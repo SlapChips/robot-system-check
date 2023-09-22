@@ -42,9 +42,11 @@ Verify required package are and package versions
     ...    
     ${items}     Get Dictionary Items   ${packages_dict}
     FOR   ${key}    ${value}    IN    @{items}
-        Log    ${key}:${value}    DEBUG
+        Log To Console   ${key}:${value}    DEBUG
         ${package}    Run    rpm -q ${key}
+        Log To Console    ${package}
         ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
+        Log To Console    ${installed_version}
         ${required_version}   Set Variable    ${value} 
         Compare Package Versions    ${installed_version}    >=    ${required_version}
 
