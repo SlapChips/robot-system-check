@@ -16,25 +16,13 @@ Setup Steps for Robot on RHEL9.2
 
   python -m pip install --upgrade pip
   
-  Requirement already satisfied: pip in ./venv/lib/python3.9/site-packages (21.2.3)
-  Collecting pip
-    Downloading pip-23.2.1-py3-none-any.whl (2.1 MB)
-       |████████████████████████████████| 2.1 MB 5.4 MB/s
-  Installing collected packages: pip
-    Attempting uninstall: pip
-      Found existing installation: pip 21.2.3
-      Uninstalling pip-21.2.3:
-        Successfully uninstalled pip-21.2.3
-  Successfully installed pip-23.2.1
 
 5. Install Robot Framework
 
   python -m pip install robotframework
 
-  Collecting robotframework
-    Obtaining dependency information for robotframework from https://files.pythonhosted.org/packages/b5/f0/3338803e955926c7826cfe6738ed99db1f76c3a86defca2c33228b12119a/robotframework-6.1.1-py3-none-any.whl.metadata
-    Downloading robotframework-6.1.1-py3-none-any.whl.metadata (7.5 kB)
-  Downloading robotframework-6.1.1-py3-none-any.whl (699 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 699.1/699.1 kB 9.3 MB/s eta 0:00:00
-  Installing collected packages: robotframework
-  Successfully installed robotframework-6.1.1
+6. [OPTIONAL] Set ROBOT_OPTIONS
+
+  export ROBOT_OPTIONS="--outputdir results"
+
+
