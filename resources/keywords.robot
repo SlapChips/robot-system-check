@@ -6,8 +6,26 @@ Library    Collections
 
 *** Keywords ***
 
-*** Keywords ***
 Compare Package Versions
+    [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
+    [Arguments]    ${actual_version}    ${operator}    ${expected_version}
+    # ${operator}             Set Variable    >
+    # ${actual_version}       Set Variable    9.1
+    # ${expected_version}     Set Variable    2.2.3
+
+    # Compare the entire version strings
+    ${comparison}    Evaluate    "${actual_version}" < "${expected_version}" and -1 or "${actual_version}" > "${expected_version}" and 1 or 0
+
+    Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Return From Keyword    Package Version is not greater
+    Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Return From Keyword    Package Version is not greater or equal
+    Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Return From Keyword    Package Version is not less
+    Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Return From Keyword    Package Version is not less or equal
+    Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Return From Keyword    Package Version is not equal
+
+    Log    Package version comparison passed
+    # Pass Execution    Package Version Passes
+    Return From Keyword    Package Version Passes
+Compare Package Versions-old
     [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
     [Arguments]    ${actual_version}    ${operator}    ${expected_version}
     # Split the package versions into iterable segments

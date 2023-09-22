@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.2 on darwin)" generated="20230922 17:06:05.556" rpa="false" schemaversion="4">
+<suite id="s1" name="Package Version" source="/Users/ubutt/git/robot-system-check/scratchpad/package_version/package_version.robot">
+<test id="s1-t1" name="Compare Package Versions-3" line="147">
+<error>
+<value>[Arguments]</value>
+<msg timestamp="20230922 17:06:05.705" level="FAIL">Setting 'Arguments' is not allowed with tests or tasks.</msg>
+<status status="FAIL" starttime="20230922 17:06:05.703" endtime="20230922 17:16:11.666"/>
+</error>
+<kw name="Set Variable" library="BuiltIn">
+<var>${operator}</var>
+<arg>&gt;</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.668" endtime="20230922 17:16:11.669"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${actual_version}</var>
+<arg>9.1</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.671" endtime="20230922 17:16:11.672"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${expected_version}</var>
+<arg>2.2.3</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.673" endtime="20230922 17:16:11.674"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${comparison}</var>
+<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.676" endtime="20230922 17:16:11.678"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt;= 0</arg>
+<arg>Fail</arg>
+<arg>Package Version is not greater</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.679" endtime="20230922 17:16:11.680"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt; 0</arg>
+<arg>Fail</arg>
+<arg>Package Version is not greater or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.682" endtime="20230922 17:16:11.683"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt;= 0</arg>
+<arg>Fail</arg>
+<arg>Package Version is not less</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.685" endtime="20230922 17:16:11.687"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt; 0</arg>
+<arg>Fail</arg>
+<arg>Package Version is not less or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.689" endtime="20230922 17:16:11.691"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "=="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} != 0</arg>
+<arg>Fail</arg>
+<arg>Package Version is not equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.694" endtime="20230922 17:16:11.695"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Package version comparison passed</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.698" endtime="20230922 17:16:11.699"/>
+</kw>
+<kw name="Pass Execution" library="BuiltIn">
+<arg>Package Version Passes</arg>
+<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
+<status status="NOT RUN" starttime="20230922 17:16:11.702" endtime="20230922 17:16:11.703"/>
+</kw>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<status status="FAIL" starttime="20230922 17:06:05.697" endtime="20230922 17:16:11.705">Setting 'Arguments' is not allowed with tests or tasks.</status>
+</test>
+<status status="FAIL" starttime="20230922 17:06:05.572" endtime="20230922 17:16:11.713"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="0" fail="1" skip="0" id="s1" name="Package Version">Package Version</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

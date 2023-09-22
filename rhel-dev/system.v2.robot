@@ -41,12 +41,12 @@ Verify required package are and package versions
     ...    the required package and the minimum supported value
     ...    
 
-    FOR   ${key}    ${value}    IN    &{packages_dict}
+    FOR   ${key}    ${value}    IN    @{packages_dict}
         Log    ${key}:${value}    DEBUG
         ${package}    Run    rpm -q ${key}
         ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
         ${required_version}    Get From Dictionary    ${packages_dict}    ${key}
-        
+        Compare Package Versions    ${installed_version}    >=    ${required_version}
 
     END
 

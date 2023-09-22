@@ -23,7 +23,7 @@ Compare Package Versions
     IF   ${exp_length} < ${min_length}    Set Variable    ${min_length}     ${exp_length}
     # iterate over min_length and run comparison operation        
     FOR    ${i}    IN RANGE    ${min_length}
-        Log    ${i}    console=${True}
+        # Log    ${i}    console=${True}
         ${actual_segment}    Get From List    ${actual_segments}    ${i}
         ${expected_segment}    Get From List    ${expected_segments}    ${i}
         ${actual_segment}    Convert To Integer    ${actual_segment}
@@ -76,8 +76,8 @@ Compare Package Versions
 
 *** Test Cases ***
 Compare Package Versions
-    ${operator}     Set Variable    ==
-    ${actual_version}=    Set Variable    1.1.1.1
+    ${operator}     Set Variable    >
+    ${actual_version}=    Set Variable    9.1.1.1
     ${expected_version}=    Set Variable    2.2.3
     # Split the package versions inst iterable segments
     ${actual_segments}    Evaluate    "${actual_version}".split('.')
@@ -97,16 +97,69 @@ Compare Package Versions
         ${actual_segment}    Convert To Integer    ${actual_segment}
         ${expected_segment}    Convert To Integer    ${expected_segment}
         ${comparison}    Evaluate    ${actual_segment} - ${expected_segment}
-        Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Log To Console    1    # Return From Keyword    False
-        Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Log To Console    2    # Return From Keyword    False
-        Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Log To Console    3    # Return From Keyword    False
-        Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Log To Console    4    # Return From Keyword    False
-        Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Log To Console    5    # Return From Keyword    False
+        Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Fail    Package Version is not gt          # Log To Console    1    # Return From Keyword    False
+        Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Fail    Package Version is not gt or eq    # Log To Console    2    # Return From Keyword    False
+        Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Fail    Package Version is not lt          # Log To Console    3    # Return From Keyword    False
+        Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Fail    Package Version is not lt or eq    # Log To Console    4    # Return From Keyword    False
+        Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Fail    Package Version is not eq          # Log To Console    5    # Return From Keyword    False
         Log    Missed all evals
     END
-    Fail    True
+    Pass Execution    Package Version Passes
 
     
+Compare Package Versions-2
+    ${operator}             Set Variable    >
+    ${actual_version}       Set Variable    2.3.1.1
+    ${expected_version}     Set Variable    2.2.3
 
+    # Split the package versions into iterable segments
+    ${actual_segments}      Evaluate    "${actual_version}".split('.')
+    ${expected_segments}    Evaluate    "${expected_version}".split('.')  
 
+    # Identify how many values are stored in the dotted notation  
+    ${min_length}           Get Length    ${actual_segments}
+    ${exp_length}           Get Length    ${expected_segments}
 
+    # Determine the minimum length between actual and expected versions
+    ${min_length}           Set Variable If    ${exp_length} < ${min_length}   ${exp_length}
+
+    FOR    ${i}    IN RANGE    ${min_length}
+       ${actual_segment}      Set Variable    ${actual_segments}[${i}]
+       ${expected_segment}    Set Variable    ${expected_segments}[${i}]
+       ${comparison}          Evaluate    "${actual_segment}" < "${expected_segment}" and -1 or "${actual_segment}" > "${expected_segment}" and 1 or 0
+
+       Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Fail    Package Version is not greater
+       Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Fail    Package Version is not greater or equal
+       Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Fail    Package Version is not less
+       Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Fail    Package Version is not less or equal
+       Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Fail    Package Version is not equal
+
+    # If we've reached this point, all segments were equal
+       Run Keyword If    ${comparison} != 0    Exit For Loop
+    END
+
+    Log    Missed all evals
+    
+    Pass Execution    Package Version Passes
+
+*** Keywords ***
+
+Compare Package Versions-3
+    [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
+    [Arguments]    ${actual_version}    ${operator}    ${expected_version}
+    # ${operator}             Set Variable    >
+    # ${actual_version}       Set Variable    9.1
+    # ${expected_version}     Set Variable    2.2.3
+
+    # Compare the entire version strings
+    ${comparison}    Evaluate    "${actual_version}" < "${expected_version}" and -1 or "${actual_version}" > "${expected_version}" and 1 or 0
+
+    Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Return From Keyword    Package Version is not greater
+    Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Return From Keyword    Package Version is not greater or equal
+    Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Return From Keyword    Package Version is not less
+    Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Return From Keyword    Package Version is not less or equal
+    Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Return From Keyword    Package Version is not equal
+
+    Log    Package version comparison passed
+    # Pass Execution    Package Version Passes
+    Return From Keyword    Package Version Passes
