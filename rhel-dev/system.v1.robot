@@ -5,19 +5,19 @@ Documentation    The following tests verify the operating system configuration &
 ...    - required utilities are present
 ...    - hostname has been changed
 ...    - DNS and NTP serviecs are configured and active
-...
+...     
 ...    Refer to the SCDP documentation to address any failed tests.
-...
+...    
 Library    OperatingSystem
-Resource    ../resources/keywords.robot
+Resource    ../resources/keywords.robot 
 
 *** Variables ***
 @{package_list}    ant    java-11-openjdk    python3    openssl    pam    python3-setuptools
-${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=${None}    pam=1.3.1.8    python3-setuptools=${None}
+${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=${None}    pam=1.3.1.8    python3-setuptools=${None}  
 @{utility_list}    tar    gzip    find    ssh-keygen
 @{dns_servers}    192.168.1.1    8.8.8.8
 @{ntp_servers}    ntp1.trans-ix.nl    leontp2.office.panq.nl
-@{nso_fw_ports}   2022    2024    8080    8888
+@{nso_fw_ports}   2022    2024    8080    8888 
 @{pam_modules}    with-faillock    without-nullok    spam-lock
 
 *** Comments ***
@@ -37,15 +37,15 @@ Verify dependency packages are installed
 
 Verify required package are and package versions
     [Documentation]    Check the versions of the packages installed meets the neccessary minimum values
-    ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing
+    ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing 
     ...    the required package and the minimum supported value
-    ...
-    ${items}     Get Dictionary Items   ${packages_dict}
-    FOR   ${key}    ${value}    IN    @{items}
+    ...    
+
+    FOR   ${key}    ${value}    IN    &{packages_dict}
         Log    ${key}:${value}    DEBUG
         ${package}    Run    rpm -q ${key}
         ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
-        ${required_version}   Set Variable    ${value}
+        ${required_version}    Get From Dictionary    ${packages_dict}    ${key}
         Compare Package Versions    ${installed_version}    >=    ${required_version}
 
     END
@@ -53,9 +53,9 @@ Verify required package are and package versions
 
 
 Check library availability
-    [Documentation]    Cisco NSO requires that the operating system has specific libraries installed
-    ...    the test verifies that the "ldconfig -p" output includes each of the libraries mentioned in the
-    ...    documentation. To adapt modify the list
+    [Documentation]    Cisco NSO requires that the operating system has specific libraries installed 
+    ...    the test verifies that the "ldconfig -p" output includes each of the libraries mentioned in the 
+    ...    documentation. To adapt modify the list 
     ${libraries}     Create List    libpam.so.0    libexpat.so.1    libz.so.1
     ${system_libraries}    Run    ldconfig -p
     ${error_list}    Create List
@@ -90,7 +90,7 @@ Check libz library version
         END
     ELSE IF    ${found_major_version[0]} > ${desired_major_version}
         Log    Found ${found_major_version} is greater than minimum, skipping minor check
-        Pass Execution    Major version is greater that required , skipping minor check.
+        Pass Execution    Major version is greater that required , skipping minor check. 
     ELSE
         Fail    Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}
     END
@@ -103,9 +103,9 @@ Verify required utilities are available
     Iterate Over List and Run Command    ${utility_list}    ${command}    ${check_string}
 
 Verify correct version of Python is active
-    [Documentation]    We require a python verison > 3.7 this test will validatre the
-    ...    active python environmnet meets this requirement
-    ...
+    [Documentation]    We require a python verison > 3.7 this test will validatre the 
+    ...    active python environmnet meets this requirement 
+    ...    
     [Tags]    os    packages
     ${python_version}    Run    python --version
     ${python_major_version}    Get Regexp Matches    ${python_version}    Python (\\d+\.\\d+)    1
@@ -113,12 +113,12 @@ Verify correct version of Python is active
     ${status}    Evaluate    ${python_major_version[0]} >= ${desired_version}
     Run Keyword If    ${status} == True
     ...    Pass Execution    Active Version of Python meets the minimum requirements
-    ...    ELSE    Fail    Active Python verison doesnt meet the requirements, review your alternatives-config to see if
+    ...    ELSE    Fail    Active Python verison doesnt meet the requirements, review your alternatives-config to see if 
     ...    correct version is active, or install the correct verison.
 
 Verify Hostname is not set to localhost
     [Documentation]    Hostname Should not be localhost
-    [Tags]    os    dns
+    [Tags]    os    dns 
     ${output}    Run    hostnamectl hostname
     Should Not Be Equal As Strings    ${output}    localhost
 
@@ -127,19 +127,19 @@ Verify DNS servers are Configured
     [Tags]    os    dns
     ${output}    Run    more /etc/resolv.conf
     FOR    ${dns_server}    IN    @{dns_servers}
-        Should Contain    ${output}    ${dns_server}
+        Should Contain    ${output}    ${dns_server}    
     END
 
 Verify NTP servers are Configured
     [Documentation]    NTP Servers should be Configured
-    [Tags]    os    ntp
+    [Tags]    os    ntp 
     ${output}    Run    chronyc sources
     FOR    ${ntp_server}    IN    @{ntp_servers}
-        Should Contain    ${output}    ${ntp_server}
+        Should Contain    ${output}    ${ntp_server}    
     END
 
 Verify NTP service is active
     [Documentation]    Check that the NTP service is active
-    [Tags]    os    ntp
+    [Tags]    os    ntp 
     ${output}    Run    timedatectl show | grep -Po '(?<=NTPSynchronized=)[^,]+'
     Should Be Equal As Strings    ${output}    yes
