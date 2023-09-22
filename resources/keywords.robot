@@ -66,7 +66,7 @@ Iterate Over List and Run Command
     [Arguments]    ${list}    ${command}    ${check_string}
     Log    ${list}    DEBUG
     ${errors_list}    Create List    # Create empty list to append errors
-    FOR    ${item}    IN    ${list}
+    FOR    ${item}    IN    @{list}
         ${run_cmd}    Catenate    ${command}    ${item}
         Log    ${run_cmd}
         ${output}    Run    ${run_cmd}
