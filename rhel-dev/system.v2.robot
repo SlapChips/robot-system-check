@@ -111,7 +111,7 @@ Verify correct version of Python is active
     ${python_major_version}    Get Regexp Matches    ${python_version}    Python (\\d+\.\\d+)    1
     ${desired_version}    Set Variable    3.08
     ${status}    Evaluate    ${python_major_version[0]} >= ${desired_version}
-    Run Keyword If    ${status} == 'PASS'
+    Run Keyword If    ${status} == True
     ...    Pass Execution    Active Version of Python meets the minimum requirements
     ...    ELSE    Fail    Active Python verison doesnt meet the requirements, review your alternatives-config to see if 
     ...    correct version is active, or install the correct verison.
