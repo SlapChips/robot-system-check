@@ -8,7 +8,7 @@ Documentation    The following tests verify the operating system configuration &
 ...     
 ...    Refer to the SCDP documentation to address any failed tests.
 ...    
-
+Library    OperatingSystem
 Resource    ../resources/keywords.robot 
 
 *** Variables ***
@@ -78,9 +78,9 @@ Check libz library version
     ${found_major_version}    Get Regexp Matches    ${libz_version}    ^(\\d+\\.\\d+)\\.(.*)    1
     ${found_minor_version}    Get Regexp Matches    ${libz_version}    ^(\\d+\\.\\d+)\\.(.*)    2
     IF    ${found_major_version[0]} == ${desired_major_version}
-        Log To Console    Going to evaluate : ${found_minor_version[0]} > ${desired_minor_version}
+        Log    Going to evaluate : ${found_minor_version[0]} > ${desired_minor_version}
         ${log}    Evaluate    ${found_minor_version[0]} > ${desired_minor_version}
-        Log To Console    ${log}
+        Log    ${log}
         IF    ${found_minor_version[0]} >= ${desired_minor_version}
             Log    Found ${found_major_version[0]}.${found_minor_version[0]} is greater than minimum
             Pass Execution    Major meets requirements, and Minor is greater or equal ${found_major_version[0]}.${found_minor_version[0]}
@@ -102,15 +102,15 @@ Verify required utilities are available
     ${check_string}    Set Variable    /usr/bin/which: no
     Iterate Over List and Run Command    ${utility_list}    ${command}    ${check_string}
 
-Verify correct version of Python is activates
+Verify correct version of Python is active
     [Documentation]    We require a python verison > 3.7 this test will validatre the 
     ...    active python environmnet meets this requirement 
     ...    
     [Tags]    os    packages
     ${python_version}    Run    python --version
-    ${python_major_version}    Get Regexp Matches    ${python_version}    Python (\\d+\.\\d+)
+    ${python_major_version}    Get Regexp Matches    ${python_version}    Python (\\d+\.\\d+)    1
     ${desired_version}    Set Variable    3.8
-    ${status}    Evaluate    ${python_major_version[0]} >= ${desired_version} 
+    ${status}    Evaluate    int(${python_major_version[0]}) >= int(${desired_version})
     Run Keyword If    ${status} == 'PASS'
     ...    Pass Execution    Active Version of Python meets the minimum requirements
     ...    ELSE    Fail    Active Python verison doesnt meet the requirements, review your alternatives-config to see if 
