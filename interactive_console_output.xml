@@ -336,4 +336,317 @@
 <var>${status}</var>
 <arg>${python_major_version} &gt;= ${desired_version}</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230922 15:42:49.596" level="FAIL">
+<msg timestamp="20230922 15:42:49.596" level="FAIL">Evaluating expression '['3.10'] &gt;= 3.8' failed: TypeError: '&gt;=' not supported between instances of 'list' and 'float'</msg>
+<status status="FAIL" starttime="20230922 15:42:49.596" endtime="20230922 15:42:49.597"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>int(${python_major_version[0]}) &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:47:10.220" endtime="20230922 15:47:10.223"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>int(${python_major_version[0]}) &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:47:22.061" endtime="20230922 15:47:22.063"/>
+</kw>
+<kw name="int(${python_major_version[0]})">
+<msg timestamp="20230922 15:47:29.159" level="FAIL">No keyword with name 'int(${python_major_version[0]})' found.</msg>
+<status status="FAIL" starttime="20230922 15:47:29.159" endtime="20230922 15:47:29.159"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${python_version}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 15:51:18.198" level="INFO">${python_version} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 15:51:18.167" endtime="20230922 15:51:18.199"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${python_major_version}</var>
+<arg>${python_version}</arg>
+<arg>Python (\\d+\.\\d+)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230922 15:51:26.012" level="INFO">${python_major_version} = ['3.10']</msg>
+<status status="PASS" starttime="20230922 15:51:26.011" endtime="20230922 15:51:26.012"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.8</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:51:35.509" level="INFO">${desired_version} = 3.8</msg>
+<status status="PASS" starttime="20230922 15:51:35.508" endtime="20230922 15:51:35.509"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>int(${python_major_version[0]}) &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:51:46.753" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20230922 15:51:46.751" endtime="20230922 15:51:46.753"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.11</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:52:07.032" level="INFO">${desired_version} = 3.11</msg>
+<status status="PASS" starttime="20230922 15:52:07.032" endtime="20230922 15:52:07.032"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>int(${python_major_version[0]}) &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:52:08.966" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20230922 15:52:08.964" endtime="20230922 15:52:08.966"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>int(${python_major_version[0]}) &gt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:52:26.874" level="INFO">${status} = False</msg>
+<status status="PASS" starttime="20230922 15:52:26.871" endtime="20230922 15:52:26.874"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.8</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:52:38.758" level="INFO">${desired_version} = 3.8</msg>
+<status status="PASS" starttime="20230922 15:52:38.757" endtime="20230922 15:52:38.758"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>int(${python_major_version[0]}) &gt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:52:40.099" level="INFO">${status} = False</msg>
+<status status="PASS" starttime="20230922 15:52:40.097" endtime="20230922 15:52:40.099"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>${python_major_version[0]} &gt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:52:53.236" level="INFO">${status} = False</msg>
+<status status="PASS" starttime="20230922 15:52:53.234" endtime="20230922 15:52:53.236"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:53:31.918" endtime="20230922 15:53:31.920"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &lt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:53:51.827" endtime="20230922 15:53:51.829"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.12</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:54:27.464" level="INFO">${desired_version} = 3.12</msg>
+<status status="PASS" starttime="20230922 15:54:27.463" endtime="20230922 15:54:27.464"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &lt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:54:29.476" endtime="20230922 15:54:29.478"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>3.12 &gt;= 3.10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:55:05.297" endtime="20230922 15:55:05.298"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>2.12 &gt;= 3.10</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:55:11.610" endtime="20230922 15:55:11.611"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>int(${python_major_version[0]})</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 15:55:44.711" endtime="20230922 15:55:44.713"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${python_major_version[0]}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 15:55:55.625" endtime="20230922 15:55:55.626"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${python_version}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 15:57:25.545" level="INFO">${python_version} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 15:57:25.515" endtime="20230922 15:57:25.545"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${python_major_version}</var>
+<arg>${python_version}</arg>
+<arg>Python (\\d+\.\\d+)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230922 15:57:25.547" level="INFO">${python_major_version} = ['3.10']</msg>
+<status status="PASS" starttime="20230922 15:57:25.546" endtime="20230922 15:57:25.547"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.8</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:57:25.547" level="INFO">${desired_version} = 3.8</msg>
+<status status="PASS" starttime="20230922 15:57:25.547" endtime="20230922 15:57:25.547"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>${python_major_version[0]} &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 15:57:25.549" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20230922 15:57:25.547" endtime="20230922 15:57:25.549"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.80</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:57:52.729" level="INFO">${desired_version} = 3.80</msg>
+<status status="PASS" starttime="20230922 15:57:52.728" endtime="20230922 15:57:52.729"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.80</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 15:58:00.982" level="INFO">${desired_version} = 3.80</msg>
+<status status="PASS" starttime="20230922 15:58:00.981" endtime="20230922 15:58:00.982"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt;= int(${desired_version})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 15:58:12.410" endtime="20230922 15:58:12.412"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${version_output}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:02:16.720" level="INFO">${version_output} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:02:16.689" endtime="20230922 16:02:16.720"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${python_version}</var>
+<arg>${version_output.split()[1]}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:02:16.722" level="INFO">${python_version} = 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:02:16.720" endtime="20230922 16:02:16.722"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${version_output}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:03:21.628" level="INFO">${version_output} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:03:21.598" endtime="20230922 16:03:21.628"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${python_version}</var>
+<arg>${version_output}[0-9]+\.[0-9]+</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:03:21.629" level="FAIL">String '${version_output}' used with invalid index '0-9'. To use '[0-9]' as a literal value, it needs to be escaped like '\[0-9]'.</msg>
+<status status="FAIL" starttime="20230922 16:03:21.628" endtime="20230922 16:03:21.629"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${version_output}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:04:38.429" level="INFO">${version_output} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:04:38.399" endtime="20230922 16:04:38.429"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${python_version}</var>
+<arg>${version_output}`[0-9]+\.[0-9]+`</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:04:38.430" level="INFO">${python_version} = Python 3.10.2`[0-9]+.[0-9]+`</msg>
+<status status="PASS" starttime="20230922 16:04:38.430" endtime="20230922 16:04:38.430"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${version_output}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:05:17.184" level="INFO">${version_output} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:05:17.154" endtime="20230922 16:05:17.184"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${python_version}</var>
+<arg>${version_output}\[0-9]+\.[0-9]+</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:05:17.185" level="INFO">${python_version} = Python 3.10.2[0-9]+.[0-9]+</msg>
+<status status="PASS" starttime="20230922 16:05:17.185" endtime="20230922 16:05:17.185"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${version_output}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:05:55.060" level="INFO">${version_output} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:05:55.030" endtime="20230922 16:05:55.061"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${python_version}</var>
+<arg>${version_output}\[0-9]+\.[0-9]+</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:05:55.062" level="INFO">${python_version} = Python 3.10.2[0-9]+.[0-9]+</msg>
+<status status="PASS" starttime="20230922 16:05:55.061" endtime="20230922 16:05:55.062"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${python_version}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:05:56.386" level="INFO">${python_version} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:05:56.359" endtime="20230922 16:05:56.386"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${python_major_version}</var>
+<arg>${python_version}</arg>
+<arg>Python (\\d+\.\\d+)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230922 16:05:56.388" level="INFO">${python_major_version} = ['3.10']</msg>
+<status status="PASS" starttime="20230922 16:05:56.387" endtime="20230922 16:05:56.388"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt; 3.9</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 16:06:48.809" endtime="20230922 16:06:48.811"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt; 3.8</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 16:06:58.651" endtime="20230922 16:06:58.653"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt; 3.4</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 16:07:05.006" endtime="20230922 16:07:05.007"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<arg>${python_major_version[0]} &gt; 3.04</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" starttime="20230922 16:08:10.089" endtime="20230922 16:08:10.090"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${python_version}</var>
+<arg>python --version</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 16:08:49.874" level="INFO">${python_version} = Python 3.10.2</msg>
+<status status="PASS" starttime="20230922 16:08:49.843" endtime="20230922 16:08:49.874"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${python_major_version}</var>
+<arg>${python_version}</arg>
+<arg>Python (\\d+\.\\d+)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230922 16:08:49.875" level="INFO">${python_major_version} = ['3.10']</msg>
+<status status="PASS" starttime="20230922 16:08:49.874" endtime="20230922 16:08:49.875"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${desired_version}</var>
+<arg>3.08</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 16:08:49.876" level="INFO">${desired_version} = 3.08</msg>
+<status status="PASS" starttime="20230922 16:08:49.876" endtime="20230922 16:08:49.876"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${status}</var>
+<arg>${python_major_version[0]} &gt;= ${desired_version}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 16:08:49.878" level="INFO">
