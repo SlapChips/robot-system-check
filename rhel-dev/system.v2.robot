@@ -39,13 +39,13 @@ Verify required package are and package versions
     [Documentation]    Check the versions of the packages installed meets the neccessary minimum values
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing
     ...    the required package and the minimum supported value
-    ...
+    ...    
     ${items}     Get Dictionary Items   ${packages_dict}
     FOR   ${key}    ${value}    IN    @{items}
         Log    ${key}:${value}    DEBUG
         ${package}    Run    rpm -q ${key}
         ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
-        ${required_version}   Set Variable    ${value}
+        ${required_version}   Set Variable    ${value} 
         Compare Package Versions    ${installed_version}    >=    ${required_version}
 
     END
