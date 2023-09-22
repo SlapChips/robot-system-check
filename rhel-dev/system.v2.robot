@@ -40,12 +40,12 @@ Verify required package are and package versions
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing 
     ...    the required package and the minimum supported value
     ...    
-
-    FOR   ${key}    ${value}    IN    @{packages_dict}
+    ${items}     Get Dictionary Items   ${packages_dict}
+    FOR   ${key}    ${value}    IN    @{items}
         Log    ${key}:${value}    DEBUG
         ${package}    Run    rpm -q ${key}
         ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
-        ${required_version}    Get From Dictionary    ${packages_dict}    ${key}
+        ${required_version}   Set Variable    ${value} 
         Compare Package Versions    ${installed_version}    >=    ${required_version}
 
     END
