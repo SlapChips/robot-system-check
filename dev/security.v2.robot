@@ -1,10 +1,20 @@
 *** Settings ***
-Resource    ../resources/keywords.robot
+Documentation    The following tests verify the security configuration that are expected to be implemented
+...    on the redhat servers that will host the Cisco NSO application
+...    - firewall Service Configrations
+...    - autheselect custome profile creation and modifications
+...    - PAM Configrations
+...    - Password quality modifications 
+...    Refer to the SCDP documentation to address any failed tests.
+...    
 
+Resource    ../resources/keywords.robot
+Library    OperatingSystem
+Library    String
+Library    Collections
 *** Variables ***
 @{nso_fw_ports}   2022    2024    8080    8888 
 @{pam_modules}    with-faillock    without-nullok    spam-locks
-
 
 *** Test Cases ***
 
@@ -16,7 +26,8 @@ Verify firewalld service is enabled
 
 Verify NSO ports are configured in the firewalld 
     [Documentation]    Check that the neccesary tcp/udp ports are open for nso the 
-    ...    ports are listed in the @{nso_fw_ports} list defined in the global Variables
+    ...    ports are listed in the list "nso_fw_ports" defined in the global Variables
+    ...    List includes the following : @{nso_fw_ports} 
     [Tags]    security
     ${output}    Run    sudo firewall-cmd --list-all
     FOR    ${port}    IN    @{nso_fw_ports}
@@ -46,6 +57,9 @@ Verify that the required PAM Modules are enabled
     ...    Enabled features:
     ...    - with-faillock
     ...    - without-nullok
+    ...    
+    ...    Checks made against the following features: @{pam_modules}
+
     [Tags]    security
     ${output}    Run    authselect current
     ${module_status_dict}    Create Dictionary
@@ -59,19 +73,72 @@ Verify that the required PAM Modules are enabled
     Log    ${status}
     IF     'FAIL' in '${status}'    Fail    Expected PAM enabled-feature not found
 
-Verify password-auth file has been modifed
-    [Documentation]    The fie /etc/authselect/custom/sssd-vf needs to be modified
-    [Tags]    security
-    Skip    This test needs development
-    Pass Execution    Need to come up with a way to check modifications
+Check the password-auth file has been updated
+    [Documentation]    Read the /etc/authselect/custom/sssd-vf/password-auth file
+    ...    and check that the values have been modified the check takes a dict with
+    ...    the module search string and the expected configuration as a k,v Pairs
+    ...    the check then searches the file for the key and evaluates the value
+    ...
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok    dummy=dummy
+    ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/password-auth
+    ${error_list}    Create List
+    FOR    ${key}    ${value}    IN    &{check_dict}
+        Log    ${key} : ${value}
+        ${matches}    Get Regexp Matches    ${password_auth}    \\s?${key}\\s?(.*)    1
+        ${len}   Get Length    ${matches}
+        IF    ${len} > 0
+            Log    Match Found match ${key} : ${matches}
+            Log    ${matches[0]}
+            IF    '${value}' == '${matches[0]}'
+                Log    '${key}' Configured as expected
+            ELSE
+                Log    ${key} Not configured as expected
+                Append To List    ${error_list}    ${key}
+            END
+        ELSE
+            Log    No Match found for : ${key}
+            Append To List    ${error_list}    ${key}
+        END
 
-Verify that system-auth file has been modifed
-    [Documentation]    The fie /etc/authselect/custom/sssd-vf needs to be modified
-    [Tags]    security
-    Skip    This test needs development
-    Pass Execution    Need to come up with a way to check modifications
+    END
+    Log    ${error_list}
+    Should Be Empty    ${error_list}    Errors found in the following modules ${error_list}
 
-Verify that faillock.conf has been modifed -2
+
+
+
+Check the system-auth file has been updated
+    [Documentation]    Read the /etc/authselect/custom/sssd-vf/system-auth file
+    ...    and check that the values have been modified the check takes a dict with
+    ...    the module search string and the expected configuration as a k,v Pairs
+    ...    the check then searches the file for the key and evaluates the value
+    ...
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only enforce-for-root retry=3 remember=12   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok remember=12    dummy=dummy
+    ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/system-auth
+    ${error_list}    Create List
+    FOR    ${key}    ${value}    IN    &{check_dict}
+        Log    ${key} : ${value}
+        ${matches}    Get Regexp Matches    ${password_auth}    \\s?${key}\\s?(.*)    1
+        ${len}   Get Length    ${matches}
+        IF    ${len} > 0
+            Log    Match Found match ${key} : ${matches}
+            Log    ${matches[0]}
+            IF    '${value}' == '${matches[0]}'
+                Log    ${key} Configured as expected
+            ELSE
+                Log    ${key} Not configured as expected
+                Append To List    ${error_list}    ${key}
+            END
+        ELSE
+            Log    No Match found for : ${key}
+            Append To List    ${error_list}    ${key}
+        END
+
+    END
+    Log    ${error_list}
+    Should Be Empty    ${error_list}    Errors found in the following modules ${error_list}
+
+Verify that faillock.conf has been modifed
     [Documentation]    We are required to modify the fail_interval to be = 1800 seconds
     [Tags]    security
     ${dict}    Create Dictionary    fail_interval=1800

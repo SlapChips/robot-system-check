@@ -1,10 +1,20 @@
 *** Settings ***
-Resource    ../resources/keywords.robot
+Documentation    The following tests verify the security configuration that are expected to be implemented
+...    on the redhat servers that will host the Cisco NSO application
+...    - firewall Service Configrations
+...    - autheselect custome profile creation and modifications
+...    - PAM Configrations
+...    - Password quality modifications 
+...    Refer to the SCDP documentation to address any failed tests.
+...    
 
+Resource    ../resources/keywords.robot
+Library    OperatingSystem
+Library    String
+Library    Collections
 *** Variables ***
 @{nso_fw_ports}   2022    2024    8080    8888 
 @{pam_modules}    with-faillock    without-nullok 
-
 
 *** Test Cases ***
 
@@ -94,14 +104,8 @@ Check the password-auth file has been updated
     Log    ${error_list}
     Should Be Empty    ${error_list}    Errors found in the following modules ${error_list}
 
-*** Settings ***
-Library    OperatingSystem
-Library    String
-Library    Collections
 
-*** Variables ***
 
-*** Test Cases ***
 
 Check the system-auth file has been updated
     [Documentation]    Read the /etc/authselect/custom/sssd-vf/system-auth file
@@ -134,7 +138,7 @@ Check the system-auth file has been updated
     Log    ${error_list}
     Should Be Empty    ${error_list}    Errors found in the following modules ${error_list}
 
-Verify that faillock.conf has been modifed -2
+Verify that faillock.conf has been modifed
     [Documentation]    We are required to modify the fail_interval to be = 1800 seconds
     [Tags]    security
     ${dict}    Create Dictionary    fail_interval=1800
@@ -176,5 +180,3 @@ Verify the user account inavtive days value has been modified
     ${match}    Get Regexp Matches    ${useradd_conf}    (?m)^\\s?INACTIVE\\s?\=\\s?(-?\\d+)    1
     ${match_val}    Get From List    ${match}    0
     IF    ${match_val} != 90    Fail    INACTIVE not set to expected value
-
-

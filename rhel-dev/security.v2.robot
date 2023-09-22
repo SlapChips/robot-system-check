@@ -14,10 +14,7 @@ Library    String
 Library    Collections
 *** Variables ***
 @{nso_fw_ports}   2022    2024    8080    8888 
-@{pam_modules}    with-faillock    without-nullok 
-
-*** Comments ***
-Some sample text
+@{pam_modules}    with-faillock    without-nullok    spam-locks
 
 *** Test Cases ***
 
@@ -82,7 +79,7 @@ Check the password-auth file has been updated
     ...    the module search string and the expected configuration as a k,v Pairs
     ...    the check then searches the file for the key and evaluates the value
     ...
-    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok 
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok    dummy=dummy
     ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/password-auth
     ${error_list}    Create List
     FOR    ${key}    ${value}    IN    &{check_dict}
@@ -116,7 +113,7 @@ Check the system-auth file has been updated
     ...    the module search string and the expected configuration as a k,v Pairs
     ...    the check then searches the file for the key and evaluates the value
     ...
-    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only enforce-for-root retry=3 remember=12   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok remember=12 
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only enforce-for-root retry=3 remember=12   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok remember=12    dummy=dummy
     ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/system-auth
     ${error_list}    Create List
     FOR    ${key}    ${value}    IN    &{check_dict}
@@ -157,7 +154,7 @@ Verify that pwquality.conf has been modified
     ...    - lcredit = -1
     ...    - ocredit = -1
     [Tags]    security
-    ${dict}    Create Dictionary    minlen=8    dcredit=-1    ucredit=-1    lcredit=-1    ocredit=-1 
+    ${dict}    Create Dictionary    minlen=8    dcredit=-1    ucredit=-1    lcredit=-1    ocredit=-1    dummy=1
     ${file_path}    Set Variable    /etc/security/pwquality.conf
     Get Regexp Matches For Key Value Pairs in File    ${dict}    ${file_path}
 
@@ -170,7 +167,7 @@ Verify login.defs has been modifed
     ...    - PASS_WARN_AGE   5
 
     [Tags]    security
-    ${dict}    Create Dictionary    PASS_MAX_DAYS=90    PASS_MIN_DAYS=1    PASS_MIN_LEN=5    PASS_WARN_AGE=5 
+    ${dict}    Create Dictionary    PASS_MAX_DAYS=90    PASS_MIN_DAYS=1    PASS_MIN_LEN=5    PASS_WARN_AGE=5    dummy=5
     ${file_path}    Set Variable    /etc/login.defs
     Get Regexp Matches For Key Value Pairs in File    ${dict}    ${file_path}
 
@@ -183,5 +180,3 @@ Verify the user account inavtive days value has been modified
     ${match}    Get Regexp Matches    ${useradd_conf}    (?m)^\\s?INACTIVE\\s?\=\\s?(-?\\d+)    1
     ${match_val}    Get From List    ${match}    0
     IF    ${match_val} != 90    Fail    INACTIVE not set to expected value
-
-
