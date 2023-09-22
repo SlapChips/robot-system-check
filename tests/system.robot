@@ -1,4 +1,5 @@
 *** Settings ***
+<<<<<<< HEAD
 Resource    ../resources/keywords.robot 
 Library    OperatingSystem
 Library    String
@@ -8,26 +9,56 @@ Library    Collections
 ${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=${None}    pam=1.3.1.8    python3-setuptools=${None}    
 @{utility_list}    tar    gzip    find    ssh-keygen
 @{dns_servers}    192.168.1.1    8.8.8.8    8.8.4.4
+=======
+Documentation    The following tests verify the operating system configuration & dependency packages
+...    are present in preperation for the Cisco NSO application testing. The checks include:
+...    - dependent packages are available
+...    - required utilities are present
+...    - hostname has been changed
+...    - DNS and NTP serviecs are configured and active
+...     
+...    Refer to the SCDP documentation to address any failed tests.
+...    
+
+Resource    ../resources/keywords.robot 
+
+*** Variables ***
+@{package_list}    ant    java-11-openjdk    python3    openssl    pam    python3-setuptools
+@{utility_list}    tar    gzip    find    ssh-keygen
+@{dns_servers}    192.168.1.1    8.8.8.8
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
 @{ntp_servers}    ntp1.trans-ix.nl    leontp2.office.panq.nl
 @{nso_fw_ports}   2022    2024    8080    8888 
 @{pam_modules}    with-faillock    without-nullok    spam-lock
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
 *** Comments ***
 
 *** Keywords ***
 
+<<<<<<< HEAD
 *** Test Cases ***
 
 Verify dependency packages are installed
     [Documentation]    Check the installed packages using the "rpm -q" command against a list of expected
     ...    packages, add and remove packages form the list to modify the test case.
     ...    List included : ${package_list}
+=======
+
+*** Test Cases ***
+
+Verify dependency packages are installed
+    [Documentation]    As above without break on first failure
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
     [Tags]    os    packages
     ${command}    Set Variable    rpm -q
     ${check_string}    Set Variable    not installed
     Iterate Over List and Run Command    ${package_list}    ${command}    ${check_string}
 
+<<<<<<< HEAD
 Verify required package are and package versions
     [Documentation]    Check the versions of the packages installed meets the neccessary minimum values
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing 
@@ -88,6 +119,8 @@ Check libz library version
         Fail    Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}
     END
 
+=======
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
 Verify required utilities are available
     [Documentation]    Cisco NSO requires some utilities, this test verfies these binaries exist
     [Tags]    os    packages
@@ -95,6 +128,7 @@ Verify required utilities are available
     ${check_string}    Set Variable    /usr/bin/which: no
     Iterate Over List and Run Command    ${utility_list}    ${command}    ${check_string}
 
+<<<<<<< HEAD
 Verify correct version of Python is activates
     [Documentation]    We require a python verison > 3.7 this test will validatre the 
     ...    active python environmnet meets this requirement 
@@ -109,6 +143,8 @@ Verify correct version of Python is activates
     ...    ELSE    Fail    Active Python verison doesnt meet the requirements, review your alternatives-config to see if 
     ...    correct version is active, or install the correct verison.
 
+=======
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
 Verify Hostname is not set to localhost
     [Documentation]    Hostname Should not be localhost
     [Tags]    os    dns 
@@ -137,3 +173,7 @@ Verify NTP service is active
     ${output}    Run    timedatectl show | grep -Po '(?<=NTPSynchronized=)[^,]+'
     Should Be Equal As Strings    ${output}    yes
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6df037e29425fc157735f8446a00cc4b7004e57b
