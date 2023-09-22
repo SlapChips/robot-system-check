@@ -1,5 +1,5 @@
 *** Settings ***
-Resource   ../resources/keywords.robot
+
 
 *** Test Cases ***
 Test Case 1
