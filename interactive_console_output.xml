@@ -9891,3 +9891,380 @@
 </kw>
 <status status="PASS" starttime="20230922 17:12:22.441" endtime="20230922 17:12:22.442"/>
 </kw>
+<status status="PASS" starttime="20230922 17:12:22.441" endtime="20230922 17:12:22.442"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.442" endtime="20230922 17:12:22.442"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.443" endtime="20230922 17:12:22.443"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.443" endtime="20230922 17:12:22.443"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "=="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} != 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.443" endtime="20230922 17:12:22.443"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Package version comparison passed</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.443" endtime="20230922 17:12:22.443"/>
+</kw>
+<kw name="Return From Keyword" library="BuiltIn">
+<arg>Package Version Passes</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="NOT RUN" starttime="20230922 17:12:22.443" endtime="20230922 17:12:22.443"/>
+</kw>
+<msg timestamp="20230922 17:12:22.443" level="INFO">${status} = Package Version is not greater</msg>
+<status status="PASS" starttime="20230922 17:12:22.439" endtime="20230922 17:12:22.444"/>
+</kw>
+<kw name="Compare Package Versions-3">
+<var>${status}</var>
+<arg>1.9</arg>
+<arg>&gt;</arg>
+<arg>1.1</arg>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<kw name="Evaluate" library="BuiltIn">
+<var>${comparison}</var>
+<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:12:26.978" level="INFO">${comparison} = 1</msg>
+<status status="PASS" starttime="20230922 17:12:26.977" endtime="20230922 17:12:26.978"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>${comparison} &lt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:12:26.979" endtime="20230922 17:12:26.979"/>
+</kw>
+<status status="PASS" starttime="20230922 17:12:26.978" endtime="20230922 17:12:26.979"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:12:26.979" endtime="20230922 17:12:26.980"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:12:26.980" endtime="20230922 17:12:26.980"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:12:26.980" endtime="20230922 17:12:26.980"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "=="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} != 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:12:26.981" endtime="20230922 17:12:26.981"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Package version comparison passed</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 17:12:26.981" endtime="20230922 17:12:26.981"/>
+</kw>
+<kw name="Return From Keyword" library="BuiltIn">
+<arg>Package Version Passes</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" starttime="20230922 17:12:26.981" endtime="20230922 17:12:26.981"/>
+</kw>
+<msg timestamp="20230922 17:12:26.982" level="INFO">${status} = Package Version Passes</msg>
+<status status="PASS" starttime="20230922 17:12:26.976" endtime="20230922 17:12:26.982"/>
+</kw>
+<kw name="Compare Package Versions-3">
+<var>${status}</var>
+<arg>1.9</arg>
+<arg>&gt;</arg>
+<arg>1.1</arg>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<kw name="Evaluate" library="BuiltIn">
+<var>${comparison}</var>
+<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:22:57.308" level="INFO">${comparison} = 1</msg>
+<status status="PASS" starttime="20230922 17:22:57.308" endtime="20230922 17:22:57.308"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>${comparison} &lt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:22:57.309" endtime="20230922 17:22:57.309"/>
+</kw>
+<status status="PASS" starttime="20230922 17:22:57.308" endtime="20230922 17:22:57.309"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not greater or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:22:57.309" endtime="20230922 17:22:57.310"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:22:57.310" endtime="20230922 17:22:57.310"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not less or equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:22:57.310" endtime="20230922 17:22:57.311"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "=="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} != 0</arg>
+<arg>Return From Keyword</arg>
+<arg>Package Version is not equal</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" starttime="20230922 17:22:57.311" endtime="20230922 17:22:57.311"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Package version comparison passed</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 17:22:57.311" endtime="20230922 17:22:57.312"/>
+</kw>
+<kw name="Return From Keyword" library="BuiltIn">
+<arg>Package Version Passes</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" starttime="20230922 17:22:57.312" endtime="20230922 17:22:57.312"/>
+</kw>
+<msg timestamp="20230922 17:22:57.312" level="INFO">${status} = Package Version Passes</msg>
+<status status="PASS" starttime="20230922 17:22:57.307" endtime="20230922 17:22:57.312"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>@{packages_dict}</var>
+<arg>ant=1.9.3</arg>
+<arg>java-11-openjdk=1.1</arg>
+<arg>python3=3.7</arg>
+<arg>openssl=${None}</arg>
+<arg>pam=1.3.1.8</arg>
+<arg>python3-setuptools=${None}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230922 17:22:59.179" level="INFO">@{packages_dict} = [ ant | java-11-openjdk | python3 | openssl | pam | python3-setuptools ]</msg>
+<status status="PASS" starttime="20230922 17:22:59.178" endtime="20230922 17:22:59.179"/>
+</kw>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>&amp;{packages_dict}</value>
+<iter>
+<var name="${key}"/>
+<var name="${value}"/>
+<kw name="Log" library="BuiltIn">
+<arg>${key}:${value}</arg>
+<arg>DEBUG</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230922 17:23:11.205" endtime="20230922 17:23:11.205"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${package}</var>
+<arg>rpm -q ${key}</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<status status="NOT RUN" starttime="20230922 17:23:11.205" endtime="20230922 17:23:11.205"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${installed_version}</var>
+<arg>${package}</arg>
+<arg>${key}-(.*)-.*</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<status status="NOT RUN" starttime="20230922 17:23:11.205" endtime="20230922 17:23:11.205"/>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<var>${required_version}</var>
+<arg>${packages_dict}</arg>
+<arg>${key}</arg>
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<status status="NOT RUN" starttime="20230922 17:23:11.205" endtime="20230922 17:23:11.205"/>
+</kw>
+<kw name="Compare Package Versions">
+<arg>${installed_version}</arg>
+<arg>&gt;=</arg>
+<arg>${required_version}</arg>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<status status="NOT RUN" starttime="20230922 17:23:11.205" endtime="20230922 17:23:11.206"/>
+</kw>
+<status status="NOT RUN" starttime="20230922 17:23:11.204" endtime="20230922 17:23:11.206"/>
+</iter>
+<msg timestamp="20230922 17:23:11.206" level="FAIL">Value of variable '&amp;{packages_dict}' is not dictionary or dictionary-like.</msg>
+<status status="FAIL" starttime="20230922 17:23:11.204" endtime="20230922 17:23:11.206"/>
+</for>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${mydict}</var>
+<arg>a=1</arg>
+<arg>b=2</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230922 17:27:38.740" level="INFO">${mydict} = {'a': '1', 'b': '2'}</msg>
+<status status="PASS" starttime="20230922 17:27:38.739" endtime="20230922 17:27:38.740"/>
+</kw>
+<kw name="Get Dictionary Items" library="Collections">
+<var>${items}</var>
+<arg>${mydict}</arg>
+<doc>Returns items of the given ``dictionary`` as a list.</doc>
+<msg timestamp="20230922 17:27:50.546" level="INFO">${items} = ['a', '1', 'b', '2']</msg>
+<status status="PASS" starttime="20230922 17:27:50.545" endtime="20230922 17:27:50.546"/>
+</kw>
+<kw name=":FOR">
+<arg>${key}</arg>
+<arg>${value}</arg>
+<arg>IN</arg>
+<arg>@{items}</arg>
+<msg timestamp="20230922 17:28:11.163" level="FAIL">Support for the old FOR loop syntax has been removed. Replace ':FOR' with 'FOR', end the loop with 'END', and remove escaping backslashes.</msg>
+<status status="FAIL" starttime="20230922 17:28:11.162" endtime="20230922 17:28:11.163"/>
+</kw>
+<kw name="\">
+<arg>Log</arg>
+<arg>The current key is: ${key}</arg>
+<status status="NOT RUN" starttime="20230922 17:28:11.163" endtime="20230922 17:28:11.163"/>
+</kw>
+<kw name="\">
+<arg>Log</arg>
+<arg>The value is: ${value}</arg>
+<status status="NOT RUN" starttime="20230922 17:28:11.163" endtime="20230922 17:28:11.164"/>
+</kw>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>@{LIST}</value>
+<iter>
+<var name="${key}"/>
+<var name="${value}"/>
+<kw name="Log" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230922 17:29:08.074" endtime="20230922 17:29:08.074"/>
+</kw>
+<status status="NOT RUN" starttime="20230922 17:29:08.074" endtime="20230922 17:29:08.074"/>
+</iter>
+<msg timestamp="20230922 17:29:08.074" level="FAIL">Variable '@{LIST}' not found.</msg>
+<status status="FAIL" starttime="20230922 17:29:08.071" endtime="20230922 17:29:08.074"/>
+</for>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>@{items}</value>
+<iter>
+<var name="${key}">a</var>
+<var name="${value}">1</var>
+<kw name="Log" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 17:29:28.387" endtime="20230922 17:29:28.388"/>
+</kw>
+<status status="PASS" starttime="20230922 17:29:28.387" endtime="20230922 17:29:28.388"/>
+</iter>
+<iter>
+<var name="${key}">b</var>
+<var name="${value}">2</var>
+<kw name="Log" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" starttime="20230922 17:29:28.388" endtime="20230922 17:29:28.388"/>
+</kw>
+<status status="PASS" starttime="20230922 17:29:28.388" endtime="20230922 17:29:28.388"/>
+</iter>
+<status status="PASS" starttime="20230922 17:29:28.386" endtime="20230922 17:29:28.388"/>
+</for>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>@{items}</value>
+<iter>
+<var name="${key}">a</var>
+<var name="${value}">1</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:29:53.781" endtime="20230922 17:29:53.781"/>
+</kw>
+<status status="PASS" starttime="20230922 17:29:53.780" endtime="20230922 17:29:53.781"/>
+</iter>
+<iter>
+<var name="${key}">b</var>
+<var name="${value}">2</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:29:53.782" endtime="20230922 17:29:53.782"/>
+</kw>
+<status status="PASS" starttime="20230922 17:29:53.781" endtime="20230922 17:29:53.782"/>
+</iter>
+<status status="PASS" starttime="20230922 17:29:53.780" endtime="20230922 17:29:53.782"/>
+</for>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>@{packages_dict}</var>
+<arg>ant=1.9.3</arg>
+<arg>java-11-openjdk=1.1</arg>
+<arg>python3=3.7</arg>
+<arg>openssl=${None}</arg>
+<arg>pam=1.3.1.8</arg>
+<arg>python3-setuptools=${None}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230922 17:31:20.403" level="INFO">@{packages_dict} = [ ant | java-11-openjdk | python3 | openssl | pam | python3-setuptools ]
