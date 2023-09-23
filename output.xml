@@ -1,95 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.10.2 on darwin)" generated="20230922 17:06:05.556" rpa="false" schemaversion="4">
-<suite id="s1" name="Package Version" source="/Users/ubutt/git/robot-system-check/scratchpad/package_version/package_version.robot">
-<test id="s1-t1" name="Compare Package Versions-3" line="147">
-<error>
-<value>[Arguments]</value>
-<msg timestamp="20230922 17:06:05.705" level="FAIL">Setting 'Arguments' is not allowed with tests or tasks.</msg>
-<status status="FAIL" starttime="20230922 17:06:05.703" endtime="20230922 17:16:11.666"/>
-</error>
-<kw name="Set Variable" library="BuiltIn">
-<var>${operator}</var>
-<arg>&gt;</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.668" endtime="20230922 17:16:11.669"/>
+<robot generator="Robot 6.1.1 (Python 3.10.2 on darwin)" generated="20230923 09:56:16.401" rpa="false" schemaversion="4">
+<suite id="s1" name="System.V2" source="/Users/ubutt/git/robot-system-check/rhel-dev/system.v2.robot">
+<test id="s1-t1" name="${error_list}" line="56">
+<kw name="Create List" library="BuiltIn">
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" starttime="20230923 09:56:16.494" endtime="20230923 09:56:16.495"/>
 </kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${actual_version}</var>
-<arg>9.1</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.671" endtime="20230922 17:16:11.672"/>
+<for flavor="IN">
+<var>${package}</var>
+<var>${required_version}</var>
+<value>&amp;{packages_dict}</value>
+<iter>
+<var name="${package}"/>
+<var name="${required_version}"/>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Package = ${package}:</arg>
+<arg>Version = ${required_version}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230923 09:56:16.497" endtime="20230923 09:56:16.497"/>
 </kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${expected_version}</var>
-<arg>2.2.3</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.673" endtime="20230922 17:16:11.674"/>
+<kw name="Run" library="OperatingSystem">
+<var>${package_rpm}</var>
+<arg>rpm -q ${package}</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<status status="NOT RUN" starttime="20230923 09:56:16.497" endtime="20230923 09:56:16.498"/>
 </kw>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.676" endtime="20230922 17:16:11.678"/>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${package_rpm}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230923 09:56:16.498" endtime="20230923 09:56:16.498"/>
 </kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Fail</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.679" endtime="20230922 17:16:11.680"/>
+<kw name="Get Regexp Matches" library="String">
+<var>${installed_version}</var>
+<arg>${package_rpm}</arg>
+<arg>${package}-(.*)-.*</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<status status="NOT RUN" starttime="20230923 09:56:16.498" endtime="20230923 09:56:16.499"/>
 </kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Fail</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.682" endtime="20230922 17:16:11.683"/>
+<kw name="Log To Console" library="BuiltIn">
+<arg>Installed Version : ${installed_version[0]}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230923 09:56:16.499" endtime="20230923 09:56:16.499"/>
 </kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Fail</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.685" endtime="20230922 17:16:11.687"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Fail</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.689" endtime="20230922 17:16:11.691"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Fail</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.694" endtime="20230922 17:16:11.695"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.698" endtime="20230922 17:16:11.699"/>
-</kw>
-<kw name="Pass Execution" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<status status="NOT RUN" starttime="20230922 17:16:11.702" endtime="20230922 17:16:11.703"/>
-</kw>
+<kw name="Compare Package Versions" library="keywords">
+<arg>${installed_version[0]}</arg>
+<arg>&gt;=</arg>
+<arg>${required_version}</arg>
 <doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<status status="FAIL" starttime="20230922 17:06:05.697" endtime="20230922 17:16:11.705">Setting 'Arguments' is not allowed with tests or tasks.</status>
+<status status="NOT RUN" starttime="20230923 09:56:16.499" endtime="20230923 09:56:16.500"/>
+</kw>
+<status status="NOT RUN" starttime="20230923 09:56:16.496" endtime="20230923 09:56:16.500"/>
+</iter>
+<msg timestamp="20230923 09:56:16.500" level="FAIL">Variable '&amp;{packages_dict}' not found.</msg>
+<status status="FAIL" starttime="20230923 09:56:16.495" endtime="20230923 09:56:16.504"/>
+</for>
+<status status="FAIL" starttime="20230923 09:56:16.493" endtime="20230923 09:56:16.505">Variable '&amp;{packages_dict}' not found.</status>
 </test>
-<status status="FAIL" starttime="20230922 17:06:05.572" endtime="20230922 17:16:11.713"/>
+<doc>The following tests verify the operating system configuration &amp; dependency packages
+are present in preperation for the Cisco NSO application testing. The checks include:
+- dependent packages are available
+- required utilities are present
+- hostname has been changed
+- DNS and NTP serviecs are configured and active
+
+Refer to the SCDP documentation to address any failed tests.</doc>
+<status status="FAIL" starttime="20230923 09:56:16.407" endtime="20230923 09:56:16.508"/>
 </suite>
 <statistics>
 <total>
@@ -98,7 +74,7 @@
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="Package Version">Package Version</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="System.V2">System.V2</stat>
 </suite>
 </statistics>
 <errors>

@@ -6,25 +6,46 @@ Library    Collections
 
 *** Keywords ***
 
+Pad Version
+    [Arguments]    ${version}    ${length}
+    ${segments}    Split String    ${version}    .
+    ${segments_length}    Get Length    ${segments}
+    ${pad_count}    Evaluate    ${length} - ${segments_length}
+    FOR    ${i}    IN RANGE    0    ${pad_count}
+        Append To List    ${segments}    0
+    END
+    ${padded_version}    Catenate    SEPARATOR=.    @{segments}
+    [Return]    ${padded_version}
+
 Compare Package Versions
-    [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
-    [Arguments]    ${actual_version}    ${operator}    ${expected_version}
-    # ${operator}             Set Variable    >
-    # ${actual_version}       Set Variable    9.1
-    # ${expected_version}     Set Variable    2.2.3
+    [Arguments]    ${installed_version}    ${evaluator}    ${required_version}
+    [Documentation]    Support all evaluators except single "=""
+    @{installed_segments}    Split String    ${installed_version}    .
+    @{required_segments}    Split String    ${required_version}    .
+    ${installed_length}    Get Length    ${installed_segments}
+    ${required_length}    Get Length    ${required_segments}
 
-    # Compare the entire version strings
-    ${comparison}    Evaluate    "${actual_version}" < "${expected_version}" and -1 or "${actual_version}" > "${expected_version}" and 1 or 0
+    # Pad the shorter version with zeros
+    ${max_length}    Set Variable    ${installed_length}
+    IF    ${required_length} > ${installed_length}
+        Set Variable    ${max_length}    ${required_length}
+    END
+    ${installed_version}    Pad Version    ${installed_version}    ${max_length}
+    ${required_version}    Pad Version    ${required_version}    ${max_length}
+    # Need to re-splot modifed Pad output:
+    @{installed_segments}    Split String    ${installed_version}    .
+    @{required_segments}    Split String    ${required_version}    .
 
-    Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Return From Keyword    Package Version is not greater
-    Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Return From Keyword    Package Version is not greater or equal
-    Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Return From Keyword    Package Version is not less
-    Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Return From Keyword    Package Version is not less or equal
-    Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0   Return From Keyword    Package Version is not equal
+    FOR    ${installed_segment}    ${required_segment}    IN    @{installed_segments}    @{required_segments}
+       ${installed_segment}    Convert To Integer    ${installed_segment}
+       ${required_segment}    Convert To Integer    ${required_segment}
+       ${result}    Run Keyword And Return Status    Evaluate    ${installed_segment} ${evaluator} ${required_segment}
+       Exit For Loop If    "${result}" == "True"
+    END
 
-    Log    Package version comparison passed
-    # Pass Execution    Package Version Passes
-    Return From Keyword    Package Version Passes
+    Run Keyword If    "${result}" == "True"    Pass Execution    Package version comparison passed
+    ...    ELSE    Fail    Package version comparison failed
+
 Compare Package Versions-old
     [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
     [Arguments]    ${actual_version}    ${operator}    ${expected_version}
@@ -34,12 +55,7 @@ Compare Package Versions-old
     # Identify how many values are stored in the dotted notation  
     ${min_length}    Get Match Count    ${actual_segments}    *    # naming this min as we will use this to loop over
     ${exp_length}    Get Match Count    ${expected_segments}    *
-    # We evaluate if the expected length (exp_length) of package verison is greater 
-    # than the actual length (min_length} of the found apckage version if exp_length
-    # is greater than min_length we overwrite the min_length value with the value of 
-    # exp_length
-    IF   ${exp_length} < ${min_length}    Set Variable    ${min_length}     ${exp_length}
-    # iterate over min_length and run comparison operation        
+    IF   ${exp_length} < ${min_length}    Set Variable    ${min_length}     ${exp_length}      
     FOR    ${i}    IN RANGE    ${min_length}
         Log    ${i}    console=${True}
         ${actual_segment}    Get From List    ${actual_segments}    ${i}
@@ -47,9 +63,6 @@ Compare Package Versions-old
         ${actual_segment}    Convert To Integer    ${actual_segment}
         ${expected_segment}    Convert To Integer    ${expected_segment}
         ${comparison}    Evaluate    ${actual_segment} - ${expected_segment}
-        # Uncomment lines below to log errors and debug
-        # Log To Console  Actual: ${actual_segment} Expected: ${expected_segment} Comparison ${comparison}
-        # Log To Console   Operator selected: ${operator}
         Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Return From Keyword    False
         Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Return From Keyword    False
         Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Return From Keyword    False
