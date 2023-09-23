@@ -30,14 +30,16 @@ Compare Package Versions
     END
     ${installed_version}    Pad Version    ${installed_version}    ${max_length}
     ${required_version}    Pad Version    ${required_version}    ${max_length}
-    # Need to re-splot modifed Pad output:
+    # Need to re-split modifed Pad output:
     @{installed_segments}    Split String    ${installed_version}    .
     @{required_segments}    Split String    ${required_version}    .
-
+    Log To Console    Comparing @{installed_segments} with @{required_segments}
     FOR    ${installed_segment}    ${required_segment}    IN    @{installed_segments}    @{required_segments}
        ${installed_segment}    Convert To Integer    ${installed_segment}
        ${required_segment}    Convert To Integer    ${required_segment}
+       Log To Console    Evaluating if ${installed_segment} ${evaluator} ${required_segment}
        ${result}    Run Keyword And Return Status    Evaluate    ${installed_segment} ${evaluator} ${required_segment}
+       Log To Console    ${result}
        Exit For Loop If    "${result}" == "True"
     END
 
