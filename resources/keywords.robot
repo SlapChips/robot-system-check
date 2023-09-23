@@ -46,7 +46,7 @@ Compare Package Versions
     Run Keyword If    "${result}" == "True"    Log To Console    Package version comparison passed
     ...    ELSE    Log To Console    Package version comparison failed
     ...    
-    IF   "${result}" == "True"   RETURN 
+    IF   "${result}" == "True"   RETURN  ${result}
 
 Compare Package Versions-old
     [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
