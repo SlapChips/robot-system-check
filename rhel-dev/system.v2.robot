@@ -13,7 +13,7 @@ Resource    ../resources/keywords.robot
 
 *** Variables ***
 @{package_list}    ant    java-11-openjdk    python3    openssl    pam    python3-setuptools
-&{packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
+${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
 @{utility_list}    tar    gzip    find    ssh-keygen
 @{dns_servers}    192.168.1.1    8.8.8.8
 @{ntp_servers}    ntp1.trans-ix.nl    leontp2.office.panq.nl
@@ -52,9 +52,9 @@ Verify required package are and package versions
     #    Compare Package Versions    ${installed_version}    >=    ${required_version}
     #
     # END
-    ${dict}	Create Dictionary   ant=1.9.3    java-11-openjdk=1.1    python3=3.7
+    ${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
 
-    FOR    ${key}  ${element}    IN    &{packages_dict}
+    FOR    ${key}  ${element}    IN    &{dict}
         Log To Console    ${key}:${element}
     END
 

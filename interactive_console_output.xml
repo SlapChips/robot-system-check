@@ -10813,4 +10813,369 @@
 <arg>${installed_version}</arg>
 <arg>&gt;=</arg>
 <arg>${required_version}</arg>
-<doc>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<kw name="Evaluate" library="BuiltIn">
+<var>${actual_segments}</var>
+<arg>"${actual_version}".split('.')</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:53:52.347" level="INFO">${actual_segments} = ['[]']</msg>
+<status status="PASS" starttime="20230922 17:53:52.347" endtime="20230922 17:53:52.347"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${expected_segments}</var>
+<arg>"${expected_version}".split('.')</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:53:52.347" level="INFO">${expected_segments} = ['1', '9', '3']</msg>
+<status status="PASS" starttime="20230922 17:53:52.347" endtime="20230922 17:53:52.347"/>
+</kw>
+<kw name="Get Match Count" library="Collections">
+<var>${min_length}</var>
+<arg>${actual_segments}</arg>
+<arg>*</arg>
+<doc>Returns the count of matches to ``pattern`` in ``list``.</doc>
+<msg timestamp="20230922 17:53:52.348" level="INFO">${min_length} = 1</msg>
+<status status="PASS" starttime="20230922 17:53:52.348" endtime="20230922 17:53:52.348"/>
+</kw>
+<kw name="Get Match Count" library="Collections">
+<var>${exp_length}</var>
+<arg>${expected_segments}</arg>
+<arg>*</arg>
+<doc>Returns the count of matches to ``pattern`` in ``list``.</doc>
+<msg timestamp="20230922 17:53:52.348" level="INFO">${exp_length} = 3</msg>
+<status status="PASS" starttime="20230922 17:53:52.348" endtime="20230922 17:53:52.348"/>
+</kw>
+<if>
+<branch type="IF" condition="${exp_length} &lt; ${min_length}">
+<kw name="Set Variable" library="BuiltIn">
+<arg>${min_length}</arg>
+<arg>${exp_length}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.349"/>
+</kw>
+<status status="NOT RUN" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.349"/>
+</branch>
+<status status="PASS" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.349"/>
+</if>
+<for flavor="IN RANGE">
+<var>${i}</var>
+<value>${min_length}</value>
+<iter>
+<var name="${i}">0</var>
+<kw name="Get From List" library="Collections">
+<var>${actual_segment}</var>
+<arg>${actual_segments}</arg>
+<arg>${i}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230922 17:53:52.350" level="INFO">${actual_segment} = []</msg>
+<status status="PASS" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.350"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${expected_segment}</var>
+<arg>${expected_segments}</arg>
+<arg>${i}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230922 17:53:52.350" level="INFO">${expected_segment} = 1</msg>
+<status status="PASS" starttime="20230922 17:53:52.350" endtime="20230922 17:53:52.350"/>
+</kw>
+<kw name="Convert To Integer" library="BuiltIn">
+<var>${actual_segment}</var>
+<arg>${actual_segment}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<msg timestamp="20230922 17:53:52.351" level="FAIL">'[]' cannot be converted to an integer: ValueError: invalid literal for int() with base 10: '[]'</msg>
+<status status="FAIL" starttime="20230922 17:53:52.350" endtime="20230922 17:53:52.351"/>
+</kw>
+<kw name="Convert To Integer" library="BuiltIn">
+<var>${expected_segment}</var>
+<arg>${expected_segment}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.352" endtime="20230922 17:53:52.352"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${comparison}</var>
+<arg>${actual_segment} - ${expected_segment}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.352" endtime="20230922 17:53:52.352"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>False</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.352" endtime="20230922 17:53:52.352"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&gt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &lt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>False</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.352" endtime="20230922 17:53:52.352"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;"</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt;= 0</arg>
+<arg>Return From Keyword</arg>
+<arg>False</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.352" endtime="20230922 17:53:52.353"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "&lt;="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} &gt; 0</arg>
+<arg>Return From Keyword</arg>
+<arg>False</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.353" endtime="20230922 17:53:52.353"/>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<arg>"${operator}" == "=="</arg>
+<arg>Run Keyword If</arg>
+<arg>${comparison} != 0</arg>
+<arg>Return From Keyword</arg>
+<arg>False</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.353" endtime="20230922 17:53:52.353"/>
+</kw>
+<status status="FAIL" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.353"/>
+</iter>
+<status status="FAIL" starttime="20230922 17:53:52.349" endtime="20230922 17:53:52.353"/>
+</for>
+<kw name="Return From Keyword" library="BuiltIn">
+<arg>True</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="NOT RUN" starttime="20230922 17:53:52.353" endtime="20230922 17:53:52.353"/>
+</kw>
+<status status="FAIL" starttime="20230922 17:53:52.346" endtime="20230922 17:53:52.353"/>
+</kw>
+<status status="FAIL" starttime="20230922 17:53:52.328" endtime="20230922 17:53:52.354"/>
+</iter>
+<status status="FAIL" starttime="20230922 17:53:52.327" endtime="20230922 17:53:52.354"/>
+</for>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>@{items}</value>
+<iter>
+<var name="${key}">ant</var>
+<var name="${value}">1.9.3</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.059" endtime="20230922 17:56:47.060"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.059" endtime="20230922 17:56:47.060"/>
+</iter>
+<iter>
+<var name="${key}">java-11-openjdk</var>
+<var name="${value}">1.1</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.060" endtime="20230922 17:56:47.060"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.060" endtime="20230922 17:56:47.060"/>
+</iter>
+<iter>
+<var name="${key}">openssl</var>
+<var name="${value}">None</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.061" endtime="20230922 17:56:47.061"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.061" endtime="20230922 17:56:47.061"/>
+</iter>
+<iter>
+<var name="${key}">pam</var>
+<var name="${value}">1.3.1.8</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.062" endtime="20230922 17:56:47.062"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.061" endtime="20230922 17:56:47.062"/>
+</iter>
+<iter>
+<var name="${key}">python3</var>
+<var name="${value}">3.7</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.063" endtime="20230922 17:56:47.064"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.062" endtime="20230922 17:56:47.064"/>
+</iter>
+<iter>
+<var name="${key}">python3-setuptools</var>
+<var name="${value}">None</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}${value}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:56:47.064" endtime="20230922 17:56:47.065"/>
+</kw>
+<status status="PASS" starttime="20230922 17:56:47.064" endtime="20230922 17:56:47.065"/>
+</iter>
+<status status="PASS" starttime="20230922 17:56:47.058" endtime="20230922 17:56:47.065"/>
+</for>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${packages_dict}</var>
+<arg>ant=1.9.3</arg>
+<arg>java-11-openjdk=1.1</arg>
+<arg>python3=3.7</arg>
+<arg>openssl=${None}</arg>
+<arg>pam=1.3.1.8</arg>
+<arg>python3-setuptools=${None}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230922 17:56:49.042" level="INFO">${packages_dict} = {'ant': '1.9.3', 'java-11-openjdk': '1.1', 'python3': '3.7', 'openssl': None, 'pam': '1.3.1.8', 'python3-setuptools': None}</msg>
+<status status="PASS" starttime="20230922 17:56:49.041" endtime="20230922 17:56:49.042"/>
+</kw>
+<kw name="Get Dictionary Items" library="Collections">
+<var>${items}</var>
+<arg>@{packages_dict}</arg>
+<doc>Returns items of the given ``dictionary`` as a list.</doc>
+<msg timestamp="20230922 17:57:10.072" level="FAIL">Keyword 'Collections.Get Dictionary Items' expected 1 to 2 arguments, got 6.</msg>
+<status status="FAIL" starttime="20230922 17:57:10.071" endtime="20230922 17:57:10.072"/>
+</kw>
+<kw name="Get Dictionary Items" library="Collections">
+<var>${items}</var>
+<arg>${packages_dict}</arg>
+<doc>Returns items of the given ``dictionary`` as a list.</doc>
+<msg timestamp="20230922 17:57:22.399" level="INFO">${items} = ['ant', '1.9.3', 'java-11-openjdk', '1.1', 'openssl', None, 'pam', '1.3.1.8', 'python3', '3.7', 'python3-setuptools', None]</msg>
+<status status="PASS" starttime="20230922 17:57:22.398" endtime="20230922 17:57:22.399"/>
+</kw>
+<for flavor="IN">
+<var>${key}</var>
+<var>${value}</var>
+<value>@{items}</value>
+<iter>
+<var name="${key}">ant</var>
+<var name="${value}">1.9.3</var>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}:${value}</arg>
+<arg>DEBUG</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:58:16.806" endtime="20230922 17:58:16.806"/>
+</kw>
+<kw name="Run" library="OperatingSystem">
+<var>${package}</var>
+<arg>rpm -q ${key}</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230922 17:58:16.820" level="INFO">${package} = /bin/sh: rpm: command not found</msg>
+<status status="PASS" starttime="20230922 17:58:16.807" endtime="20230922 17:58:16.820"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${package}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:58:16.820" endtime="20230922 17:58:16.821"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${installed_version}</var>
+<arg>${package}</arg>
+<arg>${key}-(.*)-.*</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230922 17:58:16.822" level="INFO">${installed_version} = []</msg>
+<status status="PASS" starttime="20230922 17:58:16.821" endtime="20230922 17:58:16.822"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${installed_version}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20230922 17:58:16.822" endtime="20230922 17:58:16.822"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${required_version}</var>
+<arg>${value}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230922 17:58:16.823" level="INFO">${required_version} = 1.9.3</msg>
+<status status="PASS" starttime="20230922 17:58:16.822" endtime="20230922 17:58:16.823"/>
+</kw>
+<kw name="Compare Package Versions">
+<arg>${installed_version}</arg>
+<arg>&gt;=</arg>
+<arg>${required_version}</arg>
+<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
+<kw name="Evaluate" library="BuiltIn">
+<var>${actual_segments}</var>
+<arg>"${actual_version}".split('.')</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:58:16.824" level="INFO">${actual_segments} = ['[]']</msg>
+<status status="PASS" starttime="20230922 17:58:16.824" endtime="20230922 17:58:16.824"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${expected_segments}</var>
+<arg>"${expected_version}".split('.')</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<msg timestamp="20230922 17:58:16.825" level="INFO">${expected_segments} = ['1', '9', '3']</msg>
+<status status="PASS" starttime="20230922 17:58:16.824" endtime="20230922 17:58:16.825"/>
+</kw>
+<kw name="Get Match Count" library="Collections">
+<var>${min_length}</var>
+<arg>${actual_segments}</arg>
+<arg>*</arg>
+<doc>Returns the count of matches to ``pattern`` in ``list``.</doc>
+<msg timestamp="20230922 17:58:16.825" level="INFO">${min_length} = 1</msg>
+<status status="PASS" starttime="20230922 17:58:16.825" endtime="20230922 17:58:16.825"/>
+</kw>
+<kw name="Get Match Count" library="Collections">
+<var>${exp_length}</var>
+<arg>${expected_segments}</arg>
+<arg>*</arg>
+<doc>Returns the count of matches to ``pattern`` in ``list``.</doc>
+<msg timestamp="20230922 17:58:16.826" level="INFO">${exp_length} = 3</msg>
+<status status="PASS" starttime="20230922 17:58:16.825" endtime="20230922 17:58:16.826"/>
+</kw>
+<if>
+<branch type="IF" condition="${exp_length} &lt; ${min_length}">
+<kw name="Set Variable" library="BuiltIn">
+<arg>${min_length}</arg>
+<arg>${exp_length}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20230922 17:58:16.826" endtime="20230922 17:58:16.826"/>
+</kw>
+<status status="NOT RUN" starttime="20230922 17:58:16.826" endtime="20230922 17:58:16.826"/>
+</branch>
+<status status="PASS" starttime="20230922 17:58:16.826" endtime="20230922 17:58:16.826"/>
+</if>
+<for flavor="IN RANGE">
+<var>${i}</var>
+<value>${min_length}</value>
+<iter>
+<var name="${i}">0</var>
+<kw name="Get From List" library="Collections">
+<var>${actual_segment}</var>
+<arg>${actual_segments}</arg>
+<arg>${i}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230922 17:58:16.827" level="INFO">${actual_segment} = []</msg>
+<status status="PASS" starttime="20230922 17:58:16.827" endtime="20230922 17:58:16.827"/>
+</kw>
+<kw name="Get From List" library="Collections">
+<var>${expected_segment}</var>
+<arg>${expected_segments}</arg>
+<arg>${i}</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<msg timestamp="20230922 17:58:16.827" level="INFO">${expected_segment} = 1</msg>
+<status status="PASS" starttime="20230922 17:58:16.827" endtime="20230922 17:58:16.827"/>
+</kw>
+<kw name="Convert To Integer" library="BuiltIn">
+<var>${actual_segment}</var>
+<arg>${actual_segment}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<msg timestamp="20230922 17:58:16.828" level="FAIL">'[]' cannot be converted to an integer: ValueError: invalid literal for int() with base 10: '[]'</msg>
+<status status="FAIL" starttime="20230922 17:58:16.828" endtime="20230922 17:58:16.828"/>
+</kw>
+<kw name="Convert To Integer" library="BuiltIn">
+<var>${expected_segment}</var>
+<arg>${expected_segment}</arg>
+<doc>Converts the given item to an integer number.</doc>
+<status status="NOT RUN" starttime="20230922 17:58:16.828" endtime="20230922 17:58:16.828"/>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<var>${comparison}</var>
+<arg>${actual_segment} - ${expected_segment}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
