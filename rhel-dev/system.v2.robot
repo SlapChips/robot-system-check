@@ -53,7 +53,7 @@ Verify required package are and package versions
     #
     # END
     ${packages_dict}    Create Dictionary    ant=9.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
-
+    ${error_list}    Create List
     FOR    ${package}  ${required_version}    IN    &{packages_dict}
 
         Log To Console    Package = ${package}:  Version = ${required_version}
@@ -61,7 +61,8 @@ Verify required package are and package versions
         Log To Console    ${package_rpm}
         ${installed_version}    Get Regexp Matches    ${package_rpm}    ${package}-(.*)-.*    1
         Log To Console    Installed Version : ${installed_version[0]}
-        Compare Package Versions    ${installed_version[0]}    >=    ${required_version}
+        ${status}    Compare Package Versions    ${installed_version[0]}    >=    ${required_version}
+        if     'Pass' 
     END
 
 
