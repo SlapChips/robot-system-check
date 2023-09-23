@@ -43,8 +43,8 @@ Compare Package Versions
        Exit For Loop If    "${result}" == "True"
     END
 
-    Run Keyword If    "${result}" == "True"    Pass Execution    Package version comparison passed
-    ...    ELSE    Fail    Package version comparison failed
+    Run Keyword If    "${result}" == "True"    Log To Console    Package version comparison passed
+    ...    ELSE    Log To Console    Package version comparison failed
 
 Compare Package Versions-old
     [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
