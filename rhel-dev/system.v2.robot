@@ -54,7 +54,7 @@ Verify required package are and package versions
     # END
     ${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
 
-    FOR    ${key}  ${element}    IN    &{dict}
+    FOR    ${key}  ${element}    IN    &{packages_dict}
         Log To Console    ${key}:${element}
     END
 
