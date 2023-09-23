@@ -63,7 +63,9 @@ Verify required package are and package versions
         Log To Console    Installed Version : ${installed_version[0]}
         ${status}    Compare Package Versions    ${installed_version[0]}    >=    ${required_version}
         Log To Console    Package : ${package}, Version : ${required_version}, Result : ${status}
+        IF  ${status} != True   Append To List    ${error_list}    ${package}
     END
+    Log To Console    ${error_list}
 
 
 Check library availability
