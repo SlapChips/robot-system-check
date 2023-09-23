@@ -61,7 +61,7 @@ Verify required package are and package versions
         Log To Console    ${package_rpm}
         ${installed_version}    Get Regexp Matches    ${package_rpm}    ${package}-(.*)-.*    1
         Log To Console    Installed Version : ${installed_version[0]}
-        ${status}    Compare Package Versions    ${installed_version[0]}    >=    ${required_version}
+        ${status}    Compare Package Versions    ${installed_version[0]}    >    ${required_version}
         if     'Pass' 
     END
 
