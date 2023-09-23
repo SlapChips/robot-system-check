@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230922 17:39:36.259" rpa="false" schemaversion="4">
+<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230922 19:27:46.976" rpa="false" schemaversion="4">
 <suite id="s1" name="System.V2" source="/git/robot-system-check/rhel-dev/system.v2.robot">
 <test id="s1-t1" name="Verify dependency packages are installed" line="29">
 <kw name="Set Variable" library="BuiltIn">
 <var>${command}</var>
 <arg>rpm -q</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.323" level="INFO">${command} = rpm -q</msg>
-<status status="PASS" starttime="20230922 17:39:36.323" endtime="20230922 17:39:36.323"/>
+<msg timestamp="20230922 19:27:47.043" level="INFO">${command} = rpm -q</msg>
+<status status="PASS" starttime="20230922 19:27:47.043" endtime="20230922 19:27:47.043"/>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <var>${check_string}</var>
 <arg>not installed</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.324" level="INFO">${check_string} = not installed</msg>
-<status status="PASS" starttime="20230922 17:39:36.324" endtime="20230922 17:39:36.324"/>
+<msg timestamp="20230922 19:27:47.044" level="INFO">${check_string} = not installed</msg>
+<status status="PASS" starttime="20230922 19:27:47.044" endtime="20230922 19:27:47.044"/>
 </kw>
 <kw name="Iterate Over List and Run Command" library="keywords">
 <arg>${package_list}</arg>
@@ -25,13 +25,13 @@
 <arg>${list}</arg>
 <arg>DEBUG</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" starttime="20230922 17:39:36.325" endtime="20230922 17:39:36.325"/>
+<status status="PASS" starttime="20230922 19:27:47.045" endtime="20230922 19:27:47.045"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
 <var>${errors_list}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230922 17:39:36.326" level="INFO">${errors_list} = []</msg>
-<status status="PASS" starttime="20230922 17:39:36.325" endtime="20230922 17:39:36.326"/>
+<msg timestamp="20230922 19:27:47.046" level="INFO">${errors_list} = []</msg>
+<status status="PASS" starttime="20230922 19:27:47.045" endtime="20230922 19:27:47.046"/>
 </kw>
 <for flavor="IN">
 <var>${item}</var>
@@ -43,22 +43,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.326" level="INFO">${run_cmd} = rpm -q ant</msg>
-<status status="PASS" starttime="20230922 17:39:36.326" endtime="20230922 17:39:36.326"/>
+<msg timestamp="20230922 19:27:47.046" level="INFO">${run_cmd} = rpm -q ant</msg>
+<status status="PASS" starttime="20230922 19:27:47.046" endtime="20230922 19:27:47.046"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.327" level="INFO">rpm -q ant</msg>
-<status status="PASS" starttime="20230922 17:39:36.326" endtime="20230922 17:39:36.327"/>
+<msg timestamp="20230922 19:27:47.047" level="INFO">rpm -q ant</msg>
+<status status="PASS" starttime="20230922 19:27:47.046" endtime="20230922 19:27:47.047"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.329" level="INFO">Running command 'rpm -q ant 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.345" level="INFO">${output} = ant-1.10.9-7.el9.noarch</msg>
-<status status="PASS" starttime="20230922 17:39:36.327" endtime="20230922 17:39:36.346"/>
+<msg timestamp="20230922 19:27:47.050" level="INFO">Running command 'rpm -q ant 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.065" level="INFO">${output} = ant-1.10.9-7.el9.noarch</msg>
+<status status="PASS" starttime="20230922 19:27:47.047" endtime="20230922 19:27:47.065"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -71,11 +71,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.347" endtime="20230922 17:39:36.347"/>
+<status status="PASS" starttime="20230922 19:27:47.066" endtime="20230922 19:27:47.066"/>
 </kw>
-<msg timestamp="20230922 17:39:36.347" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.347" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.346" endtime="20230922 17:39:36.347"/>
+<msg timestamp="20230922 19:27:47.066" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.067" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.065" endtime="20230922 19:27:47.067"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -83,9 +83,9 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.348" endtime="20230922 17:39:36.348"/>
+<status status="PASS" starttime="20230922 19:27:47.067" endtime="20230922 19:27:47.067"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.326" endtime="20230922 17:39:36.348"/>
+<status status="PASS" starttime="20230922 19:27:47.046" endtime="20230922 19:27:47.067"/>
 </iter>
 <iter>
 <var name="${item}">java-11-openjdk</var>
@@ -94,22 +94,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.349" level="INFO">${run_cmd} = rpm -q java-11-openjdk</msg>
-<status status="PASS" starttime="20230922 17:39:36.348" endtime="20230922 17:39:36.349"/>
+<msg timestamp="20230922 19:27:47.068" level="INFO">${run_cmd} = rpm -q java-11-openjdk</msg>
+<status status="PASS" starttime="20230922 19:27:47.067" endtime="20230922 19:27:47.068"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.349" level="INFO">rpm -q java-11-openjdk</msg>
-<status status="PASS" starttime="20230922 17:39:36.349" endtime="20230922 17:39:36.349"/>
+<msg timestamp="20230922 19:27:47.068" level="INFO">rpm -q java-11-openjdk</msg>
+<status status="PASS" starttime="20230922 19:27:47.068" endtime="20230922 19:27:47.068"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.351" level="INFO">Running command 'rpm -q java-11-openjdk 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.366" level="INFO">${output} = java-11-openjdk-11.0.18.0.10-2.el9_1.x86_64</msg>
-<status status="PASS" starttime="20230922 17:39:36.349" endtime="20230922 17:39:36.367"/>
+<msg timestamp="20230922 19:27:47.071" level="INFO">Running command 'rpm -q java-11-openjdk 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.086" level="INFO">${output} = java-11-openjdk-11.0.18.0.10-2.el9_1.x86_64</msg>
+<status status="PASS" starttime="20230922 19:27:47.068" endtime="20230922 19:27:47.086"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -122,11 +122,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.368" endtime="20230922 17:39:36.368"/>
+<status status="PASS" starttime="20230922 19:27:47.088" endtime="20230922 19:27:47.088"/>
 </kw>
-<msg timestamp="20230922 17:39:36.368" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.368" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.367" endtime="20230922 17:39:36.368"/>
+<msg timestamp="20230922 19:27:47.088" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.088" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.087" endtime="20230922 19:27:47.088"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -134,9 +134,9 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.368" endtime="20230922 17:39:36.369"/>
+<status status="PASS" starttime="20230922 19:27:47.089" endtime="20230922 19:27:47.089"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.348" endtime="20230922 17:39:36.369"/>
+<status status="PASS" starttime="20230922 19:27:47.067" endtime="20230922 19:27:47.089"/>
 </iter>
 <iter>
 <var name="${item}">python3</var>
@@ -145,22 +145,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.369" level="INFO">${run_cmd} = rpm -q python3</msg>
-<status status="PASS" starttime="20230922 17:39:36.369" endtime="20230922 17:39:36.369"/>
+<msg timestamp="20230922 19:27:47.090" level="INFO">${run_cmd} = rpm -q python3</msg>
+<status status="PASS" starttime="20230922 19:27:47.089" endtime="20230922 19:27:47.090"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.370" level="INFO">rpm -q python3</msg>
-<status status="PASS" starttime="20230922 17:39:36.370" endtime="20230922 17:39:36.370"/>
+<msg timestamp="20230922 19:27:47.090" level="INFO">rpm -q python3</msg>
+<status status="PASS" starttime="20230922 19:27:47.090" endtime="20230922 19:27:47.090"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.372" level="INFO">Running command 'rpm -q python3 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.387" level="INFO">${output} = python3-3.9.16-1.el9.x86_64</msg>
-<status status="PASS" starttime="20230922 17:39:36.370" endtime="20230922 17:39:36.387"/>
+<msg timestamp="20230922 19:27:47.093" level="INFO">Running command 'rpm -q python3 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.108" level="INFO">${output} = python3-3.9.16-1.el9.x86_64</msg>
+<status status="PASS" starttime="20230922 19:27:47.090" endtime="20230922 19:27:47.108"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -173,11 +173,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.388" endtime="20230922 17:39:36.388"/>
+<status status="PASS" starttime="20230922 19:27:47.109" endtime="20230922 19:27:47.109"/>
 </kw>
-<msg timestamp="20230922 17:39:36.388" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.388" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.387" endtime="20230922 17:39:36.389"/>
+<msg timestamp="20230922 19:27:47.110" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.110" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.108" endtime="20230922 19:27:47.110"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -185,9 +185,9 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.389" endtime="20230922 17:39:36.389"/>
+<status status="PASS" starttime="20230922 19:27:47.110" endtime="20230922 19:27:47.110"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.369" endtime="20230922 17:39:36.389"/>
+<status status="PASS" starttime="20230922 19:27:47.089" endtime="20230922 19:27:47.110"/>
 </iter>
 <iter>
 <var name="${item}">openssl</var>
@@ -196,22 +196,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.390" level="INFO">${run_cmd} = rpm -q openssl</msg>
-<status status="PASS" starttime="20230922 17:39:36.390" endtime="20230922 17:39:36.390"/>
+<msg timestamp="20230922 19:27:47.111" level="INFO">${run_cmd} = rpm -q openssl</msg>
+<status status="PASS" starttime="20230922 19:27:47.111" endtime="20230922 19:27:47.111"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.390" level="INFO">rpm -q openssl</msg>
-<status status="PASS" starttime="20230922 17:39:36.390" endtime="20230922 17:39:36.390"/>
+<msg timestamp="20230922 19:27:47.111" level="INFO">rpm -q openssl</msg>
+<status status="PASS" starttime="20230922 19:27:47.111" endtime="20230922 19:27:47.111"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.393" level="INFO">Running command 'rpm -q openssl 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.408" level="INFO">${output} = openssl-3.0.7-6.el9_2.x86_64</msg>
-<status status="PASS" starttime="20230922 17:39:36.391" endtime="20230922 17:39:36.408"/>
+<msg timestamp="20230922 19:27:47.114" level="INFO">Running command 'rpm -q openssl 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.131" level="INFO">${output} = openssl-3.0.7-6.el9_2.x86_64</msg>
+<status status="PASS" starttime="20230922 19:27:47.111" endtime="20230922 19:27:47.131"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -224,11 +224,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.409" endtime="20230922 17:39:36.410"/>
+<status status="PASS" starttime="20230922 19:27:47.132" endtime="20230922 19:27:47.133"/>
 </kw>
-<msg timestamp="20230922 17:39:36.410" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.410" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.409" endtime="20230922 17:39:36.410"/>
+<msg timestamp="20230922 19:27:47.133" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.133" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.132" endtime="20230922 19:27:47.133"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -236,9 +236,9 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.410" endtime="20230922 17:39:36.411"/>
+<status status="PASS" starttime="20230922 19:27:47.133" endtime="20230922 19:27:47.134"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.389" endtime="20230922 17:39:36.411"/>
+<status status="PASS" starttime="20230922 19:27:47.110" endtime="20230922 19:27:47.134"/>
 </iter>
 <iter>
 <var name="${item}">pam</var>
@@ -247,22 +247,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.411" level="INFO">${run_cmd} = rpm -q pam</msg>
-<status status="PASS" starttime="20230922 17:39:36.411" endtime="20230922 17:39:36.411"/>
+<msg timestamp="20230922 19:27:47.134" level="INFO">${run_cmd} = rpm -q pam</msg>
+<status status="PASS" starttime="20230922 19:27:47.134" endtime="20230922 19:27:47.134"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.412" level="INFO">rpm -q pam</msg>
-<status status="PASS" starttime="20230922 17:39:36.411" endtime="20230922 17:39:36.412"/>
+<msg timestamp="20230922 19:27:47.135" level="INFO">rpm -q pam</msg>
+<status status="PASS" starttime="20230922 19:27:47.134" endtime="20230922 19:27:47.135"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.414" level="INFO">Running command 'rpm -q pam 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.430" level="INFO">${output} = pam-1.5.1-14.el9.x86_64</msg>
-<status status="PASS" starttime="20230922 17:39:36.412" endtime="20230922 17:39:36.430"/>
+<msg timestamp="20230922 19:27:47.137" level="INFO">Running command 'rpm -q pam 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.153" level="INFO">${output} = pam-1.5.1-14.el9.x86_64</msg>
+<status status="PASS" starttime="20230922 19:27:47.135" endtime="20230922 19:27:47.153"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -275,11 +275,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.431" endtime="20230922 17:39:36.432"/>
+<status status="PASS" starttime="20230922 19:27:47.154" endtime="20230922 19:27:47.155"/>
 </kw>
-<msg timestamp="20230922 17:39:36.432" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.432" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.431" endtime="20230922 17:39:36.432"/>
+<msg timestamp="20230922 19:27:47.155" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.155" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.154" endtime="20230922 19:27:47.155"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -287,9 +287,9 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.432" endtime="20230922 17:39:36.432"/>
+<status status="PASS" starttime="20230922 19:27:47.155" endtime="20230922 19:27:47.155"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.411" endtime="20230922 17:39:36.432"/>
+<status status="PASS" starttime="20230922 19:27:47.134" endtime="20230922 19:27:47.155"/>
 </iter>
 <iter>
 <var name="${item}">python3-setuptools</var>
@@ -298,22 +298,22 @@
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.433" level="INFO">${run_cmd} = rpm -q python3-setuptools</msg>
-<status status="PASS" starttime="20230922 17:39:36.433" endtime="20230922 17:39:36.433"/>
+<msg timestamp="20230922 19:27:47.156" level="INFO">${run_cmd} = rpm -q python3-setuptools</msg>
+<status status="PASS" starttime="20230922 19:27:47.156" endtime="20230922 19:27:47.156"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.433" level="INFO">rpm -q python3-setuptools</msg>
-<status status="PASS" starttime="20230922 17:39:36.433" endtime="20230922 17:39:36.434"/>
+<msg timestamp="20230922 19:27:47.156" level="INFO">rpm -q python3-setuptools</msg>
+<status status="PASS" starttime="20230922 19:27:47.156" endtime="20230922 19:27:47.156"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.436" level="INFO">Running command 'rpm -q python3-setuptools 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.453" level="INFO">${output} = python3-setuptools-53.0.0-12.el9.noarch</msg>
-<status status="PASS" starttime="20230922 17:39:36.434" endtime="20230922 17:39:36.453"/>
+<msg timestamp="20230922 19:27:47.159" level="INFO">Running command 'rpm -q python3-setuptools 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.175" level="INFO">${output} = python3-setuptools-53.0.0-12.el9.noarch</msg>
+<status status="PASS" starttime="20230922 19:27:47.157" endtime="20230922 19:27:47.175"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -326,11 +326,11 @@
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.454" endtime="20230922 17:39:36.454"/>
+<status status="PASS" starttime="20230922 19:27:47.176" endtime="20230922 19:27:47.177"/>
 </kw>
-<msg timestamp="20230922 17:39:36.454" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.454" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.453" endtime="20230922 17:39:36.454"/>
+<msg timestamp="20230922 19:27:47.177" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.177" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.176" endtime="20230922 19:27:47.177"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -338,111 +338,86 @@
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.455" endtime="20230922 17:39:36.455"/>
+<status status="PASS" starttime="20230922 19:27:47.177" endtime="20230922 19:27:47.177"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.433" endtime="20230922 17:39:36.455"/>
+<status status="PASS" starttime="20230922 19:27:47.156" endtime="20230922 19:27:47.177"/>
 </iter>
-<status status="PASS" starttime="20230922 17:39:36.326" endtime="20230922 17:39:36.455"/>
+<status status="PASS" starttime="20230922 19:27:47.046" endtime="20230922 19:27:47.177"/>
 </for>
 <kw name="Should Be Empty" library="BuiltIn">
 <arg>${errors_list}</arg>
 <arg>Item(S) Not Found : ${errors_list}</arg>
 <doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230922 17:39:36.456" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230922 17:39:36.455" endtime="20230922 17:39:36.456"/>
+<msg timestamp="20230922 19:27:47.178" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20230922 19:27:47.178" endtime="20230922 19:27:47.178"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.324" endtime="20230922 17:39:36.456"/>
+<status status="PASS" starttime="20230922 19:27:47.044" endtime="20230922 19:27:47.178"/>
 </kw>
 <doc>Check the installed packages using the "rpm -q" command against a list of expected
 packages, add and remove packages form the list to modify the test case.
 List included : ['ant', 'java-11-openjdk', 'python3', 'openssl', 'pam', 'python3-setuptools']</doc>
 <tag>os</tag>
 <tag>packages</tag>
-<status status="PASS" starttime="20230922 17:39:36.322" endtime="20230922 17:39:36.457"/>
+<status status="PASS" starttime="20230922 19:27:47.041" endtime="20230922 19:27:47.179"/>
 </test>
 <test id="s1-t2" name="Verify required package are and package versions" line="38">
-<kw name="Get Dictionary Items" library="Collections">
-<var>${items}</var>
-<arg>${packages_dict}</arg>
-<doc>Returns items of the given ``dictionary`` as a list.</doc>
-<msg timestamp="20230922 17:39:36.462" level="FAIL">TypeError: Expected argument 1 to be a dictionary or dictionary-like, got string instead.</msg>
-<status status="FAIL" starttime="20230922 17:39:36.460" endtime="20230922 17:39:36.462"/>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${dict}</var>
+<arg>ant=1.9.3</arg>
+<arg>java-11-openjdk=1.1</arg>
+<arg>python3=3.7</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230922 19:27:47.183" level="INFO">${dict} = {'ant': '1.9.3', 'java-11-openjdk': '1.1', 'python3': '3.7'}</msg>
+<status status="PASS" starttime="20230922 19:27:47.182" endtime="20230922 19:27:47.183"/>
 </kw>
 <for flavor="IN">
 <var>${key}</var>
-<var>${value}</var>
-<value>@{items}</value>
+<var>${element}</var>
+<value>&amp;{packages_dict}</value>
 <iter>
 <var name="${key}"/>
-<var name="${value}"/>
-<kw name="Log" library="BuiltIn">
-<arg>${key}:${value}</arg>
-<arg>DEBUG</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.463" endtime="20230922 17:39:36.463"/>
+<var name="${element}"/>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${key}:${element}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="NOT RUN" starttime="20230922 19:27:47.185" endtime="20230922 19:27:47.185"/>
 </kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package}</var>
-<arg>rpm -q ${key}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.463" endtime="20230922 17:39:36.463"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package}</arg>
-<arg>${key}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.463" endtime="20230922 17:39:36.463"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${required_version}</var>
-<arg>${value}</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.463" endtime="20230922 17:39:36.463"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.463" endtime="20230922 17:39:36.463"/>
-</kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.462" endtime="20230922 17:39:36.463"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.185" endtime="20230922 19:27:47.185"/>
 </iter>
-<status status="NOT RUN" starttime="20230922 17:39:36.462" endtime="20230922 17:39:36.463"/>
+<msg timestamp="20230922 19:27:47.185" level="FAIL">Variable '&amp;{packages_dict}' not found.</msg>
+<status status="FAIL" starttime="20230922 19:27:47.184" endtime="20230922 19:27:47.185"/>
 </for>
 <doc>Check the versions of the packages installed meets the neccessary minimum values
 the test calls the packages_dict dictionary which should be populated with k,v pairs representing
 the required package and the minimum supported value</doc>
-<status status="FAIL" starttime="20230922 17:39:36.458" endtime="20230922 17:39:36.464">TypeError: Expected argument 1 to be a dictionary or dictionary-like, got string instead.</status>
+<status status="FAIL" starttime="20230922 19:27:47.180" endtime="20230922 19:27:47.186">Variable '&amp;{packages_dict}' not found.</status>
 </test>
-<test id="s1-t3" name="Check library availability" line="55">
+<test id="s1-t3" name="Check library availability" line="62">
 <kw name="Create List" library="BuiltIn">
 <var>${libraries}</var>
 <arg>libpam.so.0</arg>
 <arg>libexpat.so.1</arg>
 <arg>libz.so.1</arg>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230922 17:39:36.467" level="INFO">${libraries} = ['libpam.so.0', 'libexpat.so.1', 'libz.so.1']</msg>
-<status status="PASS" starttime="20230922 17:39:36.467" endtime="20230922 17:39:36.467"/>
+<msg timestamp="20230922 19:27:47.190" level="INFO">${libraries} = ['libpam.so.0', 'libexpat.so.1', 'libz.so.1']</msg>
+<status status="PASS" starttime="20230922 19:27:47.189" endtime="20230922 19:27:47.190"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${system_libraries}</var>
 <arg>ldconfig -p</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.470" level="INFO">Running command 'ldconfig -p 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.476" level="INFO">${system_libraries} = 510 libs found in cache `/etc/ld.so.cache'
+<msg timestamp="20230922 19:27:47.192" level="INFO">Running command 'ldconfig -p 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.199" level="INFO">${system_libraries} = 510 libs found in cache `/etc/ld.so.cache'
 	p11-kit-trust.so (libc6,x86-64) =&gt; /lib64/p11-kit-trust.so
 	libzstd.so.1 (libc6,x86-64) =&gt; /lib64/libzstd.so.1
 	libz.so.1 (libc6,x86-64) =&gt; /lib64/libz.so.1...</msg>
-<status status="PASS" starttime="20230922 17:39:36.467" endtime="20230922 17:39:36.476"/>
+<status status="PASS" starttime="20230922 19:27:47.190" endtime="20230922 19:27:47.199"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
 <var>${error_list}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230922 17:39:36.478" level="INFO">${error_list} = []</msg>
-<status status="PASS" starttime="20230922 17:39:36.477" endtime="20230922 17:39:36.478"/>
+<msg timestamp="20230922 19:27:47.200" level="INFO">${error_list} = []</msg>
+<status status="PASS" starttime="20230922 19:27:47.200" endtime="20230922 19:27:47.200"/>
 </kw>
 <for flavor="IN">
 <var>${library}</var>
@@ -460,34 +435,34 @@ the required package and the minimum supported value</doc>
 <arg>${system_libraries}</arg>
 <arg>${library}</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.479" endtime="20230922 17:39:36.480"/>
+<status status="PASS" starttime="20230922 19:27:47.202" endtime="20230922 19:27:47.202"/>
 </kw>
-<msg timestamp="20230922 17:39:36.480" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.480" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.479" endtime="20230922 17:39:36.480"/>
+<msg timestamp="20230922 19:27:47.202" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.202" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.201" endtime="20230922 19:27:47.202"/>
 </kw>
 <if>
 <branch type="IF" condition="'${status}' == 'PASS'">
 <kw name="Log" library="BuiltIn">
 <arg>${library} found</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.481" level="INFO">libpam.so.0 found</msg>
-<status status="PASS" starttime="20230922 17:39:36.480" endtime="20230922 17:39:36.481"/>
+<msg timestamp="20230922 19:27:47.203" level="INFO">libpam.so.0 found</msg>
+<status status="PASS" starttime="20230922 19:27:47.203" endtime="20230922 19:27:47.203"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.480" endtime="20230922 17:39:36.481"/>
+<status status="PASS" starttime="20230922 19:27:47.202" endtime="20230922 19:27:47.203"/>
 </branch>
 <branch type="ELSE">
 <kw name="Append To List" library="Collections">
 <arg>${error_list}</arg>
 <arg>${library}</arg>
 <doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.481" endtime="20230922 17:39:36.481"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.203" endtime="20230922 19:27:47.203"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.481" endtime="20230922 17:39:36.481"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.203" endtime="20230922 19:27:47.203"/>
 </branch>
-<status status="PASS" starttime="20230922 17:39:36.480" endtime="20230922 17:39:36.481"/>
+<status status="PASS" starttime="20230922 19:27:47.202" endtime="20230922 19:27:47.203"/>
 </if>
-<status status="PASS" starttime="20230922 17:39:36.479" endtime="20230922 17:39:36.481"/>
+<status status="PASS" starttime="20230922 19:27:47.201" endtime="20230922 19:27:47.203"/>
 </iter>
 <iter>
 <var name="${library}">libexpat.so.1</var>
@@ -502,34 +477,34 @@ the required package and the minimum supported value</doc>
 <arg>${system_libraries}</arg>
 <arg>${library}</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.481" endtime="20230922 17:39:36.482"/>
+<status status="PASS" starttime="20230922 19:27:47.204" endtime="20230922 19:27:47.204"/>
 </kw>
-<msg timestamp="20230922 17:39:36.482" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.482" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.481" endtime="20230922 17:39:36.482"/>
+<msg timestamp="20230922 19:27:47.204" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.204" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.203" endtime="20230922 19:27:47.204"/>
 </kw>
 <if>
 <branch type="IF" condition="'${status}' == 'PASS'">
 <kw name="Log" library="BuiltIn">
 <arg>${library} found</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.483" level="INFO">libexpat.so.1 found</msg>
-<status status="PASS" starttime="20230922 17:39:36.482" endtime="20230922 17:39:36.483"/>
+<msg timestamp="20230922 19:27:47.205" level="INFO">libexpat.so.1 found</msg>
+<status status="PASS" starttime="20230922 19:27:47.205" endtime="20230922 19:27:47.205"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.482" endtime="20230922 17:39:36.483"/>
+<status status="PASS" starttime="20230922 19:27:47.204" endtime="20230922 19:27:47.205"/>
 </branch>
 <branch type="ELSE">
 <kw name="Append To List" library="Collections">
 <arg>${error_list}</arg>
 <arg>${library}</arg>
 <doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.483" endtime="20230922 17:39:36.483"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.205" endtime="20230922 19:27:47.205"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.483" endtime="20230922 17:39:36.483"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.205" endtime="20230922 19:27:47.205"/>
 </branch>
-<status status="PASS" starttime="20230922 17:39:36.482" endtime="20230922 17:39:36.483"/>
+<status status="PASS" starttime="20230922 19:27:47.204" endtime="20230922 19:27:47.205"/>
 </if>
-<status status="PASS" starttime="20230922 17:39:36.481" endtime="20230922 17:39:36.483"/>
+<status status="PASS" starttime="20230922 19:27:47.203" endtime="20230922 19:27:47.205"/>
 </iter>
 <iter>
 <var name="${library}">libz.so.1</var>
@@ -544,71 +519,71 @@ the required package and the minimum supported value</doc>
 <arg>${system_libraries}</arg>
 <arg>${library}</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.484" endtime="20230922 17:39:36.484"/>
+<status status="PASS" starttime="20230922 19:27:47.206" endtime="20230922 19:27:47.206"/>
 </kw>
-<msg timestamp="20230922 17:39:36.484" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.484" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.483" endtime="20230922 17:39:36.484"/>
+<msg timestamp="20230922 19:27:47.207" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.207" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.206" endtime="20230922 19:27:47.207"/>
 </kw>
 <if>
 <branch type="IF" condition="'${status}' == 'PASS'">
 <kw name="Log" library="BuiltIn">
 <arg>${library} found</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.485" level="INFO">libz.so.1 found</msg>
-<status status="PASS" starttime="20230922 17:39:36.485" endtime="20230922 17:39:36.485"/>
+<msg timestamp="20230922 19:27:47.207" level="INFO">libz.so.1 found</msg>
+<status status="PASS" starttime="20230922 19:27:47.207" endtime="20230922 19:27:47.207"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.484" endtime="20230922 17:39:36.485"/>
+<status status="PASS" starttime="20230922 19:27:47.207" endtime="20230922 19:27:47.207"/>
 </branch>
 <branch type="ELSE">
 <kw name="Append To List" library="Collections">
 <arg>${error_list}</arg>
 <arg>${library}</arg>
 <doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.485" endtime="20230922 17:39:36.485"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.208" endtime="20230922 19:27:47.208"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.485" endtime="20230922 17:39:36.485"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.208" endtime="20230922 19:27:47.208"/>
 </branch>
-<status status="PASS" starttime="20230922 17:39:36.484" endtime="20230922 17:39:36.485"/>
+<status status="PASS" starttime="20230922 19:27:47.207" endtime="20230922 19:27:47.208"/>
 </if>
-<status status="PASS" starttime="20230922 17:39:36.483" endtime="20230922 17:39:36.485"/>
+<status status="PASS" starttime="20230922 19:27:47.206" endtime="20230922 19:27:47.208"/>
 </iter>
-<status status="PASS" starttime="20230922 17:39:36.478" endtime="20230922 17:39:36.485"/>
+<status status="PASS" starttime="20230922 19:27:47.201" endtime="20230922 19:27:47.208"/>
 </for>
 <kw name="Should Be Empty" library="BuiltIn">
 <arg>${error_list}</arg>
 <arg>Following Libraries are missing ${error_list}</arg>
 <doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230922 17:39:36.486" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230922 17:39:36.486" endtime="20230922 17:39:36.486"/>
+<msg timestamp="20230922 19:27:47.209" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20230922 19:27:47.208" endtime="20230922 19:27:47.209"/>
 </kw>
 <doc>Cisco NSO requires that the operating system has specific libraries installed
 the test verifies that the "ldconfig -p" output includes each of the libraries mentioned in the
 documentation. To adapt modify the list</doc>
-<status status="PASS" starttime="20230922 17:39:36.466" endtime="20230922 17:39:36.487"/>
+<status status="PASS" starttime="20230922 19:27:47.188" endtime="20230922 19:27:47.209"/>
 </test>
-<test id="s1-t4" name="Check libz library version" line="72">
+<test id="s1-t4" name="Check libz library version" line="79">
 <kw name="Set Variable" library="BuiltIn">
 <var>${desired_major_version}</var>
 <arg>1.2</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.491" level="INFO">${desired_major_version} = 1.2</msg>
-<status status="PASS" starttime="20230922 17:39:36.491" endtime="20230922 17:39:36.491"/>
+<msg timestamp="20230922 19:27:47.212" level="INFO">${desired_major_version} = 1.2</msg>
+<status status="PASS" starttime="20230922 19:27:47.212" endtime="20230922 19:27:47.212"/>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <var>${desired_minor_version}</var>
 <arg>7.1</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.492" level="INFO">${desired_minor_version} = 7.1</msg>
-<status status="PASS" starttime="20230922 17:39:36.492" endtime="20230922 17:39:36.492"/>
+<msg timestamp="20230922 19:27:47.213" level="INFO">${desired_minor_version} = 7.1</msg>
+<status status="PASS" starttime="20230922 19:27:47.213" endtime="20230922 19:27:47.213"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${libz_version}</var>
 <arg>python3 -c "import zlib; print (zlib.ZLIB_VERSION)"</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.495" level="INFO">Running command 'python3 -c "import zlib; print (zlib.ZLIB_VERSION)" 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.518" level="INFO">${libz_version} = 1.2.11</msg>
-<status status="PASS" starttime="20230922 17:39:36.492" endtime="20230922 17:39:36.519"/>
+<msg timestamp="20230922 19:27:47.216" level="INFO">Running command 'python3 -c "import zlib; print (zlib.ZLIB_VERSION)" 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.241" level="INFO">${libz_version} = 1.2.11</msg>
+<status status="PASS" starttime="20230922 19:27:47.213" endtime="20230922 19:27:47.241"/>
 </kw>
 <kw name="Get Regexp Matches" library="String">
 <var>${found_major_version}</var>
@@ -616,8 +591,8 @@ documentation. To adapt modify the list</doc>
 <arg>^(\\d+\\.\\d+)\\.(.*)</arg>
 <arg>1</arg>
 <doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230922 17:39:36.521" level="INFO">${found_major_version} = ['1.2']</msg>
-<status status="PASS" starttime="20230922 17:39:36.520" endtime="20230922 17:39:36.521"/>
+<msg timestamp="20230922 19:27:47.243" level="INFO">${found_major_version} = ['1.2']</msg>
+<status status="PASS" starttime="20230922 19:27:47.242" endtime="20230922 19:27:47.243"/>
 </kw>
 <kw name="Get Regexp Matches" library="String">
 <var>${found_minor_version}</var>
@@ -625,105 +600,105 @@ documentation. To adapt modify the list</doc>
 <arg>^(\\d+\\.\\d+)\\.(.*)</arg>
 <arg>2</arg>
 <doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230922 17:39:36.522" level="INFO">${found_minor_version} = ['11']</msg>
-<status status="PASS" starttime="20230922 17:39:36.521" endtime="20230922 17:39:36.522"/>
+<msg timestamp="20230922 19:27:47.244" level="INFO">${found_minor_version} = ['11']</msg>
+<status status="PASS" starttime="20230922 19:27:47.244" endtime="20230922 19:27:47.244"/>
 </kw>
 <if>
 <branch type="IF" condition="${found_major_version[0]} == ${desired_major_version}">
 <kw name="Log" library="BuiltIn">
 <arg>Going to evaluate : ${found_minor_version[0]} &gt; ${desired_minor_version}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.524" level="INFO">Going to evaluate : 11 &gt; 7.1</msg>
-<status status="PASS" starttime="20230922 17:39:36.523" endtime="20230922 17:39:36.525"/>
+<msg timestamp="20230922 19:27:47.247" level="INFO">Going to evaluate : 11 &gt; 7.1</msg>
+<status status="PASS" starttime="20230922 19:27:47.246" endtime="20230922 19:27:47.247"/>
 </kw>
 <kw name="Evaluate" library="BuiltIn">
 <var>${log}</var>
 <arg>${found_minor_version[0]} &gt; ${desired_minor_version}</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230922 17:39:36.526" level="INFO">${log} = True</msg>
-<status status="PASS" starttime="20230922 17:39:36.525" endtime="20230922 17:39:36.526"/>
+<msg timestamp="20230922 19:27:47.248" level="INFO">${log} = True</msg>
+<status status="PASS" starttime="20230922 19:27:47.247" endtime="20230922 19:27:47.248"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${log}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.526" level="INFO">True</msg>
-<status status="PASS" starttime="20230922 17:39:36.526" endtime="20230922 17:39:36.526"/>
+<msg timestamp="20230922 19:27:47.248" level="INFO">True</msg>
+<status status="PASS" starttime="20230922 19:27:47.248" endtime="20230922 19:27:47.248"/>
 </kw>
 <if>
 <branch type="IF" condition="${found_minor_version[0]} &gt;= ${desired_minor_version}">
 <kw name="Log" library="BuiltIn">
 <arg>Found ${found_major_version[0]}.${found_minor_version[0]} is greater than minimum</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.529" level="INFO">Found 1.2.11 is greater than minimum</msg>
-<status status="PASS" starttime="20230922 17:39:36.527" endtime="20230922 17:39:36.529"/>
+<msg timestamp="20230922 19:27:47.251" level="INFO">Found 1.2.11 is greater than minimum</msg>
+<status status="PASS" starttime="20230922 19:27:47.250" endtime="20230922 19:27:47.251"/>
 </kw>
 <kw name="Pass Execution" library="BuiltIn">
 <arg>Major meets requirements, and Minor is greater or equal ${found_major_version[0]}.${found_minor_version[0]}</arg>
 <doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<msg timestamp="20230922 17:39:36.530" level="INFO">Execution passed with message:
+<msg timestamp="20230922 19:27:47.253" level="INFO">Execution passed with message:
 Major meets requirements, and Minor is greater or equal 1.2.11</msg>
-<status status="PASS" starttime="20230922 17:39:36.529" endtime="20230922 17:39:36.530"/>
+<status status="PASS" starttime="20230922 19:27:47.251" endtime="20230922 19:27:47.253"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.526" endtime="20230922 17:39:36.530"/>
+<status status="PASS" starttime="20230922 19:27:47.249" endtime="20230922 19:27:47.253"/>
 </branch>
 <branch type="ELSE">
 <kw name="Log" library="BuiltIn">
 <arg>Found ${found_major_version[0]}.${found_minor_version[0]} this is lower than expected</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.531" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.254" endtime="20230922 19:27:47.254"/>
 </kw>
 <kw name="Fail" library="BuiltIn">
 <arg>Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}</arg>
 <doc>Fails the test with the given message and optionally alters its tags.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.531" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.254" endtime="20230922 19:27:47.254"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.530" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.253" endtime="20230922 19:27:47.254"/>
 </branch>
-<status status="PASS" starttime="20230922 17:39:36.526" endtime="20230922 17:39:36.531"/>
+<status status="PASS" starttime="20230922 19:27:47.249" endtime="20230922 19:27:47.254"/>
 </if>
-<status status="PASS" starttime="20230922 17:39:36.522" endtime="20230922 17:39:36.531"/>
+<status status="PASS" starttime="20230922 19:27:47.245" endtime="20230922 19:27:47.254"/>
 </branch>
 <branch type="ELSE IF" condition="${found_major_version[0]} &gt; ${desired_major_version}">
 <kw name="Log" library="BuiltIn">
 <arg>Found ${found_major_version} is greater than minimum, skipping minor check</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.531" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.255" endtime="20230922 19:27:47.255"/>
 </kw>
 <kw name="Pass Execution" library="BuiltIn">
 <arg>Major version is greater that required , skipping minor check.</arg>
 <doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.531" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.255" endtime="20230922 19:27:47.255"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.531" endtime="20230922 17:39:36.531"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.254" endtime="20230922 19:27:47.255"/>
 </branch>
 <branch type="ELSE">
 <kw name="Fail" library="BuiltIn">
 <arg>Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}</arg>
 <doc>Fails the test with the given message and optionally alters its tags.</doc>
-<status status="NOT RUN" starttime="20230922 17:39:36.532" endtime="20230922 17:39:36.532"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.255" endtime="20230922 19:27:47.255"/>
 </kw>
-<status status="NOT RUN" starttime="20230922 17:39:36.532" endtime="20230922 17:39:36.532"/>
+<status status="NOT RUN" starttime="20230922 19:27:47.255" endtime="20230922 19:27:47.255"/>
 </branch>
-<status status="PASS" starttime="20230922 17:39:36.522" endtime="20230922 17:39:36.532"/>
+<status status="PASS" starttime="20230922 19:27:47.245" endtime="20230922 19:27:47.255"/>
 </if>
 <doc>Cisco NSO requires a minimimum version of 1.2.7.1 for the libz library
 this test will verify that the verison installed satisfies this requirement.</doc>
-<status status="PASS" starttime="20230922 17:39:36.489" endtime="20230922 17:39:36.532">Major meets requirements, and Minor is greater or equal 1.2.11</status>
+<status status="PASS" starttime="20230922 19:27:47.211" endtime="20230922 19:27:47.256">Major meets requirements, and Minor is greater or equal 1.2.11</status>
 </test>
-<test id="s1-t5" name="Verify required utilities are available" line="98">
+<test id="s1-t5" name="Verify required utilities are available" line="105">
 <kw name="Set Variable" library="BuiltIn">
 <var>${command}</var>
 <arg>which</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.535" level="INFO">${command} = which</msg>
-<status status="PASS" starttime="20230922 17:39:36.535" endtime="20230922 17:39:36.535"/>
+<msg timestamp="20230922 19:27:47.259" level="INFO">${command} = which</msg>
+<status status="PASS" starttime="20230922 19:27:47.259" endtime="20230922 19:27:47.259"/>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <var>${check_string}</var>
 <arg>/usr/bin/which: no</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.536" level="INFO">${check_string} = /usr/bin/which: no</msg>
-<status status="PASS" starttime="20230922 17:39:36.536" endtime="20230922 17:39:36.536"/>
+<msg timestamp="20230922 19:27:47.260" level="INFO">${check_string} = /usr/bin/which: no</msg>
+<status status="PASS" starttime="20230922 19:27:47.260" endtime="20230922 19:27:47.260"/>
 </kw>
 <kw name="Iterate Over List and Run Command" library="keywords">
 <arg>${utility_list}</arg>
@@ -734,13 +709,13 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${list}</arg>
 <arg>DEBUG</arg>
 <doc>Logs the given message with the given level.</doc>
-<status status="PASS" starttime="20230922 17:39:36.537" endtime="20230922 17:39:36.537"/>
+<status status="PASS" starttime="20230922 19:27:47.261" endtime="20230922 19:27:47.262"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
 <var>${errors_list}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230922 17:39:36.538" level="INFO">${errors_list} = []</msg>
-<status status="PASS" starttime="20230922 17:39:36.537" endtime="20230922 17:39:36.538"/>
+<msg timestamp="20230922 19:27:47.262" level="INFO">${errors_list} = []</msg>
+<status status="PASS" starttime="20230922 19:27:47.262" endtime="20230922 19:27:47.262"/>
 </kw>
 <for flavor="IN">
 <var>${item}</var>
@@ -752,22 +727,22 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.539" level="INFO">${run_cmd} = which tar</msg>
-<status status="PASS" starttime="20230922 17:39:36.538" endtime="20230922 17:39:36.539"/>
+<msg timestamp="20230922 19:27:47.263" level="INFO">${run_cmd} = which tar</msg>
+<status status="PASS" starttime="20230922 19:27:47.262" endtime="20230922 19:27:47.263"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.539" level="INFO">which tar</msg>
-<status status="PASS" starttime="20230922 17:39:36.539" endtime="20230922 17:39:36.539"/>
+<msg timestamp="20230922 19:27:47.263" level="INFO">which tar</msg>
+<status status="PASS" starttime="20230922 19:27:47.263" endtime="20230922 19:27:47.263"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.542" level="INFO">Running command 'which tar 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.549" level="INFO">${output} = /usr/bin/tar</msg>
-<status status="PASS" starttime="20230922 17:39:36.540" endtime="20230922 17:39:36.550"/>
+<msg timestamp="20230922 19:27:47.266" level="INFO">Running command 'which tar 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.272" level="INFO">${output} = /usr/bin/tar</msg>
+<status status="PASS" starttime="20230922 19:27:47.263" endtime="20230922 19:27:47.272"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -780,11 +755,11 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.551" endtime="20230922 17:39:36.551"/>
+<status status="PASS" starttime="20230922 19:27:47.274" endtime="20230922 19:27:47.274"/>
 </kw>
-<msg timestamp="20230922 17:39:36.551" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.551" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.550" endtime="20230922 17:39:36.551"/>
+<msg timestamp="20230922 19:27:47.274" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.274" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.273" endtime="20230922 19:27:47.274"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -792,9 +767,9 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.551" endtime="20230922 17:39:36.552"/>
+<status status="PASS" starttime="20230922 19:27:47.274" endtime="20230922 19:27:47.275"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.538" endtime="20230922 17:39:36.552"/>
+<status status="PASS" starttime="20230922 19:27:47.262" endtime="20230922 19:27:47.275"/>
 </iter>
 <iter>
 <var name="${item}">gzip</var>
@@ -803,22 +778,22 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.552" level="INFO">${run_cmd} = which gzip</msg>
-<status status="PASS" starttime="20230922 17:39:36.552" endtime="20230922 17:39:36.552"/>
+<msg timestamp="20230922 19:27:47.276" level="INFO">${run_cmd} = which gzip</msg>
+<status status="PASS" starttime="20230922 19:27:47.275" endtime="20230922 19:27:47.276"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.553" level="INFO">which gzip</msg>
-<status status="PASS" starttime="20230922 17:39:36.553" endtime="20230922 17:39:36.553"/>
+<msg timestamp="20230922 19:27:47.276" level="INFO">which gzip</msg>
+<status status="PASS" starttime="20230922 19:27:47.276" endtime="20230922 19:27:47.276"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.556" level="INFO">Running command 'which gzip 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.563" level="INFO">${output} = /usr/bin/gzip</msg>
-<status status="PASS" starttime="20230922 17:39:36.553" endtime="20230922 17:39:36.563"/>
+<msg timestamp="20230922 19:27:47.279" level="INFO">Running command 'which gzip 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.285" level="INFO">${output} = /usr/bin/gzip</msg>
+<status status="PASS" starttime="20230922 19:27:47.277" endtime="20230922 19:27:47.285"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -831,11 +806,11 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.564" endtime="20230922 17:39:36.564"/>
+<status status="PASS" starttime="20230922 19:27:47.286" endtime="20230922 19:27:47.287"/>
 </kw>
-<msg timestamp="20230922 17:39:36.565" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.565" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.563" endtime="20230922 17:39:36.565"/>
+<msg timestamp="20230922 19:27:47.288" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.288" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.286" endtime="20230922 19:27:47.288"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -843,9 +818,9 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.565" endtime="20230922 17:39:36.565"/>
+<status status="PASS" starttime="20230922 19:27:47.289" endtime="20230922 19:27:47.289"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.552" endtime="20230922 17:39:36.565"/>
+<status status="PASS" starttime="20230922 19:27:47.275" endtime="20230922 19:27:47.289"/>
 </iter>
 <iter>
 <var name="${item}">find</var>
@@ -854,22 +829,22 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.566" level="INFO">${run_cmd} = which find</msg>
-<status status="PASS" starttime="20230922 17:39:36.566" endtime="20230922 17:39:36.566"/>
+<msg timestamp="20230922 19:27:47.290" level="INFO">${run_cmd} = which find</msg>
+<status status="PASS" starttime="20230922 19:27:47.290" endtime="20230922 19:27:47.290"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.566" level="INFO">which find</msg>
-<status status="PASS" starttime="20230922 17:39:36.566" endtime="20230922 17:39:36.567"/>
+<msg timestamp="20230922 19:27:47.290" level="INFO">which find</msg>
+<status status="PASS" starttime="20230922 19:27:47.290" endtime="20230922 19:27:47.290"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.569" level="INFO">Running command 'which find 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.575" level="INFO">${output} = /usr/bin/find</msg>
-<status status="PASS" starttime="20230922 17:39:36.567" endtime="20230922 17:39:36.575"/>
+<msg timestamp="20230922 19:27:47.293" level="INFO">Running command 'which find 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.299" level="INFO">${output} = /usr/bin/find</msg>
+<status status="PASS" starttime="20230922 19:27:47.291" endtime="20230922 19:27:47.299"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -882,11 +857,11 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.576" endtime="20230922 17:39:36.576"/>
+<status status="PASS" starttime="20230922 19:27:47.300" endtime="20230922 19:27:47.300"/>
 </kw>
-<msg timestamp="20230922 17:39:36.576" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.576" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.575" endtime="20230922 17:39:36.576"/>
+<msg timestamp="20230922 19:27:47.300" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.301" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.299" endtime="20230922 19:27:47.301"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -894,9 +869,9 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.577" endtime="20230922 17:39:36.577"/>
+<status status="PASS" starttime="20230922 19:27:47.301" endtime="20230922 19:27:47.301"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.565" endtime="20230922 17:39:36.577"/>
+<status status="PASS" starttime="20230922 19:27:47.289" endtime="20230922 19:27:47.301"/>
 </iter>
 <iter>
 <var name="${item}">ssh-keygen</var>
@@ -905,22 +880,22 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${command}</arg>
 <arg>${item}</arg>
 <doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230922 17:39:36.578" level="INFO">${run_cmd} = which ssh-keygen</msg>
-<status status="PASS" starttime="20230922 17:39:36.577" endtime="20230922 17:39:36.578"/>
+<msg timestamp="20230922 19:27:47.302" level="INFO">${run_cmd} = which ssh-keygen</msg>
+<status status="PASS" starttime="20230922 19:27:47.301" endtime="20230922 19:27:47.302"/>
 </kw>
 <kw name="Log" library="BuiltIn">
 <arg>${run_cmd}</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230922 17:39:36.578" level="INFO">which ssh-keygen</msg>
-<status status="PASS" starttime="20230922 17:39:36.578" endtime="20230922 17:39:36.578"/>
+<msg timestamp="20230922 19:27:47.302" level="INFO">which ssh-keygen</msg>
+<status status="PASS" starttime="20230922 19:27:47.302" endtime="20230922 19:27:47.302"/>
 </kw>
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>${run_cmd}</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.580" level="INFO">Running command 'which ssh-keygen 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.586" level="INFO">${output} = /usr/bin/ssh-keygen</msg>
-<status status="PASS" starttime="20230922 17:39:36.578" endtime="20230922 17:39:36.586"/>
+<msg timestamp="20230922 19:27:47.305" level="INFO">Running command 'which ssh-keygen 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.310" level="INFO">${output} = /usr/bin/ssh-keygen</msg>
+<status status="PASS" starttime="20230922 19:27:47.302" endtime="20230922 19:27:47.310"/>
 </kw>
 <kw name="Run Keyword And Ignore Error" library="BuiltIn">
 <var>${status}</var>
@@ -933,11 +908,11 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${output}</arg>
 <arg>${check_string}</arg>
 <doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230922 17:39:36.587" endtime="20230922 17:39:36.588"/>
+<status status="PASS" starttime="20230922 19:27:47.312" endtime="20230922 19:27:47.312"/>
 </kw>
-<msg timestamp="20230922 17:39:36.588" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230922 17:39:36.588" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230922 17:39:36.587" endtime="20230922 17:39:36.588"/>
+<msg timestamp="20230922 19:27:47.312" level="INFO">${status} = PASS</msg>
+<msg timestamp="20230922 19:27:47.312" level="INFO">${status_message} = None</msg>
+<status status="PASS" starttime="20230922 19:27:47.311" endtime="20230922 19:27:47.312"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>'${status}' != 'PASS'</arg>
@@ -945,34 +920,34 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>${errors_list}</arg>
 <arg>${item}</arg>
 <doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230922 17:39:36.588" endtime="20230922 17:39:36.589"/>
+<status status="PASS" starttime="20230922 19:27:47.312" endtime="20230922 19:27:47.313"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.577" endtime="20230922 17:39:36.589"/>
+<status status="PASS" starttime="20230922 19:27:47.301" endtime="20230922 19:27:47.313"/>
 </iter>
-<status status="PASS" starttime="20230922 17:39:36.538" endtime="20230922 17:39:36.589"/>
+<status status="PASS" starttime="20230922 19:27:47.262" endtime="20230922 19:27:47.313"/>
 </for>
 <kw name="Should Be Empty" library="BuiltIn">
 <arg>${errors_list}</arg>
 <arg>Item(S) Not Found : ${errors_list}</arg>
 <doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230922 17:39:36.589" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230922 17:39:36.589" endtime="20230922 17:39:36.589"/>
+<msg timestamp="20230922 19:27:47.313" level="INFO">Length is 0</msg>
+<status status="PASS" starttime="20230922 19:27:47.313" endtime="20230922 19:27:47.313"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.536" endtime="20230922 17:39:36.590"/>
+<status status="PASS" starttime="20230922 19:27:47.261" endtime="20230922 19:27:47.314"/>
 </kw>
 <doc>Cisco NSO requires some utilities, this test verfies these binaries exist</doc>
 <tag>os</tag>
 <tag>packages</tag>
-<status status="PASS" starttime="20230922 17:39:36.534" endtime="20230922 17:39:36.590"/>
+<status status="PASS" starttime="20230922 19:27:47.258" endtime="20230922 19:27:47.314"/>
 </test>
-<test id="s1-t6" name="Verify correct version of Python is active" line="105">
+<test id="s1-t6" name="Verify correct version of Python is active" line="112">
 <kw name="Run" library="OperatingSystem">
 <var>${python_version}</var>
 <arg>python --version</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.599" level="INFO">Running command 'python --version 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.606" level="INFO">${python_version} = Python 3.9.16</msg>
-<status status="PASS" starttime="20230922 17:39:36.596" endtime="20230922 17:39:36.606"/>
+<msg timestamp="20230922 19:27:47.319" level="INFO">Running command 'python --version 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.326" level="INFO">${python_version} = Python 3.9.16</msg>
+<status status="PASS" starttime="20230922 19:27:47.317" endtime="20230922 19:27:47.326"/>
 </kw>
 <kw name="Get Regexp Matches" library="String">
 <var>${python_major_version}</var>
@@ -980,22 +955,22 @@ this test will verify that the verison installed satisfies this requirement.</do
 <arg>Python (\\d+\.\\d+)</arg>
 <arg>1</arg>
 <doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230922 17:39:36.608" level="INFO">${python_major_version} = ['3.9']</msg>
-<status status="PASS" starttime="20230922 17:39:36.607" endtime="20230922 17:39:36.608"/>
+<msg timestamp="20230922 19:27:47.328" level="INFO">${python_major_version} = ['3.9']</msg>
+<status status="PASS" starttime="20230922 19:27:47.327" endtime="20230922 19:27:47.328"/>
 </kw>
 <kw name="Set Variable" library="BuiltIn">
 <var>${desired_version}</var>
 <arg>3.08</arg>
 <doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230922 17:39:36.608" level="INFO">${desired_version} = 3.08</msg>
-<status status="PASS" starttime="20230922 17:39:36.608" endtime="20230922 17:39:36.608"/>
+<msg timestamp="20230922 19:27:47.329" level="INFO">${desired_version} = 3.08</msg>
+<status status="PASS" starttime="20230922 19:27:47.328" endtime="20230922 19:27:47.329"/>
 </kw>
 <kw name="Evaluate" library="BuiltIn">
 <var>${status}</var>
 <arg>${python_major_version[0]} &gt;= ${desired_version}</arg>
 <doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230922 17:39:36.611" level="INFO">${status} = True</msg>
-<status status="PASS" starttime="20230922 17:39:36.609" endtime="20230922 17:39:36.611"/>
+<msg timestamp="20230922 19:27:47.331" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20230922 19:27:47.329" endtime="20230922 19:27:47.331"/>
 </kw>
 <kw name="Run Keyword If" library="BuiltIn">
 <arg>${status} == True</arg>
@@ -1009,48 +984,48 @@ this test will verify that the verison installed satisfies this requirement.</do
 <kw name="Pass Execution" library="BuiltIn">
 <arg>Active Version of Python meets the minimum requirements</arg>
 <doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<msg timestamp="20230922 17:39:36.612" level="INFO">Execution passed with message:
+<msg timestamp="20230922 19:27:47.332" level="INFO">Execution passed with message:
 Active Version of Python meets the minimum requirements</msg>
-<status status="PASS" starttime="20230922 17:39:36.612" endtime="20230922 17:39:36.612"/>
+<status status="PASS" starttime="20230922 19:27:47.332" endtime="20230922 19:27:47.333"/>
 </kw>
-<status status="PASS" starttime="20230922 17:39:36.612" endtime="20230922 17:39:36.612"/>
+<status status="PASS" starttime="20230922 19:27:47.332" endtime="20230922 19:27:47.333"/>
 </kw>
 <doc>We require a python verison &gt; 3.7 this test will validatre the
 active python environmnet meets this requirement</doc>
 <tag>os</tag>
 <tag>packages</tag>
-<status status="PASS" starttime="20230922 17:39:36.593" endtime="20230922 17:39:36.613">Active Version of Python meets the minimum requirements</status>
+<status status="PASS" starttime="20230922 19:27:47.316" endtime="20230922 19:27:47.333">Active Version of Python meets the minimum requirements</status>
 </test>
-<test id="s1-t7" name="Verify Hostname is not set to localhost" line="119">
+<test id="s1-t7" name="Verify Hostname is not set to localhost" line="126">
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>hostnamectl hostname</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.618" level="INFO">Running command 'hostnamectl hostname 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.698" level="INFO">${output} = robot-dev-rhel-9.2</msg>
-<status status="PASS" starttime="20230922 17:39:36.616" endtime="20230922 17:39:36.698"/>
+<msg timestamp="20230922 19:27:47.339" level="INFO">Running command 'hostnamectl hostname 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.433" level="INFO">${output} = robot-dev-rhel-9.2</msg>
+<status status="PASS" starttime="20230922 19:27:47.337" endtime="20230922 19:27:47.433"/>
 </kw>
 <kw name="Should Not Be Equal As Strings" library="BuiltIn">
 <arg>${output}</arg>
 <arg>localhost</arg>
 <doc>Fails if objects are equal after converting them to strings.</doc>
-<status status="PASS" starttime="20230922 17:39:36.699" endtime="20230922 17:39:36.700"/>
+<status status="PASS" starttime="20230922 19:27:47.434" endtime="20230922 19:27:47.436"/>
 </kw>
 <doc>Hostname Should not be localhost</doc>
 <tag>dns</tag>
 <tag>os</tag>
-<status status="PASS" starttime="20230922 17:39:36.615" endtime="20230922 17:39:36.701"/>
+<status status="PASS" starttime="20230922 19:27:47.336" endtime="20230922 19:27:47.437"/>
 </test>
-<test id="s1-t8" name="Verify DNS servers are Configured" line="125">
+<test id="s1-t8" name="Verify DNS servers are Configured" line="132">
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>more /etc/resolv.conf</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.712" level="INFO">Running command 'more /etc/resolv.conf 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:36.718" level="INFO">${output} = # Generated by NetworkManager
+<msg timestamp="20230922 19:27:47.450" level="INFO">Running command 'more /etc/resolv.conf 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:47.458" level="INFO">${output} = # Generated by NetworkManager
 search localdomain 2
 nameserver 172.16.167.2</msg>
-<status status="PASS" starttime="20230922 17:39:36.706" endtime="20230922 17:39:36.718"/>
+<status status="PASS" starttime="20230922 19:27:47.444" endtime="20230922 19:27:47.458"/>
 </kw>
 <for flavor="IN">
 <var>${dns_server}</var>
@@ -1061,32 +1036,32 @@ nameserver 172.16.167.2</msg>
 <arg>${output}</arg>
 <arg>${dns_server}</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<msg timestamp="20230922 17:39:36.720" level="FAIL">'# Generated by NetworkManager
+<msg timestamp="20230922 19:27:47.460" level="FAIL">'# Generated by NetworkManager
 search localdomain 2
 nameserver 172.16.167.2' does not contain '192.168.1.1'</msg>
-<status status="FAIL" starttime="20230922 17:39:36.719" endtime="20230922 17:39:36.720"/>
+<status status="FAIL" starttime="20230922 19:27:47.459" endtime="20230922 19:27:47.461"/>
 </kw>
-<status status="FAIL" starttime="20230922 17:39:36.719" endtime="20230922 17:39:36.720"/>
+<status status="FAIL" starttime="20230922 19:27:47.459" endtime="20230922 19:27:47.461"/>
 </iter>
-<status status="FAIL" starttime="20230922 17:39:36.718" endtime="20230922 17:39:36.720"/>
+<status status="FAIL" starttime="20230922 19:27:47.458" endtime="20230922 19:27:47.461"/>
 </for>
 <doc>DNS Servers should be Configured</doc>
 <tag>dns</tag>
 <tag>os</tag>
-<status status="FAIL" starttime="20230922 17:39:36.704" endtime="20230922 17:39:36.721">'# Generated by NetworkManager
+<status status="FAIL" starttime="20230922 19:27:47.443" endtime="20230922 19:27:47.462">'# Generated by NetworkManager
 search localdomain 2
 nameserver 172.16.167.2' does not contain '192.168.1.1'</status>
 </test>
-<test id="s1-t9" name="Verify NTP servers are Configured" line="133">
+<test id="s1-t9" name="Verify NTP servers are Configured" line="140">
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>chronyc sources</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:36.727" level="INFO">Running command 'chronyc sources 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:37.686" level="INFO">${output} = MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+<msg timestamp="20230922 19:27:47.469" level="INFO">Running command 'chronyc sources 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:48.048" level="INFO">${output} = MS Name/IP address         Stratum Poll Reach LastRx Last sample               
 ===============================================================================
 ^- pruts.nl                      2   6  ...</msg>
-<status status="PASS" starttime="20230922 17:39:36.724" endtime="20230922 17:39:37.686"/>
+<status status="PASS" starttime="20230922 19:27:47.467" endtime="20230922 19:27:48.048"/>
 </kw>
 <for flavor="IN">
 <var>${ntp_server}</var>
@@ -1097,47 +1072,47 @@ nameserver 172.16.167.2' does not contain '192.168.1.1'</status>
 <arg>${output}</arg>
 <arg>${ntp_server}</arg>
 <doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<msg timestamp="20230922 17:39:37.688" level="FAIL">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+<msg timestamp="20230922 19:27:48.050" level="FAIL">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
 ===============================================================================
-^- pruts.nl                      2   6   377    62  +9034us[  -15ms] +/-   32ms
-^- ntp4.bit.nl                   1   6   377    60  +9973us[  -14ms] +/-  305ms
-^* 149-225-172-081.dynamic.&gt;     1   6   377     7    -26ms[  -54ms] +/- 5097us
-^- mail.emuadmin.com             3   6   377    65    +14ms[  -11ms] +/-   68ms' does not contain 'ntp1.trans-ix.nl'</msg>
-<status status="FAIL" starttime="20230922 17:39:37.688" endtime="20230922 17:39:37.688"/>
+^- pruts.nl                      2   6   377    19  -3477us[-3477us] +/-   52ms
+^- ntp4.bit.nl                   1   6   377    24    -67ms[  -67ms] +/-  368ms
+^* 149-225-172-081.dynamic.&gt;     1   6   377    31  -5117us[  -16ms] +/- 4461us
+^- mail.emuadmin.com             3   6   377    23  -6464us[-6464us] +/-   53ms' does not contain 'ntp1.trans-ix.nl'</msg>
+<status status="FAIL" starttime="20230922 19:27:48.050" endtime="20230922 19:27:48.051"/>
 </kw>
-<status status="FAIL" starttime="20230922 17:39:37.687" endtime="20230922 17:39:37.689"/>
+<status status="FAIL" starttime="20230922 19:27:48.049" endtime="20230922 19:27:48.051"/>
 </iter>
-<status status="FAIL" starttime="20230922 17:39:37.687" endtime="20230922 17:39:37.689"/>
+<status status="FAIL" starttime="20230922 19:27:48.049" endtime="20230922 19:27:48.051"/>
 </for>
 <doc>NTP Servers should be Configured</doc>
 <tag>ntp</tag>
 <tag>os</tag>
-<status status="FAIL" starttime="20230922 17:39:36.723" endtime="20230922 17:39:37.689">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+<status status="FAIL" starttime="20230922 19:27:47.465" endtime="20230922 19:27:48.051">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
 ===============================================================================
-^- pruts.nl                      2   6   377    62  +9034us[  -15ms] +/-   32ms
-^- ntp4.bit.nl                   1   6   377    60  +9973us[  -14ms] +/-  305ms
-^* 149-225-172-081.dynamic.&gt;     1   6   377     7    -26ms[  -54ms] +/- 5097us
-^- mail.emuadmin.com             3   6   377    65    +14ms[  -11ms] +/-   68ms' does not contain 'ntp1.trans-ix.nl'</status>
+^- pruts.nl                      2   6   377    19  -3477us[-3477us] +/-   52ms
+^- ntp4.bit.nl                   1   6   377    24    -67ms[  -67ms] +/-  368ms
+^* 149-225-172-081.dynamic.&gt;     1   6   377    31  -5117us[  -16ms] +/- 4461us
+^- mail.emuadmin.com             3   6   377    23  -6464us[-6464us] +/-   53ms' does not contain 'ntp1.trans-ix.nl'</status>
 </test>
-<test id="s1-t10" name="Verify NTP service is active" line="141">
+<test id="s1-t10" name="Verify NTP service is active" line="148">
 <kw name="Run" library="OperatingSystem">
 <var>${output}</var>
 <arg>timedatectl show | grep -Po '(?&lt;=NTPSynchronized=)[^,]+'</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230922 17:39:37.696" level="INFO">Running command 'timedatectl show | grep -Po '(?&lt;=NTPSynchronized=)[^,]+' 2&gt;&amp;1'.</msg>
-<msg timestamp="20230922 17:39:37.781" level="INFO">${output} = yes</msg>
-<status status="PASS" starttime="20230922 17:39:37.694" endtime="20230922 17:39:37.782"/>
+<msg timestamp="20230922 19:27:48.058" level="INFO">Running command 'timedatectl show | grep -Po '(?&lt;=NTPSynchronized=)[^,]+' 2&gt;&amp;1'.</msg>
+<msg timestamp="20230922 19:27:48.148" level="INFO">${output} = yes</msg>
+<status status="PASS" starttime="20230922 19:27:48.056" endtime="20230922 19:27:48.148"/>
 </kw>
 <kw name="Should Be Equal As Strings" library="BuiltIn">
 <arg>${output}</arg>
 <arg>yes</arg>
 <doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" starttime="20230922 17:39:37.782" endtime="20230922 17:39:37.783"/>
+<status status="PASS" starttime="20230922 19:27:48.149" endtime="20230922 19:27:48.149"/>
 </kw>
 <doc>Check that the NTP service is active</doc>
 <tag>ntp</tag>
 <tag>os</tag>
-<status status="PASS" starttime="20230922 17:39:37.693" endtime="20230922 17:39:37.784"/>
+<status status="PASS" starttime="20230922 19:27:48.055" endtime="20230922 19:27:48.150"/>
 </test>
 <doc>The following tests verify the operating system configuration &amp; dependency packages
 are present in preperation for the Cisco NSO application testing. The checks include:
@@ -1147,7 +1122,7 @@ are present in preperation for the Cisco NSO application testing. The checks inc
 - DNS and NTP serviecs are configured and active
 
 Refer to the SCDP documentation to address any failed tests.</doc>
-<status status="FAIL" starttime="20230922 17:39:36.261" endtime="20230922 17:39:37.786"/>
+<status status="FAIL" starttime="20230922 19:27:46.977" endtime="20230922 19:27:48.152"/>
 </suite>
 <statistics>
 <total>
@@ -1164,5 +1139,6 @@ Refer to the SCDP documentation to address any failed tests.</doc>
 </suite>
 </statistics>
 <errors>
+<msg timestamp="20230922 19:27:46.977" level="ERROR">Error in file '/git/robot-system-check/rhel-dev/system.v2.robot' on line 16: Setting variable '&amp;{packages_dict}' failed: Invalid dictionary variable item 'Create Dictionary'. Items must use 'name=value' syntax or be dictionary variables themselves.</msg>
 </errors>
 </robot>

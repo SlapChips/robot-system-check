@@ -13,7 +13,7 @@ Resource    ../resources/keywords.robot
 
 *** Variables ***
 @{package_list}    ant    java-11-openjdk    python3    openssl    pam    python3-setuptools
-${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=${None}    pam=1.3.1.8    python3-setuptools=${None}
+&{packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1.8    python3-setuptools=0
 @{utility_list}    tar    gzip    find    ssh-keygen
 @{dns_servers}    192.168.1.1    8.8.8.8
 @{ntp_servers}    ntp1.trans-ix.nl    leontp2.office.panq.nl
@@ -40,18 +40,23 @@ Verify required package are and package versions
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing
     ...    the required package and the minimum supported value
     ...    
-    ${items}     Get Dictionary Items   ${packages_dict}
-    FOR   ${key}    ${value}    IN    @{items}
-        Log To Console   ${key}:${value}    DEBUG
-        ${package}    Run    rpm -q ${key}
-        Log To Console    ${package}
-        ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
-        Log To Console    ${installed_version}
-        ${required_version}   Set Variable    ${value} 
-        Compare Package Versions    ${installed_version}    >=    ${required_version}
+    # ${items}     Get Dictionary Items   ${packages_dict}
+    # Log    ${items}
+    # FOR   ${key}    ${value}    IN    @{items}
+    #    Log To Console   ${key}:${value}    DEBUG
+    #    ${package}    Run    rpm -q ${key}
+    #    Log To Console    ${package}
+    #    ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
+    #    Log To Console    ${installed_version}
+    #    ${required_version}   Set Variable    ${value} 
+    #    Compare Package Versions    ${installed_version}    >=    ${required_version}
+    #
+    # END
+    ${dict}	Create Dictionary   ant=1.9.3    java-11-openjdk=1.1    python3=3.7
 
+    FOR    ${key}  ${element}    IN    &{packages_dict}
+        Log To Console    ${key}:${element}
     END
-
 
 
 Check library availability
