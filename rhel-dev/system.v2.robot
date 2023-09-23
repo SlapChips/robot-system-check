@@ -56,13 +56,13 @@ Verify required package are and package versions
     ${error_list}    Create List
     FOR    ${package}  ${required_version}    IN    &{packages_dict}
 
-        Log    Package = ${package}:  Version = ${required_version}
+        Log    Package = ${package} Version = ${required_version}
         ${package_rpm}    Run    rpm -q ${package}
         Log    ${package_rpm}
         ${installed_version}    Get Regexp Matches    ${package_rpm}    ${package}-(.*)-.*    1
         Log    Installed Version : ${installed_version[0]}
         ${status}    Compare Package Versions    ${installed_version[0]}    >=    ${required_version}
-        Log    Package : ${package}, Version : ${required_version}
+        Log    Package : ${package}, Version:${required_version}
         IF  ${status} != True   Append To List    ${error_list}    ${package}
     END
     Log    ${error_list}
