@@ -38,10 +38,54 @@ Compare Package Versions
        ${installed_segment}    Convert To Integer    ${installed_segment}
        ${required_segment}    Convert To Integer    ${required_segment}
        Log To Console    Evaluating if ${installed_segment} ${evaluator} ${required_segment}
-       ${result}    Run Keyword And Return Status    Evaluate    ${installed_segment} ${evaluator} ${required_segment}
+       Log To Console    Installed segment : ${installed_segment} 
+       Log To Console    Required segment : ${required_segment}
+       Log To Console    Operator : ${evaluator}
+       ${result}    Evaluate    ${installed_segment} ${evaluator} ${required_segment}
        Log To Console    ${result}
        Exit For Loop If    "${result}" == "True"
     END
+
+    Run Keyword If    "${result}" == "True"    Pass Execution    Package version comparison passed
+    ...    ELSE    Fail    Package version comparison failed
+    ...    
+
+Compare Package Versions-2
+    [Arguments]    ${installed_version}    ${evaluator}    ${required_version}
+    [Documentation]    Support all evaluators except single "=""
+    @{installed_segments}    Split String    ${installed_version}    .
+    @{required_segments}    Split String    ${required_version}    .
+    ${installed_length}    Get Length    ${installed_segments}
+    ${required_length}    Get Length    ${required_segments}
+
+    # Pad the shorter version with zeros
+    Log To Console    Installed length ${installed_length}
+    Log To Console    Required Length ${required_length}
+    ${max_length}    Set Variable    ${installed_length}
+    IF    ${required_length} > ${installed_length}
+        # Set Variable    ${max_length}    ${required_length}
+        ${max_length}    Set Variable    ${required_length}
+    END
+    Log To Console    max length : ${max_length}
+    ${installed_version}    Pad Version    ${installed_version}    ${max_length}
+    ${required_version}    Pad Version    ${required_version}    ${max_length}
+    # Need to re-split modifed Pad output:
+    @{installed_segments}    Split String    ${installed_version}    .
+    @{required_segments}    Split String    ${required_version}    .
+    Log To Console    Comparing @{installed_segments} with @{required_segments}
+    ${iterator}    Set Variable    0
+    FOR    ${i}    IN RANGE    0     ${max_length} 
+        Log To Console    Values: ${installed_segments[${i}]} ${evaluator}= ${required_segments[${i}]}
+        ${result}    Evaluate    ${installed_segments[${i}]} ${evaluator}= ${required_segments[${i}]}
+        Log To Console    i is ${i}
+        Log To Console    Result is ${result}
+        Log To Console    Iterator ${i}
+        IF    "${evaluator}" != "=="
+            # Exit For Loop If    "${result}" == "True"
+            Exit For Loop If    "${result}" == "False"
+        END
+    END
+    RETURN    ${result}
 
     Run Keyword If    "${result}" == "True"    Pass Execution    Package version comparison passed
     ...    ELSE    Fail    Package version comparison failed

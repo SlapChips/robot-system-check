@@ -1,3 +1,6 @@
+*** Comments ***
+The following utilities are for general system checks to support the testcases
+
 *** Settings ***
 Library    OperatingSystem
 Library  BuiltIn
@@ -28,51 +31,25 @@ Compare Package Versions
     # Pad the shorter version with zeros
     ${max_length}    Set Variable    ${installed_length}
     IF    ${required_length} > ${installed_length}
-        Set Variable    ${max_length}    ${required_length}
+        # Set Variable    ${max_length}    ${required_length}
+        ${max_length}    Set Variable    ${required_length}
     END
+
     ${installed_version}    Pad Version    ${installed_version}    ${max_length}
     ${required_version}    Pad Version    ${required_version}    ${max_length}
-    # Need to re-splot modifed Pad output:
+    # Need to re-split modifed Pad output:
     @{installed_segments}    Split String    ${installed_version}    .
     @{required_segments}    Split String    ${required_version}    .
-
-    FOR    ${installed_segment}    ${required_segment}    IN    @{installed_segments}    @{required_segments}
-       ${installed_segment}    Convert To Integer    ${installed_segment}
-       ${required_segment}    Convert To Integer    ${required_segment}
-       ${result}    Run Keyword And Return Status    Evaluate    ${installed_segment} ${evaluator} ${required_segment}
-       Exit For Loop If    "${result}" == "True"
+    ${iterator}    Set Variable    0
+    FOR    ${i}    IN RANGE    0     ${max_length} 
+        ${result}    Evaluate    ${installed_segments[${i}]} ${evaluator}= ${required_segments[${i}]}
+        IF    "${evaluator}" != "=="
+            Exit For Loop If    "${result}" == "False"
+            Run Keyword If    "${evaluator}" == ">"    Exit For Loop If    ${installed_segments[${i}]} ${evaluator} ${required_segments[${i}]}    
+            Run Keyword If    "${evaluator}" == "<"    Exit For Loop If    ${installed_segments[${i}]} ${evaluator} ${required_segments[${i}]}    
+        END
     END
-
-    Run Keyword If    "${result}" == "True"    Log To Console    Package version comparison passed
-    ...    ELSE    Log To Console    Package version comparison failed
-    ...    
-    IF   "${result}" == "True"   RETURN  ${result}
-
-Compare Package Versions-old
-    [Documentation]    Takes dotted decimal package versions and comparies them with a provided operator 
-    [Arguments]    ${actual_version}    ${operator}    ${expected_version}
-    # Split the package versions into iterable segments
-    ${actual_segments}    Evaluate    "${actual_version}".split('.')
-    ${expected_segments}    Evaluate    "${expected_version}".split('.')  
-    # Identify how many values are stored in the dotted notation  
-    ${min_length}    Get Match Count    ${actual_segments}    *    # naming this min as we will use this to loop over
-    ${exp_length}    Get Match Count    ${expected_segments}    *
-    IF   ${exp_length} < ${min_length}    Set Variable    ${min_length}     ${exp_length}      
-    FOR    ${i}    IN RANGE    ${min_length}
-        Log    ${i}    console=${True}
-        ${actual_segment}    Get From List    ${actual_segments}    ${i}
-        ${expected_segment}    Get From List    ${expected_segments}    ${i}
-        ${actual_segment}    Convert To Integer    ${actual_segment}
-        ${expected_segment}    Convert To Integer    ${expected_segment}
-        ${comparison}    Evaluate    ${actual_segment} - ${expected_segment}
-        Run Keyword If    "${operator}" == ">"    Run Keyword If    ${comparison} <= 0    Return From Keyword    False
-        Run Keyword If    "${operator}" == ">="    Run Keyword If    ${comparison} < 0    Return From Keyword    False
-        Run Keyword If    "${operator}" == "<"    Run Keyword If    ${comparison} >= 0    Return From Keyword    False
-        Run Keyword If    "${operator}" == "<="    Run Keyword If    ${comparison} > 0    Return From Keyword    False
-        Run Keyword If    "${operator}" == "=="    Run Keyword If    ${comparison} != 0    Return From Keyword    False
-    END
-    # If no failures from above, return positive response
-    Return From Keyword    True
+    RETURN    ${result}
 
 Get Regexp Matches For Key Value Pairs in File
     [Documentation]    Iterates through Dict and searches for Key,Value pairs in file
@@ -107,3 +84,4 @@ Iterate Over List and Run Command
         Run Keyword If    '${status}' != 'PASS'    Append To List    ${errors_list}    ${item}
     END
     Should Be Empty    ${errors_list}    Item(S) Not Found : ${errors_list}
+

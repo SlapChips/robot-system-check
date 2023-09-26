@@ -16,7 +16,7 @@ Resource   ../resources/keywords.robot
 *** Test Cases ***
 Verify that the overcommit_memory value has been updated
     [Documentation]    The default os value is pre-configured to 0, this needs to be modified
-    ...    to "2". This can be changed at run-time by "echo 2 > /proc/sys/vm/overcommit_memmory"
+    ...    to "2". This can be changed at run-time by "echo 2 > /proc/sys/vm/overcommit_memory"
     ...    however it should be persistently added to the /etc/sysctl.d/ncs.conf
     ...    this test will check both locations
     ...

@@ -1,1833 +1,475 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230923 09:50:54.589" rpa="false" schemaversion="4">
-<suite id="s1" name="System.V2" source="/git/robot-system-check/rhel-dev/system.v2.robot">
-<test id="s1-t1" name="Verify dependency packages are installed" line="29">
-<kw name="Set Variable" library="BuiltIn">
-<var>${command}</var>
-<arg>rpm -q</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:54.677" level="INFO">${command} = rpm -q</msg>
-<status status="PASS" starttime="20230923 09:50:54.677" endtime="20230923 09:50:54.677"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${check_string}</var>
-<arg>not installed</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:54.678" level="INFO">${check_string} = not installed</msg>
-<status status="PASS" starttime="20230923 09:50:54.678" endtime="20230923 09:50:54.678"/>
-</kw>
-<kw name="Iterate Over List and Run Command" library="keywords">
-<arg>${package_list}</arg>
-<arg>${command}</arg>
-<arg>${check_string}</arg>
-<doc>Iterates through list and runs the provided command, checking that the error string is not in the response</doc>
-<kw name="Log" library="BuiltIn">
-<arg>${list}</arg>
-<arg>DEBUG</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" starttime="20230923 09:50:54.680" endtime="20230923 09:50:54.680"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${errors_list}</var>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20230923 09:50:54.681" level="INFO">${errors_list} = []</msg>
-<status status="PASS" starttime="20230923 09:50:54.680" endtime="20230923 09:50:54.681"/>
-</kw>
-<for flavor="IN">
-<var>${item}</var>
-<value>@{list}</value>
-<iter>
-<var name="${item}">ant</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.682" level="INFO">${run_cmd} = rpm -q ant</msg>
-<status status="PASS" starttime="20230923 09:50:54.681" endtime="20230923 09:50:54.682"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.682" level="INFO">rpm -q ant</msg>
-<status status="PASS" starttime="20230923 09:50:54.682" endtime="20230923 09:50:54.682"/>
-</kw>
+<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230926 20:01:29.764" rpa="false" schemaversion="4">
+<suite id="s1" name="Ncs Env.V2" source="/mnt/vm-shared/robot-dev/rhel-dev/ncs_env.v2.robot">
+<test id="s1-t1" name="Verify that the overcommit_memory value has been updated" line="17">
 <kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
+<var>${run_time_overcommit}</var>
+<arg>cat /proc/sys/vm/overcommit_memory</arg>
 <doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.690" level="INFO">Running command 'rpm -q ant 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:54.729" level="INFO">${output} = ant-1.10.9-7.el9.noarch</msg>
-<status status="PASS" starttime="20230923 09:50:54.683" endtime="20230923 09:50:54.730"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:54.734" endtime="20230923 09:50:54.735"/>
-</kw>
-<msg timestamp="20230923 09:50:54.735" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:54.735" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:54.732" endtime="20230923 09:50:54.735"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:54.735" endtime="20230923 09:50:54.736"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.681" endtime="20230923 09:50:54.736"/>
-</iter>
-<iter>
-<var name="${item}">java-11-openjdk</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.737" level="INFO">${run_cmd} = rpm -q java-11-openjdk</msg>
-<status status="PASS" starttime="20230923 09:50:54.737" endtime="20230923 09:50:54.737"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.738" level="INFO">rpm -q java-11-openjdk</msg>
-<status status="PASS" starttime="20230923 09:50:54.738" endtime="20230923 09:50:54.738"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.745" level="INFO">Running command 'rpm -q java-11-openjdk 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:54.784" level="INFO">${output} = java-11-openjdk-11.0.18.0.10-2.el9_1.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:54.738" endtime="20230923 09:50:54.784"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:54.788" endtime="20230923 09:50:54.790"/>
-</kw>
-<msg timestamp="20230923 09:50:54.790" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:54.790" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:54.787" endtime="20230923 09:50:54.790"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:54.790" endtime="20230923 09:50:54.791"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.737" endtime="20230923 09:50:54.791"/>
-</iter>
-<iter>
-<var name="${item}">python3</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.793" level="INFO">${run_cmd} = rpm -q python3</msg>
-<status status="PASS" starttime="20230923 09:50:54.792" endtime="20230923 09:50:54.793"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.793" level="INFO">rpm -q python3</msg>
-<status status="PASS" starttime="20230923 09:50:54.793" endtime="20230923 09:50:54.793"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.800" level="INFO">Running command 'rpm -q python3 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:54.837" level="INFO">${output} = python3-3.9.16-1.el9.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:54.794" endtime="20230923 09:50:54.838"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:54.842" endtime="20230923 09:50:54.843"/>
-</kw>
-<msg timestamp="20230923 09:50:54.844" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:54.844" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:54.840" endtime="20230923 09:50:54.844"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:54.844" endtime="20230923 09:50:54.845"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.792" endtime="20230923 09:50:54.845"/>
-</iter>
-<iter>
-<var name="${item}">openssl</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.846" level="INFO">${run_cmd} = rpm -q openssl</msg>
-<status status="PASS" starttime="20230923 09:50:54.845" endtime="20230923 09:50:54.846"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.847" level="INFO">rpm -q openssl</msg>
-<status status="PASS" starttime="20230923 09:50:54.846" endtime="20230923 09:50:54.847"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.853" level="INFO">Running command 'rpm -q openssl 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:54.893" level="INFO">${output} = openssl-3.0.7-6.el9_2.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:54.847" endtime="20230923 09:50:54.893"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:54.897" endtime="20230923 09:50:54.899"/>
-</kw>
-<msg timestamp="20230923 09:50:54.899" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:54.899" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:54.896" endtime="20230923 09:50:54.899"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:54.899" endtime="20230923 09:50:54.900"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.845" endtime="20230923 09:50:54.900"/>
-</iter>
-<iter>
-<var name="${item}">pam</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.901" level="INFO">${run_cmd} = rpm -q pam</msg>
-<status status="PASS" starttime="20230923 09:50:54.900" endtime="20230923 09:50:54.901"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.902" level="INFO">rpm -q pam</msg>
-<status status="PASS" starttime="20230923 09:50:54.901" endtime="20230923 09:50:54.902"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.908" level="INFO">Running command 'rpm -q pam 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:54.950" level="INFO">${output} = pam-1.5.1-14.el9.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:54.902" endtime="20230923 09:50:54.950"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:54.954" endtime="20230923 09:50:54.956"/>
-</kw>
-<msg timestamp="20230923 09:50:54.956" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:54.956" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:54.952" endtime="20230923 09:50:54.956"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:54.956" endtime="20230923 09:50:54.957"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.900" endtime="20230923 09:50:54.957"/>
-</iter>
-<iter>
-<var name="${item}">python3-setuptools</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:54.958" level="INFO">${run_cmd} = rpm -q python3-setuptools</msg>
-<status status="PASS" starttime="20230923 09:50:54.958" endtime="20230923 09:50:54.958"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:54.959" level="INFO">rpm -q python3-setuptools</msg>
-<status status="PASS" starttime="20230923 09:50:54.958" endtime="20230923 09:50:54.959"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:54.965" level="INFO">Running command 'rpm -q python3-setuptools 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.008" level="INFO">${output} = python3-setuptools-53.0.0-12.el9.noarch</msg>
-<status status="PASS" starttime="20230923 09:50:54.959" endtime="20230923 09:50:55.008"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.012" endtime="20230923 09:50:55.013"/>
-</kw>
-<msg timestamp="20230923 09:50:55.013" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.013" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.010" endtime="20230923 09:50:55.014"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.014" endtime="20230923 09:50:55.014"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.957" endtime="20230923 09:50:55.014"/>
-</iter>
-<status status="PASS" starttime="20230923 09:50:54.681" endtime="20230923 09:50:55.015"/>
-</for>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${errors_list}</arg>
-<arg>Item(S) Not Found : ${errors_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230923 09:50:55.016" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230923 09:50:55.015" endtime="20230923 09:50:55.016"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:54.679" endtime="20230923 09:50:55.016"/>
-</kw>
-<doc>Check the installed packages using the "rpm -q" command against a list of expected
-packages, add and remove packages form the list to modify the test case.
-List included : ['ant', 'java-11-openjdk', 'python3', 'openssl', 'pam', 'python3-setuptools']</doc>
-<tag>os</tag>
-<tag>packages</tag>
-<status status="PASS" starttime="20230923 09:50:54.675" endtime="20230923 09:50:55.018"/>
-</test>
-<test id="s1-t2" name="Verify required package are and package versions" line="38">
-<kw name="Create Dictionary" library="BuiltIn">
-<var>${packages_dict}</var>
-<arg>ant=9.9.3</arg>
-<arg>java-11-openjdk=1.1</arg>
-<arg>python3=3.7</arg>
-<arg>openssl=0</arg>
-<arg>pam=1.3.1.8</arg>
-<arg>python3-setuptools=0</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20230923 09:50:55.028" level="INFO">${packages_dict} = {'ant': '9.9.3', 'java-11-openjdk': '1.1', 'python3': '3.7', 'openssl': '0', 'pam': '1.3.1.8', 'python3-setuptools': '0'}</msg>
-<status status="PASS" starttime="20230923 09:50:55.024" endtime="20230923 09:50:55.028"/>
-</kw>
-<for flavor="IN">
-<var>${package}</var>
-<var>${required_version}</var>
-<value>&amp;{packages_dict}</value>
-<iter>
-<var name="${package}">ant</var>
-<var name="${required_version}">9.9.3</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.030" endtime="20230923 09:50:55.031"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.038" level="INFO">Running command 'rpm -q ant 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.077" level="INFO">${package_rpm} = ant-1.10.9-7.el9.noarch</msg>
-<status status="PASS" starttime="20230923 09:50:55.031" endtime="20230923 09:50:55.077"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.080" endtime="20230923 09:50:55.083"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.085" level="INFO">${installed_version} = ['1.10.9']</msg>
-<status status="PASS" starttime="20230923 09:50:55.083" endtime="20230923 09:50:55.085"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.086" endtime="20230923 09:50:55.089"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.092" level="INFO">${comparison} = -1</msg>
-<status status="PASS" starttime="20230923 09:50:55.091" endtime="20230923 09:50:55.092"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.092" endtime="20230923 09:50:55.093"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version is not greater or equal</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.094" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.094" endtime="20230923 09:50:55.095"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.094" endtime="20230923 09:50:55.095"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.093" endtime="20230923 09:50:55.095"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.095" endtime="20230923 09:50:55.096"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.096" endtime="20230923 09:50:55.096"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.096" endtime="20230923 09:50:55.096"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.096" endtime="20230923 09:50:55.096"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.096" endtime="20230923 09:50:55.097"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.089" endtime="20230923 09:50:55.097"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.029" endtime="20230923 09:50:55.097"/>
-</iter>
-<iter>
-<var name="${package}">java-11-openjdk</var>
-<var name="${required_version}">1.1</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.098" endtime="20230923 09:50:55.099"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.106" level="INFO">Running command 'rpm -q java-11-openjdk 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.150" level="INFO">${package_rpm} = java-11-openjdk-11.0.18.0.10-2.el9_1.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:55.099" endtime="20230923 09:50:55.150"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.152" endtime="20230923 09:50:55.156"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.158" level="INFO">${installed_version} = ['11.0.18.0.10']</msg>
-<status status="PASS" starttime="20230923 09:50:55.156" endtime="20230923 09:50:55.158"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.158" endtime="20230923 09:50:55.161"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.165" level="INFO">${comparison} = 1</msg>
-<status status="PASS" starttime="20230923 09:50:55.164" endtime="20230923 09:50:55.165"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.165" endtime="20230923 09:50:55.166"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.166" endtime="20230923 09:50:55.167"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.166" endtime="20230923 09:50:55.167"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.167" endtime="20230923 09:50:55.167"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.167" endtime="20230923 09:50:55.168"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.168" endtime="20230923 09:50:55.169"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.169" level="INFO">Package version comparison passed</msg>
-<status status="PASS" starttime="20230923 09:50:55.169" endtime="20230923 09:50:55.169"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.170" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.169" endtime="20230923 09:50:55.170"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.162" endtime="20230923 09:50:55.170"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.097" endtime="20230923 09:50:55.170"/>
-</iter>
-<iter>
-<var name="${package}">python3</var>
-<var name="${required_version}">3.7</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.171" endtime="20230923 09:50:55.173"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.181" level="INFO">Running command 'rpm -q python3 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.221" level="INFO">${package_rpm} = python3-3.9.16-1.el9.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:55.173" endtime="20230923 09:50:55.221"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.224" endtime="20230923 09:50:55.227"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.229" level="INFO">${installed_version} = ['3.9.16']</msg>
-<status status="PASS" starttime="20230923 09:50:55.227" endtime="20230923 09:50:55.229"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.229" endtime="20230923 09:50:55.237"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.241" level="INFO">${comparison} = 1</msg>
-<status status="PASS" starttime="20230923 09:50:55.240" endtime="20230923 09:50:55.241"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.244" endtime="20230923 09:50:55.245"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.245" endtime="20230923 09:50:55.246"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.245" endtime="20230923 09:50:55.246"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.246" endtime="20230923 09:50:55.246"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.247" endtime="20230923 09:50:55.247"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.247" endtime="20230923 09:50:55.248"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.248" level="INFO">Package version comparison passed</msg>
-<status status="PASS" starttime="20230923 09:50:55.248" endtime="20230923 09:50:55.248"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.249" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.248" endtime="20230923 09:50:55.249"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.237" endtime="20230923 09:50:55.249"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.171" endtime="20230923 09:50:55.249"/>
-</iter>
-<iter>
-<var name="${package}">openssl</var>
-<var name="${required_version}">0</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.250" endtime="20230923 09:50:55.251"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.258" level="INFO">Running command 'rpm -q openssl 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.301" level="INFO">${package_rpm} = openssl-3.0.7-6.el9_2.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:55.252" endtime="20230923 09:50:55.301"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.303" endtime="20230923 09:50:55.306"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.308" level="INFO">${installed_version} = ['3.0.7']</msg>
-<status status="PASS" starttime="20230923 09:50:55.306" endtime="20230923 09:50:55.308"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.308" endtime="20230923 09:50:55.312"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.316" level="INFO">${comparison} = 1</msg>
-<status status="PASS" starttime="20230923 09:50:55.315" endtime="20230923 09:50:55.316"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.316" endtime="20230923 09:50:55.317"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.317" endtime="20230923 09:50:55.318"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.317" endtime="20230923 09:50:55.318"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.318" endtime="20230923 09:50:55.319"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.319" endtime="20230923 09:50:55.319"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.320" endtime="20230923 09:50:55.320"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.320" level="INFO">Package version comparison passed</msg>
-<status status="PASS" starttime="20230923 09:50:55.320" endtime="20230923 09:50:55.321"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.321" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.321" endtime="20230923 09:50:55.321"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.312" endtime="20230923 09:50:55.321"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.250" endtime="20230923 09:50:55.322"/>
-</iter>
-<iter>
-<var name="${package}">pam</var>
-<var name="${required_version}">1.3.1.8</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.322" endtime="20230923 09:50:55.324"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.330" level="INFO">Running command 'rpm -q pam 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.374" level="INFO">${package_rpm} = pam-1.5.1-14.el9.x86_64</msg>
-<status status="PASS" starttime="20230923 09:50:55.324" endtime="20230923 09:50:55.375"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.377" endtime="20230923 09:50:55.380"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.382" level="INFO">${installed_version} = ['1.5.1']</msg>
-<status status="PASS" starttime="20230923 09:50:55.380" endtime="20230923 09:50:55.382"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.382" endtime="20230923 09:50:55.385"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.388" level="INFO">${comparison} = 1</msg>
-<status status="PASS" starttime="20230923 09:50:55.388" endtime="20230923 09:50:55.388"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.389" endtime="20230923 09:50:55.389"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.390" endtime="20230923 09:50:55.390"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.389" endtime="20230923 09:50:55.390"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.391" endtime="20230923 09:50:55.391"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.391" endtime="20230923 09:50:55.391"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.392" endtime="20230923 09:50:55.392"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.393" level="INFO">Package version comparison passed</msg>
-<status status="PASS" starttime="20230923 09:50:55.392" endtime="20230923 09:50:55.393"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.394" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.393" endtime="20230923 09:50:55.394"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.386" endtime="20230923 09:50:55.394"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.322" endtime="20230923 09:50:55.394"/>
-</iter>
-<iter>
-<var name="${package}">python3-setuptools</var>
-<var name="${required_version}">0</var>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Package = ${package}:</arg>
-<arg>Version = ${required_version}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.395" endtime="20230923 09:50:55.397"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${package_rpm}</var>
-<arg>rpm -q ${package}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.404" level="INFO">Running command 'rpm -q python3-setuptools 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.449" level="INFO">${package_rpm} = python3-setuptools-53.0.0-12.el9.noarch</msg>
-<status status="PASS" starttime="20230923 09:50:55.397" endtime="20230923 09:50:55.449"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>${package_rpm}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.451" endtime="20230923 09:50:55.454"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${installed_version}</var>
-<arg>${package_rpm}</arg>
-<arg>${package}-(.*)-.*</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.456" level="INFO">${installed_version} = ['53.0.0']</msg>
-<status status="PASS" starttime="20230923 09:50:55.455" endtime="20230923 09:50:55.456"/>
-</kw>
-<kw name="Log To Console" library="BuiltIn">
-<arg>Installed Version : ${installed_version[0]}</arg>
-<doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230923 09:50:55.457" endtime="20230923 09:50:55.461"/>
-</kw>
-<kw name="Compare Package Versions" library="keywords">
-<arg>${installed_version[0]}</arg>
-<arg>&gt;=</arg>
-<arg>${required_version}</arg>
-<doc>Takes dotted decimal package versions and comparies them with a provided operator</doc>
-<kw name="Evaluate" library="BuiltIn">
-<var>${comparison}</var>
-<arg>"${actual_version}" &lt; "${expected_version}" and -1 or "${actual_version}" &gt; "${expected_version}" and 1 or 0</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.464" level="INFO">${comparison} = 1</msg>
-<status status="PASS" starttime="20230923 09:50:55.463" endtime="20230923 09:50:55.464"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.464" endtime="20230923 09:50:55.465"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&gt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${comparison} &lt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not greater or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.466" endtime="20230923 09:50:55.466"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.465" endtime="20230923 09:50:55.466"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;"</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt;= 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.466" endtime="20230923 09:50:55.467"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "&lt;="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} &gt; 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not less or equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.467" endtime="20230923 09:50:55.467"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>"${operator}" == "=="</arg>
-<arg>Run Keyword If</arg>
-<arg>${comparison} != 0</arg>
-<arg>Return From Keyword</arg>
-<arg>Package Version is not equal</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.467" endtime="20230923 09:50:55.468"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Package version comparison passed</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.468" level="INFO">Package version comparison passed</msg>
-<status status="PASS" starttime="20230923 09:50:55.468" endtime="20230923 09:50:55.468"/>
-</kw>
-<kw name="Return From Keyword" library="BuiltIn">
-<arg>Package Version Passes</arg>
-<doc>Returns from the enclosing user keyword.</doc>
-<msg timestamp="20230923 09:50:55.469" level="INFO">Returning from the enclosing user keyword.</msg>
-<status status="PASS" starttime="20230923 09:50:55.468" endtime="20230923 09:50:55.469"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.461" endtime="20230923 09:50:55.469"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.395" endtime="20230923 09:50:55.469"/>
-</iter>
-<status status="PASS" starttime="20230923 09:50:55.029" endtime="20230923 09:50:55.470"/>
-</for>
-<doc>Check the versions of the packages installed meets the neccessary minimum values
-the test calls the packages_dict dictionary which should be populated with k,v pairs representing
-the required package and the minimum supported value</doc>
-<status status="PASS" starttime="20230923 09:50:55.022" endtime="20230923 09:50:55.471"/>
-</test>
-<test id="s1-t3" name="Check library availability" line="68">
-<kw name="Create List" library="BuiltIn">
-<var>${libraries}</var>
-<arg>libpam.so.0</arg>
-<arg>libexpat.so.1</arg>
-<arg>libz.so.1</arg>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20230923 09:50:55.477" level="INFO">${libraries} = ['libpam.so.0', 'libexpat.so.1', 'libz.so.1']</msg>
-<status status="PASS" starttime="20230923 09:50:55.476" endtime="20230923 09:50:55.477"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${system_libraries}</var>
-<arg>ldconfig -p</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.484" level="INFO">Running command 'ldconfig -p 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.503" level="INFO">${system_libraries} = 510 libs found in cache `/etc/ld.so.cache'
-	p11-kit-trust.so (libc6,x86-64) =&gt; /lib64/p11-kit-trust.so
-	libzstd.so.1 (libc6,x86-64) =&gt; /lib64/libzstd.so.1
-	libz.so.1 (libc6,x86-64) =&gt; /lib64/libz.so.1...</msg>
-<status status="PASS" starttime="20230923 09:50:55.478" endtime="20230923 09:50:55.504"/>
+<msg timestamp="20230926 20:01:29.835" level="INFO">Running command 'cat /proc/sys/vm/overcommit_memory 2&gt;&amp;1'.</msg>
+<msg timestamp="20230926 20:01:29.842" level="INFO">${run_time_overcommit} = 2</msg>
+<status status="PASS" starttime="20230926 20:01:29.832" endtime="20230926 20:01:29.842"/>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<var>${sysctl_d_ncs_conf}</var>
+<arg>/etc/sysctl.d/ncs.conf</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230926 20:01:29.843" level="INFO" html="true">Getting file '&lt;a href="file:///etc/sysctl.d/ncs.conf"&gt;/etc/sysctl.d/ncs.conf&lt;/a&gt;'.</msg>
+<msg timestamp="20230926 20:01:29.843" level="FAIL">FileNotFoundError: [Errno 2] No such file or directory: '/etc/sysctl.d/ncs.conf'</msg>
+<status status="FAIL" starttime="20230926 20:01:29.843" endtime="20230926 20:01:29.844"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
 <var>${error_list}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230923 09:50:55.508" level="INFO">${error_list} = []</msg>
-<status status="PASS" starttime="20230923 09:50:55.507" endtime="20230923 09:50:55.508"/>
-</kw>
-<for flavor="IN">
-<var>${library}</var>
-<value>@{libraries}</value>
-<iter>
-<var name="${library}">libpam.so.0</var>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Contain</arg>
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.511" endtime="20230923 09:50:55.512"/>
-</kw>
-<msg timestamp="20230923 09:50:55.512" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.512" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.511" endtime="20230923 09:50:55.513"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.844" endtime="20230926 20:01:29.844"/>
 </kw>
 <if>
-<branch type="IF" condition="'${status}' == 'PASS'">
+<branch type="IF" condition="${run_time_overcommit} == 2">
 <kw name="Log" library="BuiltIn">
-<arg>${library} found</arg>
+<arg>/proc/sys/vm/overcommit_memory is configured correctly</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.514" level="INFO">libpam.so.0 found</msg>
-<status status="PASS" starttime="20230923 09:50:55.514" endtime="20230923 09:50:55.514"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
 </kw>
-<status status="PASS" starttime="20230923 09:50:55.513" endtime="20230923 09:50:55.514"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
 </branch>
 <branch type="ELSE">
 <kw name="Append To List" library="Collections">
 <arg>${error_list}</arg>
-<arg>${library}</arg>
+<arg>overcommit_memory not set to expected value</arg>
 <doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.515" endtime="20230923 09:50:55.515"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
 </kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.514" endtime="20230923 09:50:55.515"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
 </branch>
-<status status="PASS" starttime="20230923 09:50:55.513" endtime="20230923 09:50:55.515"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.844" endtime="20230926 20:01:29.845"/>
 </if>
-<status status="PASS" starttime="20230923 09:50:55.510" endtime="20230923 09:50:55.515"/>
-</iter>
-<iter>
-<var name="${library}">libexpat.so.1</var>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Contain</arg>
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.515" endtime="20230923 09:50:55.516"/>
-</kw>
-<msg timestamp="20230923 09:50:55.516" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.516" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.515" endtime="20230923 09:50:55.516"/>
-</kw>
-<if>
-<branch type="IF" condition="'${status}' == 'PASS'">
-<kw name="Log" library="BuiltIn">
-<arg>${library} found</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.517" level="INFO">libexpat.so.1 found</msg>
-<status status="PASS" starttime="20230923 09:50:55.517" endtime="20230923 09:50:55.517"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.516" endtime="20230923 09:50:55.517"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${library}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.517" endtime="20230923 09:50:55.517"/>
-</kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.517" endtime="20230923 09:50:55.517"/>
-</branch>
-<status status="PASS" starttime="20230923 09:50:55.516" endtime="20230923 09:50:55.518"/>
-</if>
-<status status="PASS" starttime="20230923 09:50:55.515" endtime="20230923 09:50:55.518"/>
-</iter>
-<iter>
-<var name="${library}">libz.so.1</var>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Contain</arg>
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${system_libraries}</arg>
-<arg>${library}</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.518" endtime="20230923 09:50:55.519"/>
-</kw>
-<msg timestamp="20230923 09:50:55.519" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.519" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.518" endtime="20230923 09:50:55.519"/>
-</kw>
-<if>
-<branch type="IF" condition="'${status}' == 'PASS'">
-<kw name="Log" library="BuiltIn">
-<arg>${library} found</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.520" level="INFO">libz.so.1 found</msg>
-<status status="PASS" starttime="20230923 09:50:55.520" endtime="20230923 09:50:55.520"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.520" endtime="20230923 09:50:55.520"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${library}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.521" endtime="20230923 09:50:55.521"/>
-</kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.520" endtime="20230923 09:50:55.521"/>
-</branch>
-<status status="PASS" starttime="20230923 09:50:55.519" endtime="20230923 09:50:55.521"/>
-</if>
-<status status="PASS" starttime="20230923 09:50:55.518" endtime="20230923 09:50:55.521"/>
-</iter>
-<status status="PASS" starttime="20230923 09:50:55.509" endtime="20230923 09:50:55.521"/>
-</for>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${error_list}</arg>
-<arg>Following Libraries are missing ${error_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230923 09:50:55.522" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230923 09:50:55.522" endtime="20230923 09:50:55.523"/>
-</kw>
-<doc>Cisco NSO requires that the operating system has specific libraries installed
-the test verifies that the "ldconfig -p" output includes each of the libraries mentioned in the
-documentation. To adapt modify the list</doc>
-<status status="PASS" starttime="20230923 09:50:55.474" endtime="20230923 09:50:55.524"/>
-</test>
-<test id="s1-t4" name="Check libz library version" line="85">
-<kw name="Set Variable" library="BuiltIn">
-<var>${desired_major_version}</var>
-<arg>1.2</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:55.530" level="INFO">${desired_major_version} = 1.2</msg>
-<status status="PASS" starttime="20230923 09:50:55.529" endtime="20230923 09:50:55.530"/>
-</kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${desired_minor_version}</var>
-<arg>7.1</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:55.531" level="INFO">${desired_minor_version} = 7.1</msg>
-<status status="PASS" starttime="20230923 09:50:55.530" endtime="20230923 09:50:55.531"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${libz_version}</var>
-<arg>python3 -c "import zlib; print (zlib.ZLIB_VERSION)"</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.538" level="INFO">Running command 'python3 -c "import zlib; print (zlib.ZLIB_VERSION)" 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.588" level="INFO">${libz_version} = 1.2.11</msg>
-<status status="PASS" starttime="20230923 09:50:55.531" endtime="20230923 09:50:55.588"/>
-</kw>
 <kw name="Get Regexp Matches" library="String">
-<var>${found_major_version}</var>
-<arg>${libz_version}</arg>
-<arg>^(\\d+\\.\\d+)\\.(.*)</arg>
+<var>${matches}</var>
+<arg>${sysctl_d_ncs_conf}</arg>
+<arg>vm.overcommit_memory\\s?=\\s?(.*)</arg>
 <arg>1</arg>
 <doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.595" level="INFO">${found_major_version} = ['1.2']</msg>
-<status status="PASS" starttime="20230923 09:50:55.592" endtime="20230923 09:50:55.595"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.846" endtime="20230926 20:01:29.846"/>
 </kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${found_minor_version}</var>
-<arg>${libz_version}</arg>
-<arg>^(\\d+\\.\\d+)\\.(.*)</arg>
-<arg>2</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.597" level="INFO">${found_minor_version} = ['11']</msg>
-<status status="PASS" starttime="20230923 09:50:55.596" endtime="20230923 09:50:55.597"/>
+<kw name="Log" library="BuiltIn">
+<arg>${matches}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.847" endtime="20230926 20:01:29.847"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${matches[0]}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.847" endtime="20230926 20:01:29.847"/>
 </kw>
 <if>
-<branch type="IF" condition="${found_major_version[0]} == ${desired_major_version}">
+<branch type="IF" condition="${matches[0]} == 2">
 <kw name="Log" library="BuiltIn">
-<arg>Going to evaluate : ${found_minor_version[0]} &gt; ${desired_minor_version}</arg>
+<arg>vm.overcommit_memory assigned to correct values</arg>
 <doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.601" level="INFO">Going to evaluate : 11 &gt; 7.1</msg>
-<status status="PASS" starttime="20230923 09:50:55.600" endtime="20230923 09:50:55.602"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
 </kw>
-<kw name="Evaluate" library="BuiltIn">
-<var>${log}</var>
-<arg>${found_minor_version[0]} &gt; ${desired_minor_version}</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.604" level="INFO">${log} = True</msg>
-<status status="PASS" starttime="20230923 09:50:55.602" endtime="20230923 09:50:55.604"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${log}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.604" level="INFO">True</msg>
-<status status="PASS" starttime="20230923 09:50:55.604" endtime="20230923 09:50:55.605"/>
-</kw>
-<if>
-<branch type="IF" condition="${found_minor_version[0]} &gt;= ${desired_minor_version}">
-<kw name="Log" library="BuiltIn">
-<arg>Found ${found_major_version[0]}.${found_minor_version[0]} is greater than minimum</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.609" level="INFO">Found 1.2.11 is greater than minimum</msg>
-<status status="PASS" starttime="20230923 09:50:55.606" endtime="20230923 09:50:55.609"/>
-</kw>
-<kw name="Pass Execution" library="BuiltIn">
-<arg>Major meets requirements, and Minor is greater or equal ${found_major_version[0]}.${found_minor_version[0]}</arg>
-<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<msg timestamp="20230923 09:50:55.611" level="INFO">Execution passed with message:
-Major meets requirements, and Minor is greater or equal 1.2.11</msg>
-<status status="PASS" starttime="20230923 09:50:55.609" endtime="20230923 09:50:55.611"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.605" endtime="20230923 09:50:55.611"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
 </branch>
 <branch type="ELSE">
-<kw name="Log" library="BuiltIn">
-<arg>Found ${found_major_version[0]}.${found_minor_version[0]} this is lower than expected</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.612" endtime="20230923 09:50:55.612"/>
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>vm.overcommit_memory not assigned correct values</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
 </kw>
-<kw name="Fail" library="BuiltIn">
-<arg>Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}</arg>
-<doc>Fails the test with the given message and optionally alters its tags.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.612" endtime="20230923 09:50:55.612"/>
-</kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.611" endtime="20230923 09:50:55.612"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
 </branch>
-<status status="PASS" starttime="20230923 09:50:55.605" endtime="20230923 09:50:55.612"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
 </if>
-<status status="PASS" starttime="20230923 09:50:55.598" endtime="20230923 09:50:55.612"/>
-</branch>
-<branch type="ELSE IF" condition="${found_major_version[0]} &gt; ${desired_major_version}">
-<kw name="Log" library="BuiltIn">
-<arg>Found ${found_major_version} is greater than minimum, skipping minor check</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.612" endtime="20230923 09:50:55.613"/>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${error_list}</arg>
+<arg>Errors encountered with values for ${error_list}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.849" endtime="20230926 20:01:29.849"/>
 </kw>
-<kw name="Pass Execution" library="BuiltIn">
-<arg>Major version is greater that required , skipping minor check.</arg>
-<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.613" endtime="20230923 09:50:55.613"/>
-</kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.612" endtime="20230923 09:50:55.613"/>
-</branch>
-<branch type="ELSE">
-<kw name="Fail" library="BuiltIn">
-<arg>Unsupported version of Libz found ${found_major_version[0]}.${found_minor_version[0]}</arg>
-<doc>Fails the test with the given message and optionally alters its tags.</doc>
-<status status="NOT RUN" starttime="20230923 09:50:55.613" endtime="20230923 09:50:55.613"/>
-</kw>
-<status status="NOT RUN" starttime="20230923 09:50:55.613" endtime="20230923 09:50:55.613"/>
-</branch>
-<status status="PASS" starttime="20230923 09:50:55.598" endtime="20230923 09:50:55.613"/>
-</if>
-<doc>Cisco NSO requires a minimimum version of 1.2.7.1 for the libz library
-this test will verify that the verison installed satisfies this requirement.</doc>
-<status status="PASS" starttime="20230923 09:50:55.527" endtime="20230923 09:50:55.614">Major meets requirements, and Minor is greater or equal 1.2.11</status>
+<doc>The default os value is pre-configured to 0, this needs to be modified
+to "2". This can be changed at run-time by "echo 2 &gt; /proc/sys/vm/overcommit_memory"
+however it should be persistently added to the /etc/sysctl.d/ncs.conf
+this test will check both locations</doc>
+<status status="FAIL" starttime="20230926 20:01:29.831" endtime="20230926 20:01:29.850">FileNotFoundError: [Errno 2] No such file or directory: '/etc/sysctl.d/ncs.conf'</status>
 </test>
-<test id="s1-t5" name="Verify required utilities are available" line="111">
-<kw name="Set Variable" library="BuiltIn">
-<var>${command}</var>
-<arg>which</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:55.621" level="INFO">${command} = which</msg>
-<status status="PASS" starttime="20230923 09:50:55.621" endtime="20230923 09:50:55.621"/>
+<test id="s1-t2" name="Verify the T-SDN system limits have been configured" line="42">
+<kw name="Get File" library="OperatingSystem">
+<var>${file}</var>
+<arg>/etc/security/limits.d/ncs.conf</arg>
+<doc>Returns the contents of a specified file.</doc>
+<msg timestamp="20230926 20:01:29.853" level="INFO" html="true">Getting file '&lt;a href="file:///etc/security/limits.d/ncs.conf"&gt;/etc/security/limits.d/ncs.conf&lt;/a&gt;'.</msg>
+<msg timestamp="20230926 20:01:29.854" level="FAIL">FileNotFoundError: [Errno 2] No such file or directory: '/etc/security/limits.d/ncs.conf'</msg>
+<status status="FAIL" starttime="20230926 20:01:29.853" endtime="20230926 20:01:29.854"/>
 </kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${check_string}</var>
-<arg>/usr/bin/which: no</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:55.622" level="INFO">${check_string} = /usr/bin/which: no</msg>
-<status status="PASS" starttime="20230923 09:50:55.622" endtime="20230923 09:50:55.622"/>
+<kw name="Replace String Using Regexp" library="String">
+<var>${clean_file}</var>
+<arg>${file}</arg>
+<arg>\\s{2}</arg>
+<arg>${SPACE}</arg>
+<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.854" endtime="20230926 20:01:29.854"/>
 </kw>
-<kw name="Iterate Over List and Run Command" library="keywords">
-<arg>${utility_list}</arg>
-<arg>${command}</arg>
-<arg>${check_string}</arg>
-<doc>Iterates through list and runs the provided command, checking that the error string is not in the response</doc>
-<kw name="Log" library="BuiltIn">
-<arg>${list}</arg>
-<arg>DEBUG</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" starttime="20230923 09:50:55.624" endtime="20230923 09:50:55.624"/>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${limits_dict}</var>
+<arg>soft nproc=65535</arg>
+<arg>hard nproc=65535</arg>
+<arg>soft nofile=65536</arg>
+<arg>hard memlock=65536</arg>
+<arg>soft memlock=65536</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.855"/>
 </kw>
 <kw name="Create List" library="BuiltIn">
-<var>${errors_list}</var>
+<var>${error_list}</var>
 <doc>Returns a list containing given items.</doc>
-<msg timestamp="20230923 09:50:55.625" level="INFO">${errors_list} = []</msg>
-<status status="PASS" starttime="20230923 09:50:55.624" endtime="20230923 09:50:55.625"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.855"/>
 </kw>
 <for flavor="IN">
-<var>${item}</var>
-<value>@{list}</value>
+<var>${key}</var>
+<var>${value}</var>
+<value>&amp;{limits_dict}</value>
 <iter>
-<var name="${item}">tar</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:55.626" level="INFO">${run_cmd} = which tar</msg>
-<status status="PASS" starttime="20230923 09:50:55.626" endtime="20230923 09:50:55.626"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.627" level="INFO">which tar</msg>
-<status status="PASS" starttime="20230923 09:50:55.627" endtime="20230923 09:50:55.627"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.633" level="INFO">Running command 'which tar 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.654" level="INFO">${output} = /usr/bin/tar</msg>
-<status status="PASS" starttime="20230923 09:50:55.627" endtime="20230923 09:50:55.654"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.659" endtime="20230923 09:50:55.660"/>
-</kw>
-<msg timestamp="20230923 09:50:55.660" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.660" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.657" endtime="20230923 09:50:55.660"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.660" endtime="20230923 09:50:55.661"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.626" endtime="20230923 09:50:55.661"/>
-</iter>
-<iter>
-<var name="${item}">gzip</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:55.662" level="INFO">${run_cmd} = which gzip</msg>
-<status status="PASS" starttime="20230923 09:50:55.662" endtime="20230923 09:50:55.662"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.663" level="INFO">which gzip</msg>
-<status status="PASS" starttime="20230923 09:50:55.662" endtime="20230923 09:50:55.663"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.669" level="INFO">Running command 'which gzip 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.686" level="INFO">${output} = /usr/bin/gzip</msg>
-<status status="PASS" starttime="20230923 09:50:55.663" endtime="20230923 09:50:55.686"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.690" endtime="20230923 09:50:55.691"/>
-</kw>
-<msg timestamp="20230923 09:50:55.692" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.692" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.688" endtime="20230923 09:50:55.692"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.692" endtime="20230923 09:50:55.692"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.661" endtime="20230923 09:50:55.693"/>
-</iter>
-<iter>
-<var name="${item}">find</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:55.694" level="INFO">${run_cmd} = which find</msg>
-<status status="PASS" starttime="20230923 09:50:55.693" endtime="20230923 09:50:55.694"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.694" level="INFO">which find</msg>
-<status status="PASS" starttime="20230923 09:50:55.694" endtime="20230923 09:50:55.695"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.700" level="INFO">Running command 'which find 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.718" level="INFO">${output} = /usr/bin/find</msg>
-<status status="PASS" starttime="20230923 09:50:55.695" endtime="20230923 09:50:55.718"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.722" endtime="20230923 09:50:55.723"/>
-</kw>
-<msg timestamp="20230923 09:50:55.723" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.723" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.720" endtime="20230923 09:50:55.723"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.723" endtime="20230923 09:50:55.724"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.693" endtime="20230923 09:50:55.724"/>
-</iter>
-<iter>
-<var name="${item}">ssh-keygen</var>
-<kw name="Catenate" library="BuiltIn">
-<var>${run_cmd}</var>
-<arg>${command}</arg>
-<arg>${item}</arg>
-<doc>Catenates the given items together and returns the resulted string.</doc>
-<msg timestamp="20230923 09:50:55.725" level="INFO">${run_cmd} = which ssh-keygen</msg>
-<status status="PASS" starttime="20230923 09:50:55.725" endtime="20230923 09:50:55.725"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${run_cmd}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230923 09:50:55.726" level="INFO">which ssh-keygen</msg>
-<status status="PASS" starttime="20230923 09:50:55.726" endtime="20230923 09:50:55.726"/>
-</kw>
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>${run_cmd}</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.732" level="INFO">Running command 'which ssh-keygen 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.749" level="INFO">${output} = /usr/bin/ssh-keygen</msg>
-<status status="PASS" starttime="20230923 09:50:55.726" endtime="20230923 09:50:55.750"/>
-</kw>
-<kw name="Run Keyword And Ignore Error" library="BuiltIn">
-<var>${status}</var>
-<var>${status_message}</var>
-<arg>Should Not Contain</arg>
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
-<kw name="Should Not Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${check_string}</arg>
-<doc>Fails if ``container`` contains ``item`` one or more times.</doc>
-<status status="PASS" starttime="20230923 09:50:55.754" endtime="20230923 09:50:55.755"/>
-</kw>
-<msg timestamp="20230923 09:50:55.755" level="INFO">${status} = PASS</msg>
-<msg timestamp="20230923 09:50:55.755" level="INFO">${status_message} = None</msg>
-<status status="PASS" starttime="20230923 09:50:55.752" endtime="20230923 09:50:55.755"/>
-</kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>'${status}' != 'PASS'</arg>
-<arg>Append To List</arg>
-<arg>${errors_list}</arg>
-<arg>${item}</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<status status="PASS" starttime="20230923 09:50:55.755" endtime="20230923 09:50:55.756"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.725" endtime="20230923 09:50:55.756"/>
-</iter>
-<status status="PASS" starttime="20230923 09:50:55.625" endtime="20230923 09:50:55.756"/>
-</for>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${errors_list}</arg>
-<arg>Item(S) Not Found : ${errors_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230923 09:50:55.757" level="INFO">Length is 0</msg>
-<status status="PASS" starttime="20230923 09:50:55.757" endtime="20230923 09:50:55.757"/>
-</kw>
-<status status="PASS" starttime="20230923 09:50:55.623" endtime="20230923 09:50:55.758"/>
-</kw>
-<doc>Cisco NSO requires some utilities, this test verfies these binaries exist</doc>
-<tag>os</tag>
-<tag>packages</tag>
-<status status="PASS" starttime="20230923 09:50:55.619" endtime="20230923 09:50:55.759"/>
-</test>
-<test id="s1-t6" name="Verify correct version of Python is active" line="118">
-<kw name="Run" library="OperatingSystem">
-<var>${python_version}</var>
-<arg>python --version</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.771" level="INFO">Running command 'python --version 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:55.791" level="INFO">${python_version} = Python 3.9.16</msg>
-<status status="PASS" starttime="20230923 09:50:55.765" endtime="20230923 09:50:55.791"/>
-</kw>
+<var name="${key}"/>
+<var name="${value}"/>
 <kw name="Get Regexp Matches" library="String">
-<var>${python_major_version}</var>
-<arg>${python_version}</arg>
-<arg>Python (\\d+\.\\d+)</arg>
+<var>${matches}</var>
+<arg>${clean_file}</arg>
+<arg>(?&lt;!#)\\s+\\*\\s+${key}\\s?(\\d+)</arg>
 <arg>1</arg>
 <doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230923 09:50:55.798" level="INFO">${python_major_version} = ['3.9']</msg>
-<status status="PASS" starttime="20230923 09:50:55.794" endtime="20230923 09:50:55.798"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
 </kw>
-<kw name="Set Variable" library="BuiltIn">
-<var>${desired_version}</var>
-<arg>3.08</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230923 09:50:55.799" level="INFO">${desired_version} = 3.08</msg>
-<status status="PASS" starttime="20230923 09:50:55.798" endtime="20230923 09:50:55.799"/>
+<kw name="Get Length" library="BuiltIn">
+<var>${len}</var>
+<arg>${matches}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
 </kw>
-<kw name="Evaluate" library="BuiltIn">
-<var>${status}</var>
-<arg>${python_major_version[0]} &gt;= ${desired_version}</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<msg timestamp="20230923 09:50:55.803" level="INFO">${status} = True</msg>
-<status status="PASS" starttime="20230923 09:50:55.800" endtime="20230923 09:50:55.803"/>
+<if>
+<branch type="IF" condition="${len} &gt; 0">
+<if>
+<branch type="IF" condition="${matches[0]} == ${value}">
+<kw name="Log" library="BuiltIn">
+<arg>${key} value found, and set to the expected value : ${value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
 </kw>
-<kw name="Run Keyword If" library="BuiltIn">
-<arg>${status} == True</arg>
-<arg>Pass Execution</arg>
-<arg>Active Version of Python meets the minimum requirements</arg>
-<arg>ELSE</arg>
-<arg>Fail</arg>
-<arg>Active Python verison doesnt meet the requirements, review your alternatives-config to see if</arg>
-<arg>correct version is active, or install the correct verison.</arg>
-<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
-<kw name="Pass Execution" library="BuiltIn">
-<arg>Active Version of Python meets the minimum requirements</arg>
-<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<msg timestamp="20230923 09:50:55.806" level="INFO">Execution passed with message:
-Active Version of Python meets the minimum requirements</msg>
-<status status="PASS" starttime="20230923 09:50:55.804" endtime="20230923 09:50:55.806"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${key}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
 </kw>
-<status status="PASS" starttime="20230923 09:50:55.804" endtime="20230923 09:50:55.806"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
+</branch>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
+</if>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" library="BuiltIn">
+<arg>${key} not found in ${file}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
 </kw>
-<doc>We require a python verison &gt; 3.7 this test will validatre the
-active python environmnet meets this requirement</doc>
-<tag>os</tag>
-<tag>packages</tag>
-<status status="PASS" starttime="20230923 09:50:55.763" endtime="20230923 09:50:55.807">Active Version of Python meets the minimum requirements</status>
-</test>
-<test id="s1-t7" name="Verify Hostname is not set to localhost" line="132">
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>hostnamectl hostname</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:55.820" level="INFO">Running command 'hostnamectl hostname 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:56.012" level="INFO">${output} = robot-dev-rhel-9.2</msg>
-<status status="PASS" starttime="20230923 09:50:55.814" endtime="20230923 09:50:56.013"/>
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${key}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
 </kw>
-<kw name="Should Not Be Equal As Strings" library="BuiltIn">
-<arg>${output}</arg>
-<arg>localhost</arg>
-<doc>Fails if objects are equal after converting them to strings.</doc>
-<status status="PASS" starttime="20230923 09:50:56.018" endtime="20230923 09:50:56.027"/>
-</kw>
-<doc>Hostname Should not be localhost</doc>
-<tag>dns</tag>
-<tag>os</tag>
-<status status="PASS" starttime="20230923 09:50:55.812" endtime="20230923 09:50:56.028"/>
-</test>
-<test id="s1-t8" name="Verify DNS servers are Configured" line="138">
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>more /etc/resolv.conf</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:56.045" level="INFO">Running command 'more /etc/resolv.conf 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:56.065" level="INFO">${output} = # Generated by NetworkManager
-search localdomain 2
-nameserver 172.16.167.2</msg>
-<status status="PASS" starttime="20230923 09:50:56.039" endtime="20230923 09:50:56.065"/>
-</kw>
-<for flavor="IN">
-<var>${dns_server}</var>
-<value>@{dns_servers}</value>
-<iter>
-<var name="${dns_server}">192.168.1.1</var>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${dns_server}</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<msg timestamp="20230923 09:50:56.073" level="FAIL">'# Generated by NetworkManager
-search localdomain 2
-nameserver 172.16.167.2' does not contain '192.168.1.1'</msg>
-<status status="FAIL" starttime="20230923 09:50:56.071" endtime="20230923 09:50:56.073"/>
-</kw>
-<status status="FAIL" starttime="20230923 09:50:56.070" endtime="20230923 09:50:56.074"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
+</branch>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
+</if>
+<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
 </iter>
-<status status="FAIL" starttime="20230923 09:50:56.068" endtime="20230923 09:50:56.074"/>
+<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.858"/>
 </for>
-<doc>DNS Servers should be Configured</doc>
-<tag>dns</tag>
-<tag>os</tag>
-<status status="FAIL" starttime="20230923 09:50:56.035" endtime="20230923 09:50:56.075">'# Generated by NetworkManager
-search localdomain 2
-nameserver 172.16.167.2' does not contain '192.168.1.1'</status>
-</test>
-<test id="s1-t9" name="Verify NTP servers are Configured" line="146">
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>chronyc sources</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:56.090" level="INFO">Running command 'chronyc sources 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:56.686" level="INFO">${output} = MS Name/IP address         Stratum Poll Reach LastRx Last sample               
-===============================================================================
-^- pruts.nl                      2   6  ...</msg>
-<status status="PASS" starttime="20230923 09:50:56.084" endtime="20230923 09:50:56.686"/>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${error_list}</arg>
+<arg>Errors found in the following paramaters : ${error_list}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.858" endtime="20230926 20:01:29.858"/>
 </kw>
-<for flavor="IN">
-<var>${ntp_server}</var>
-<value>@{ntp_servers}</value>
-<iter>
-<var name="${ntp_server}">ntp1.trans-ix.nl</var>
-<kw name="Should Contain" library="BuiltIn">
-<arg>${output}</arg>
-<arg>${ntp_server}</arg>
-<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
-<msg timestamp="20230923 09:50:56.694" level="FAIL">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
-===============================================================================
-^- pruts.nl                      2   6   377    51  +4761us[+4761us] +/-   47ms
-^- ntp4.bit.nl                   1   6   377    57  -1634us[-1634us] +/-  308ms
-^* 149-225-172-081.dynamic.&gt;     1   6   377    62   +451us[-4323us] +/- 5117us
-^- mail.emuadmin.com             3   6   377    53  +1182us[+1182us] +/-   55ms' does not contain 'ntp1.trans-ix.nl'</msg>
-<status status="FAIL" starttime="20230923 09:50:56.692" endtime="20230923 09:50:56.694"/>
-</kw>
-<status status="FAIL" starttime="20230923 09:50:56.690" endtime="20230923 09:50:56.694"/>
-</iter>
-<status status="FAIL" starttime="20230923 09:50:56.689" endtime="20230923 09:50:56.694"/>
-</for>
-<doc>NTP Servers should be Configured</doc>
-<tag>ntp</tag>
-<tag>os</tag>
-<status status="FAIL" starttime="20230923 09:50:56.082" endtime="20230923 09:50:56.696">'MS Name/IP address         Stratum Poll Reach LastRx Last sample               
-===============================================================================
-^- pruts.nl                      2   6   377    51  +4761us[+4761us] +/-   47ms
-^- ntp4.bit.nl                   1   6   377    57  -1634us[-1634us] +/-  308ms
-^* 149-225-172-081.dynamic.&gt;     1   6   377    62   +451us[-4323us] +/- 5117us
-^- mail.emuadmin.com             3   6   377    53  +1182us[+1182us] +/-   55ms' does not contain 'ntp1.trans-ix.nl'</status>
-</test>
-<test id="s1-t10" name="Verify NTP service is active" line="154">
-<kw name="Run" library="OperatingSystem">
-<var>${output}</var>
-<arg>timedatectl show | grep -Po '(?&lt;=NTPSynchronized=)[^,]+'</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230923 09:50:56.712" level="INFO">Running command 'timedatectl show | grep -Po '(?&lt;=NTPSynchronized=)[^,]+' 2&gt;&amp;1'.</msg>
-<msg timestamp="20230923 09:50:56.906" level="INFO">${output} = yes</msg>
-<status status="PASS" starttime="20230923 09:50:56.706" endtime="20230923 09:50:56.907"/>
-</kw>
-<kw name="Should Be Equal As Strings" library="BuiltIn">
-<arg>${output}</arg>
-<arg>yes</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" starttime="20230923 09:50:56.910" endtime="20230923 09:50:56.912"/>
-</kw>
-<doc>Check that the NTP service is active</doc>
-<tag>ntp</tag>
-<tag>os</tag>
-<status status="PASS" starttime="20230923 09:50:56.704" endtime="20230923 09:50:56.914"/>
-</test>
-<doc>The following tests verify the operating system configuration &amp; dependency packages
-are present in preperation for the Cisco NSO application testing. The checks include:
-- dependent packages are available
-- required utilities are present
-- hostname has been changed
-- DNS and NTP serviecs are configured and active
+<doc>The T-SDN Core Function Pack requires system limit changes to be made
+the test will check the /etc/security/limnits.d/ncs.conf file exists and that the expected values
+have been provided. The expected values are stored in a dict k,v arrangement and can be extended
+if needed
 
-Refer to the SCDP documentation to address any failed tests.</doc>
-<status status="FAIL" starttime="20230923 09:50:54.591" endtime="20230923 09:50:56.920"/>
+To handle the Regex * issue we need to preface each key with 
+\*s+ should be handled in
+the KEywork but thats for the future</doc>
+<status status="FAIL" starttime="20230926 20:01:29.852" endtime="20230926 20:01:29.858">FileNotFoundError: [Errno 2] No such file or directory: '/etc/security/limits.d/ncs.conf'</status>
+</test>
+<test id="s1-t3" name="Verify that the limit changes are applied to the system" line="74">
+<kw name="Run" library="OperatingSystem">
+<var>${ulimit_settings}</var>
+<arg>ulimit -a</arg>
+<doc>Runs the given command in the system and returns the output.</doc>
+<msg timestamp="20230926 20:01:29.864" level="INFO">Running command 'ulimit -a 2&gt;&amp;1'.</msg>
+<msg timestamp="20230926 20:01:29.867" level="INFO">${ulimit_settings} = real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) 0
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file ...</msg>
+<status status="PASS" starttime="20230926 20:01:29.861" endtime="20230926 20:01:29.867"/>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${ulimit_dict}</var>
+<arg>max locked memory=65536</arg>
+<arg>open files=65535</arg>
+<arg>max user processes=65535</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230926 20:01:29.869" level="INFO">${ulimit_dict} = {'max locked memory': '65536', 'open files': '65535', 'max user processes': '65535'}</msg>
+<status status="PASS" starttime="20230926 20:01:29.868" endtime="20230926 20:01:29.869"/>
+</kw>
+<kw name="Create List" library="BuiltIn">
+<var>${error_list}</var>
+<doc>Returns a list containing given items.</doc>
+<msg timestamp="20230926 20:01:29.870" level="INFO">${error_list} = []</msg>
+<status status="PASS" starttime="20230926 20:01:29.870" endtime="20230926 20:01:29.870"/>
+</kw>
+<for flavor="IN">
+<var>${ulimit}</var>
+<var>${ulimit_value}</var>
+<value>&amp;{ulimit_dict}</value>
+<iter>
+<var name="${ulimit}">max locked memory</var>
+<var name="${ulimit_value}">65536</var>
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit}:${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230926 20:01:29.871" level="INFO">max locked memory:65536</msg>
+<status status="PASS" starttime="20230926 20:01:29.871" endtime="20230926 20:01:29.871"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${matches}</var>
+<arg>${ulimit_settings}</arg>
+<arg>${ulimit}.*\\)\\s(.*)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230926 20:01:29.872" level="INFO">${matches} = ['8192']</msg>
+<status status="PASS" starttime="20230926 20:01:29.872" endtime="20230926 20:01:29.872"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${len}</var>
+<arg>${matches}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230926 20:01:29.873" level="INFO">Length is 1</msg>
+<msg timestamp="20230926 20:01:29.873" level="INFO">${len} = 1</msg>
+<status status="PASS" starttime="20230926 20:01:29.872" endtime="20230926 20:01:29.873"/>
+</kw>
+<if>
+<branch type="IF" condition="${len} &gt; 0">
+<if>
+<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.875" endtime="20230926 20:01:29.875"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.875"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
+</kw>
+<status status="PASS" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.876"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.876"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} not found in output</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.877"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.877"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.871" endtime="20230926 20:01:29.877"/>
+</iter>
+<iter>
+<var name="${ulimit}">open files</var>
+<var name="${ulimit_value}">65535</var>
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit}:${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230926 20:01:29.877" level="INFO">open files:65535</msg>
+<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.877"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${matches}</var>
+<arg>${ulimit_settings}</arg>
+<arg>${ulimit}.*\\)\\s(.*)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230926 20:01:29.878" level="INFO">${matches} = ['1024']</msg>
+<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.878"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${len}</var>
+<arg>${matches}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230926 20:01:29.878" level="INFO">Length is 1</msg>
+<msg timestamp="20230926 20:01:29.878" level="INFO">${len} = 1</msg>
+<status status="PASS" starttime="20230926 20:01:29.878" endtime="20230926 20:01:29.878"/>
+</kw>
+<if>
+<branch type="IF" condition="${len} &gt; 0">
+<if>
+<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.880"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.880"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.882"/>
+</kw>
+<status status="PASS" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.882"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} not found in output</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.883"/>
+</iter>
+<iter>
+<var name="${ulimit}">max user processes</var>
+<var name="${ulimit_value}">65535</var>
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit}:${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230926 20:01:29.883" level="INFO">max user processes:65535</msg>
+<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.883"/>
+</kw>
+<kw name="Get Regexp Matches" library="String">
+<var>${matches}</var>
+<arg>${ulimit_settings}</arg>
+<arg>${ulimit}.*\\)\\s(.*)</arg>
+<arg>1</arg>
+<doc>Returns a list of all non-overlapping matches in the given string.</doc>
+<msg timestamp="20230926 20:01:29.884" level="INFO">${matches} = ['6836']</msg>
+<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.884"/>
+</kw>
+<kw name="Get Length" library="BuiltIn">
+<var>${len}</var>
+<arg>${matches}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<msg timestamp="20230926 20:01:29.884" level="INFO">Length is 1</msg>
+<msg timestamp="20230926 20:01:29.884" level="INFO">${len} = 1</msg>
+<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.884"/>
+</kw>
+<if>
+<branch type="IF" condition="${len} &gt; 0">
+<if>
+<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.885"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.886"/>
+</branch>
+<branch type="ELSE">
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="PASS" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
+</kw>
+<status status="PASS" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.886"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.886"/>
+</branch>
+<branch type="ELSE">
+<kw name="Log" library="BuiltIn">
+<arg>${ulimit} not found in output</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
+</kw>
+<kw name="Append To List" library="Collections">
+<arg>${error_list}</arg>
+<arg>${ulimit}</arg>
+<doc>Adds ``values`` to the end of ``list``.</doc>
+<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
+</kw>
+<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.887"/>
+</branch>
+<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.887"/>
+</if>
+<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.887"/>
+</iter>
+<status status="PASS" starttime="20230926 20:01:29.870" endtime="20230926 20:01:29.887"/>
+</for>
+<kw name="Should Be Empty" library="BuiltIn">
+<arg>${error_list}</arg>
+<arg>Errors found in the following paramaters : ${error_list}</arg>
+<doc>Verifies that the given item is empty.</doc>
+<msg timestamp="20230926 20:01:29.887" level="INFO">Length is 3</msg>
+<msg timestamp="20230926 20:01:29.888" level="FAIL">Errors found in the following paramaters : ['max locked memory', 'open files', 'max user processes']</msg>
+<status status="FAIL" starttime="20230926 20:01:29.887" endtime="20230926 20:01:29.888"/>
+</kw>
+<doc>This test checks that the variables applied to the /etc/security/limits.d/ncs.conf
+have been applied. This typically requires a user to disconnect and reconnect to the servers</doc>
+<status status="FAIL" starttime="20230926 20:01:29.860" endtime="20230926 20:01:29.888">Errors found in the following paramaters : ['max locked memory', 'open files', 'max user processes']</status>
+</test>
+<doc>This set of tests validates the system envionment changes have been made for
+the Cisco NSO application and the T-SDN Core Function Pack the changes relate to:
+- overcommit_memory disabled across reboots
+- system limits configured as per T-SDN package documentation</doc>
+<status status="FAIL" starttime="20230926 20:01:29.767" endtime="20230926 20:01:29.890"/>
 </suite>
 <statistics>
 <total>
-<stat pass="8" fail="2" skip="0">All Tests</stat>
+<stat pass="0" fail="3" skip="0">All Tests</stat>
 </total>
 <tag>
-<stat pass="1" fail="1" skip="0">dns</stat>
-<stat pass="1" fail="1" skip="0">ntp</stat>
-<stat pass="5" fail="2" skip="0">os</stat>
-<stat pass="3" fail="0" skip="0">packages</stat>
 </tag>
 <suite>
-<stat pass="8" fail="2" skip="0" id="s1" name="System.V2">System.V2</stat>
+<stat pass="0" fail="3" skip="0" id="s1" name="Ncs Env.V2">Ncs Env.V2</stat>
 </suite>
 </statistics>
 <errors>
