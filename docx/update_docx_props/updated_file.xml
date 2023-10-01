@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<additionalProperties xmlns="http://schemas.cisco.com/ASMasterTemplate/additionalProperties">
+    <ProjectNameAndCustomerName>VF Germany</ProjectNameAndCustomerName>
+    <documentDeliverableName>ATP - Acceptance Test Plan</documentDeliverableName>
+    <VersionDocument>1.0</VersionDocument>
+    <documentAuthor>Ulfat Butt</documentAuthor>
+    <ChangeAuthority />
+    <documentDCP />
+    <documentPID />  
+    <documentClassification>Cisco Highly Confidential</documentClassification>
+    <documentTemplateDate />
+    <documentTemplateVersion>Template v2.30.5</documentTemplateVersion>
+    <documentTheater />
+    <documentOrg>Cisco CX</documentOrg>
+    <EDCS_Reference>EDCS-1238376</EDCS_Reference>
+    <ReferenceNo>[Enter AIX Template ID number]</ReferenceNo>
+    <TemplateId>ICN-TMPL-18326</TemplateId>
+    <AIX-TMPL>AIX-TMPL 18326</AIX-TMPL>
+    <TemplateOwner>[Enter Template Owner (email alias)]</TemplateOwner>
+    
+</additionalProperties>

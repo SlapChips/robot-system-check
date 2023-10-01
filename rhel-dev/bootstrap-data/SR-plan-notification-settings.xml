@@ -1,0 +1,24 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <plan-notifications>
+      <subscription>
+        <name>sr-odn-notif</name>
+        <service-type>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-odn:odn/cisco-sr-te-cfp-sr-odn:odn-template</service-type>
+      </subscription>
+      <subscription>
+        <name>sr-policy-notif</name>
+        <service-type>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-policies:policies/cisco-sr-te-cfp-sr-policies:policy</service-type>
+      </subscription>
+    </plan-notifications>
+  </services>
+  <plan-path-for-notification xmlns="http://com/cisco/core-fp-plan-notif-generator">
+    <path>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-odn:odn/odn-template-plan</path>
+    <service-path>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-odn:odn/odn-template</service-path>
+    <service-key-elements>name</service-key-elements>
+  </plan-path-for-notification>
+  <plan-path-for-notification xmlns="http://com/cisco/core-fp-plan-notif-generator">
+    <path>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-policies:policies/policy-plan</path>
+    <service-path>/cisco-sr-te-cfp:sr-te/cisco-sr-te-cfp-sr-policies:policies/policy</service-path>
+    <service-key-elements>name</service-key-elements>
+  </plan-path-for-notification>
+</config>

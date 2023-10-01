@@ -64,3 +64,8 @@ fi
 if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
     hash -r 2> /dev/null
 fi
+
+# Set the ROBOT OPTIONS to be used
+# Pass the Reults Folder: --outputdir /mnt/vm-shared/robot-dev/rhel-dev/results/
+# Pass the Test Suite Name override --name = ATP
+export ROBOT_OPTIONS="--outputdir /mnt/vm-shared/robot-dev/rhel-dev/results/ --name ATP"

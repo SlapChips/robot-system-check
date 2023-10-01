@@ -21,6 +21,8 @@ Verify that the overcommit_memory value has been updated
     ...    this test will check both locations
     ...
 
+    Skip    Need to check the configurations as its not in the CFP docs
+
     ${run_time_overcommit}    Run    cat /proc/sys/vm/overcommit_memory
     ${sysctl_d_ncs_conf}    Get File    /etc/sysctl.d/ncs.conf
     ${error_list}   Create List
@@ -39,14 +41,43 @@ Verify that the overcommit_memory value has been updated
     END
     Should Be Empty    ${error_list}    Errors encountered with values for ${error_list}
 
+Verify that the ncs init script 'ulimit' has been updated
+    [Documentation]    The T-SDN Core Function Pack requires for the NSO process
+    ...    initilization script to be modified. This test validates that the neccesary
+    ...    changes are implemented in the system. If the test fails, edit and 
+    ...    modify the '/etc/init.d/ncs' file and add the 'ulimit -n 65535' statement
+    ...    as shown in the example:
+    ...    
+    ...    ncsdir=/opt/ncs/current
+    ...    confdir=/etc/ncs
+    ...    rundir=/var/opt/ncs
+    ...    logdir=/var/log/ncs
+    ...    
+    ...    ncs=${ncsdir}/bin/ncs
+    ...    ulimit -n 65535
+    ...    prog=ncs
+    ...    conf="-c ${confdir}/ncs.conf"
+    ...    heart="--heart"
+    ...    
+    ${cmd}    Set Variable    grep "ulimit" /etc/init.d/ncs
+    ${response}    Run    ${cmd}
+    Should Not Be Empty    ${response}
+    Should Match Regexp    ${response}    ulimit\\s*-n\\s*
+
+
 Verify the T-SDN system limits have been configured
     [Documentation]    The T-SDN Core Function Pack requires system limit changes to be made
     ...    the test will check the /etc/security/limnits.d/ncs.conf file exists and that the expected values
-    ...    have been provided. The expected values are stored in a dict k,v arrangement and can be extended
-    ...    if needed
+    ...    have been provided. The expected values are stored in a dict k,v arrangement.
+    ...    Expected file contents:
+    ...    *   hard nproc 65535
+    ...    *   soft nofile 65535
+    ...    *   hard nofile 65535
+    ...    *   hard memlock 65536
+    ...    *   soft memlock 65536 
     ...
     ...    To handle the Regex * issue we need to preface each key with \n\\*\s+ should be handled in
-    ...    the KEywork but thats for the future
+    ...    the Keyword but thats for the future
     ...
 
     ${file}    Get File    /etc/security/limits.d/ncs.conf

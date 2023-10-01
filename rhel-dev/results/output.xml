@@ -1,475 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230926 20:01:29.764" rpa="false" schemaversion="4">
-<suite id="s1" name="Ncs Env.V2" source="/mnt/vm-shared/robot-dev/rhel-dev/ncs_env.v2.robot">
-<test id="s1-t1" name="Verify that the overcommit_memory value has been updated" line="17">
-<kw name="Run" library="OperatingSystem">
-<var>${run_time_overcommit}</var>
-<arg>cat /proc/sys/vm/overcommit_memory</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230926 20:01:29.835" level="INFO">Running command 'cat /proc/sys/vm/overcommit_memory 2&gt;&amp;1'.</msg>
-<msg timestamp="20230926 20:01:29.842" level="INFO">${run_time_overcommit} = 2</msg>
-<status status="PASS" starttime="20230926 20:01:29.832" endtime="20230926 20:01:29.842"/>
+<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230927 16:42:35.785" rpa="false" schemaversion="4">
+<suite id="s1" name="ATP" source="/mnt/vm-shared/robot-dev/dev/ncs_load_merge/nso_load_merge.robot">
+<test id="s1-t1" name="Test Load merge" line="5">
+<kw name="Set Variable" library="BuiltIn">
+<var>${load_xml_file}</var>
+<arg>test</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20230927 16:42:35.821" level="INFO">${load_xml_file} = test</msg>
+<status status="PASS" starttime="20230927 16:42:35.821" endtime="20230927 16:42:35.821"/>
 </kw>
-<kw name="Get File" library="OperatingSystem">
-<var>${sysctl_d_ncs_conf}</var>
-<arg>/etc/sysctl.d/ncs.conf</arg>
-<doc>Returns the contents of a specified file.</doc>
-<msg timestamp="20230926 20:01:29.843" level="INFO" html="true">Getting file '&lt;a href="file:///etc/sysctl.d/ncs.conf"&gt;/etc/sysctl.d/ncs.conf&lt;/a&gt;'.</msg>
-<msg timestamp="20230926 20:01:29.843" level="FAIL">FileNotFoundError: [Errno 2] No such file or directory: '/etc/sysctl.d/ncs.conf'</msg>
-<status status="FAIL" starttime="20230926 20:01:29.843" endtime="20230926 20:01:29.844"/>
+<kw name="Load Merge Xml File And Return Output" library="CiscoNso">
+<var>${status}</var>
+<var>${message}</var>
+<var>${output}</var>
+<arg>${load_xml_file}</arg>
+<doc>Constructs the command sequance to send to ncs_cli to load an xml file 
+which is passed as an argument. File path of the XML files should be in 
+the relative path ./config_files/ directory</doc>
+<msg timestamp="20230927 16:42:35.901" level="INFO">${status} = False</msg>
+<msg timestamp="20230927 16:42:35.901" level="INFO">${message} = Configuration is applied but not consistent</msg>
+<msg timestamp="20230927 16:42:35.901" level="INFO">${output} = Loading.
+361 bytes parsed in 0.00 sec (43.43 KiB/sec)
+cli {
+    local-node {
+        data  devices {
+                  authgroups {
+                      group default {
+                          defa...</msg>
+<status status="PASS" starttime="20230927 16:42:35.822" endtime="20230927 16:42:35.901"/>
 </kw>
-<kw name="Create List" library="BuiltIn">
-<var>${error_list}</var>
-<doc>Returns a list containing given items.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.844" endtime="20230926 20:01:29.844"/>
+<kw name="Log" library="BuiltIn">
+<arg>Output ${output}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 16:42:35.903" level="INFO">Output Loading.
+361 bytes parsed in 0.00 sec (43.43 KiB/sec)
+cli {
+    local-node {
+        data  devices {
+                  authgroups {
+                      group default {
+                          default-map {
+             -                remote-name "Kilroy was here";
+             +                remote-name cisco55;
+                          }
+                      }
+                  }
+              }
+    }
+}
+</msg>
+<status status="PASS" starttime="20230927 16:42:35.902" endtime="20230927 16:42:35.903"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Status ${status}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 16:42:35.904" level="INFO">Status False</msg>
+<status status="PASS" starttime="20230927 16:42:35.903" endtime="20230927 16:42:35.904"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Message ${message}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230927 16:42:35.906" level="INFO">Message Configuration is applied but not consistent</msg>
+<status status="PASS" starttime="20230927 16:42:35.905" endtime="20230927 16:42:35.906"/>
 </kw>
 <if>
-<branch type="IF" condition="${run_time_overcommit} == 2">
-<kw name="Log" library="BuiltIn">
-<arg>/proc/sys/vm/overcommit_memory is configured correctly</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
+<branch type="IF" condition="${status} == True">
+<kw name="Pass Execution" library="BuiltIn">
+<arg>Validation Successful for file : ${load_xml_file}</arg>
+<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
+<status status="NOT RUN" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.907"/>
 </kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
+<status status="NOT RUN" starttime="20230927 16:42:35.906" endtime="20230927 16:42:35.907"/>
 </branch>
 <branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>overcommit_memory not set to expected value</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
+<kw name="Fail" library="BuiltIn">
+<arg>Validation unsuccesful for file : ${load_xml_file}</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<msg timestamp="20230927 16:42:35.907" level="FAIL">Validation unsuccesful for file : test</msg>
+<status status="FAIL" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.908"/>
 </kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.845" endtime="20230926 20:01:29.845"/>
+<status status="FAIL" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.908"/>
 </branch>
-<status status="NOT RUN" starttime="20230926 20:01:29.844" endtime="20230926 20:01:29.845"/>
+<status status="FAIL" starttime="20230927 16:42:35.906" endtime="20230927 16:42:35.908"/>
 </if>
-<kw name="Get Regexp Matches" library="String">
-<var>${matches}</var>
-<arg>${sysctl_d_ncs_conf}</arg>
-<arg>vm.overcommit_memory\\s?=\\s?(.*)</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.846" endtime="20230926 20:01:29.846"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${matches}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.847" endtime="20230926 20:01:29.847"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>${matches[0]}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.847" endtime="20230926 20:01:29.847"/>
-</kw>
-<if>
-<branch type="IF" condition="${matches[0]} == 2">
-<kw name="Log" library="BuiltIn">
-<arg>vm.overcommit_memory assigned to correct values</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>vm.overcommit_memory not assigned correct values</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
-</branch>
-<status status="NOT RUN" starttime="20230926 20:01:29.848" endtime="20230926 20:01:29.848"/>
-</if>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${error_list}</arg>
-<arg>Errors encountered with values for ${error_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.849" endtime="20230926 20:01:29.849"/>
-</kw>
-<doc>The default os value is pre-configured to 0, this needs to be modified
-to "2". This can be changed at run-time by "echo 2 &gt; /proc/sys/vm/overcommit_memory"
-however it should be persistently added to the /etc/sysctl.d/ncs.conf
-this test will check both locations</doc>
-<status status="FAIL" starttime="20230926 20:01:29.831" endtime="20230926 20:01:29.850">FileNotFoundError: [Errno 2] No such file or directory: '/etc/sysctl.d/ncs.conf'</status>
+<status status="FAIL" starttime="20230927 16:42:35.820" endtime="20230927 16:42:35.908">Validation unsuccesful for file : test</status>
 </test>
-<test id="s1-t2" name="Verify the T-SDN system limits have been configured" line="42">
-<kw name="Get File" library="OperatingSystem">
-<var>${file}</var>
-<arg>/etc/security/limits.d/ncs.conf</arg>
-<doc>Returns the contents of a specified file.</doc>
-<msg timestamp="20230926 20:01:29.853" level="INFO" html="true">Getting file '&lt;a href="file:///etc/security/limits.d/ncs.conf"&gt;/etc/security/limits.d/ncs.conf&lt;/a&gt;'.</msg>
-<msg timestamp="20230926 20:01:29.854" level="FAIL">FileNotFoundError: [Errno 2] No such file or directory: '/etc/security/limits.d/ncs.conf'</msg>
-<status status="FAIL" starttime="20230926 20:01:29.853" endtime="20230926 20:01:29.854"/>
-</kw>
-<kw name="Replace String Using Regexp" library="String">
-<var>${clean_file}</var>
-<arg>${file}</arg>
-<arg>\\s{2}</arg>
-<arg>${SPACE}</arg>
-<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.854" endtime="20230926 20:01:29.854"/>
-</kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<var>${limits_dict}</var>
-<arg>soft nproc=65535</arg>
-<arg>hard nproc=65535</arg>
-<arg>soft nofile=65536</arg>
-<arg>hard memlock=65536</arg>
-<arg>soft memlock=65536</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.855"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${error_list}</var>
-<doc>Returns a list containing given items.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.855"/>
-</kw>
-<for flavor="IN">
-<var>${key}</var>
-<var>${value}</var>
-<value>&amp;{limits_dict}</value>
-<iter>
-<var name="${key}"/>
-<var name="${value}"/>
-<kw name="Get Regexp Matches" library="String">
-<var>${matches}</var>
-<arg>${clean_file}</arg>
-<arg>(?&lt;!#)\\s+\\*\\s+${key}\\s?(\\d+)</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<var>${len}</var>
-<arg>${matches}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
-</kw>
-<if>
-<branch type="IF" condition="${len} &gt; 0">
-<if>
-<branch type="IF" condition="${matches[0]} == ${value}">
-<kw name="Log" library="BuiltIn">
-<arg>${key} value found, and set to the expected value : ${value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.856"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${key}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
-</branch>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
-</if>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
-</branch>
-<branch type="ELSE">
-<kw name="Log" library="BuiltIn">
-<arg>${key} not found in ${file}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
-</kw>
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${key}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.857" endtime="20230926 20:01:29.857"/>
-</branch>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
-</if>
-<status status="NOT RUN" starttime="20230926 20:01:29.856" endtime="20230926 20:01:29.857"/>
-</iter>
-<status status="NOT RUN" starttime="20230926 20:01:29.855" endtime="20230926 20:01:29.858"/>
-</for>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${error_list}</arg>
-<arg>Errors found in the following paramaters : ${error_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.858" endtime="20230926 20:01:29.858"/>
-</kw>
-<doc>The T-SDN Core Function Pack requires system limit changes to be made
-the test will check the /etc/security/limnits.d/ncs.conf file exists and that the expected values
-have been provided. The expected values are stored in a dict k,v arrangement and can be extended
-if needed
-
-To handle the Regex * issue we need to preface each key with 
-\*s+ should be handled in
-the KEywork but thats for the future</doc>
-<status status="FAIL" starttime="20230926 20:01:29.852" endtime="20230926 20:01:29.858">FileNotFoundError: [Errno 2] No such file or directory: '/etc/security/limits.d/ncs.conf'</status>
-</test>
-<test id="s1-t3" name="Verify that the limit changes are applied to the system" line="74">
-<kw name="Run" library="OperatingSystem">
-<var>${ulimit_settings}</var>
-<arg>ulimit -a</arg>
-<doc>Runs the given command in the system and returns the output.</doc>
-<msg timestamp="20230926 20:01:29.864" level="INFO">Running command 'ulimit -a 2&gt;&amp;1'.</msg>
-<msg timestamp="20230926 20:01:29.867" level="INFO">${ulimit_settings} = real-time non-blocking time  (microseconds, -R) unlimited
-core file size              (blocks, -c) 0
-data seg size               (kbytes, -d) unlimited
-scheduling priority                 (-e) 0
-file ...</msg>
-<status status="PASS" starttime="20230926 20:01:29.861" endtime="20230926 20:01:29.867"/>
-</kw>
-<kw name="Create Dictionary" library="BuiltIn">
-<var>${ulimit_dict}</var>
-<arg>max locked memory=65536</arg>
-<arg>open files=65535</arg>
-<arg>max user processes=65535</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<msg timestamp="20230926 20:01:29.869" level="INFO">${ulimit_dict} = {'max locked memory': '65536', 'open files': '65535', 'max user processes': '65535'}</msg>
-<status status="PASS" starttime="20230926 20:01:29.868" endtime="20230926 20:01:29.869"/>
-</kw>
-<kw name="Create List" library="BuiltIn">
-<var>${error_list}</var>
-<doc>Returns a list containing given items.</doc>
-<msg timestamp="20230926 20:01:29.870" level="INFO">${error_list} = []</msg>
-<status status="PASS" starttime="20230926 20:01:29.870" endtime="20230926 20:01:29.870"/>
-</kw>
-<for flavor="IN">
-<var>${ulimit}</var>
-<var>${ulimit_value}</var>
-<value>&amp;{ulimit_dict}</value>
-<iter>
-<var name="${ulimit}">max locked memory</var>
-<var name="${ulimit_value}">65536</var>
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit}:${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230926 20:01:29.871" level="INFO">max locked memory:65536</msg>
-<status status="PASS" starttime="20230926 20:01:29.871" endtime="20230926 20:01:29.871"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${matches}</var>
-<arg>${ulimit_settings}</arg>
-<arg>${ulimit}.*\\)\\s(.*)</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230926 20:01:29.872" level="INFO">${matches} = ['8192']</msg>
-<status status="PASS" starttime="20230926 20:01:29.872" endtime="20230926 20:01:29.872"/>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<var>${len}</var>
-<arg>${matches}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<msg timestamp="20230926 20:01:29.873" level="INFO">Length is 1</msg>
-<msg timestamp="20230926 20:01:29.873" level="INFO">${len} = 1</msg>
-<status status="PASS" starttime="20230926 20:01:29.872" endtime="20230926 20:01:29.873"/>
-</kw>
-<if>
-<branch type="IF" condition="${len} &gt; 0">
-<if>
-<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.875" endtime="20230926 20:01:29.875"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.875"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
-</kw>
-<status status="PASS" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.876"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.876"/>
-</branch>
-<branch type="ELSE">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} not found in output</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
-</kw>
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.876"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.876" endtime="20230926 20:01:29.877"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.873" endtime="20230926 20:01:29.877"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.871" endtime="20230926 20:01:29.877"/>
-</iter>
-<iter>
-<var name="${ulimit}">open files</var>
-<var name="${ulimit_value}">65535</var>
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit}:${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230926 20:01:29.877" level="INFO">open files:65535</msg>
-<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.877"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${matches}</var>
-<arg>${ulimit_settings}</arg>
-<arg>${ulimit}.*\\)\\s(.*)</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230926 20:01:29.878" level="INFO">${matches} = ['1024']</msg>
-<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.878"/>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<var>${len}</var>
-<arg>${matches}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<msg timestamp="20230926 20:01:29.878" level="INFO">Length is 1</msg>
-<msg timestamp="20230926 20:01:29.878" level="INFO">${len} = 1</msg>
-<status status="PASS" starttime="20230926 20:01:29.878" endtime="20230926 20:01:29.878"/>
-</kw>
-<if>
-<branch type="IF" condition="${len} &gt; 0">
-<if>
-<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.880"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.880"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.882"/>
-</kw>
-<status status="PASS" starttime="20230926 20:01:29.880" endtime="20230926 20:01:29.882"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
-</branch>
-<branch type="ELSE">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} not found in output</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
-</kw>
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.882" endtime="20230926 20:01:29.882"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.879" endtime="20230926 20:01:29.882"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.877" endtime="20230926 20:01:29.883"/>
-</iter>
-<iter>
-<var name="${ulimit}">max user processes</var>
-<var name="${ulimit_value}">65535</var>
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit}:${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230926 20:01:29.883" level="INFO">max user processes:65535</msg>
-<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.883"/>
-</kw>
-<kw name="Get Regexp Matches" library="String">
-<var>${matches}</var>
-<arg>${ulimit_settings}</arg>
-<arg>${ulimit}.*\\)\\s(.*)</arg>
-<arg>1</arg>
-<doc>Returns a list of all non-overlapping matches in the given string.</doc>
-<msg timestamp="20230926 20:01:29.884" level="INFO">${matches} = ['6836']</msg>
-<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.884"/>
-</kw>
-<kw name="Get Length" library="BuiltIn">
-<var>${len}</var>
-<arg>${matches}</arg>
-<doc>Returns and logs the length of the given item as an integer.</doc>
-<msg timestamp="20230926 20:01:29.884" level="INFO">Length is 1</msg>
-<msg timestamp="20230926 20:01:29.884" level="INFO">${len} = 1</msg>
-<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.884"/>
-</kw>
-<if>
-<branch type="IF" condition="${len} &gt; 0">
-<if>
-<branch type="IF" condition="${matches[0]} == ${ulimit_value}">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} value found, and set to the expected value : ${ulimit_value}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.885"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.886"/>
-</branch>
-<branch type="ELSE">
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="PASS" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
-</kw>
-<status status="PASS" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.885" endtime="20230926 20:01:29.886"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.886"/>
-</branch>
-<branch type="ELSE">
-<kw name="Log" library="BuiltIn">
-<arg>${ulimit} not found in output</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
-</kw>
-<kw name="Append To List" library="Collections">
-<arg>${error_list}</arg>
-<arg>${ulimit}</arg>
-<doc>Adds ``values`` to the end of ``list``.</doc>
-<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.886"/>
-</kw>
-<status status="NOT RUN" starttime="20230926 20:01:29.886" endtime="20230926 20:01:29.887"/>
-</branch>
-<status status="PASS" starttime="20230926 20:01:29.884" endtime="20230926 20:01:29.887"/>
-</if>
-<status status="PASS" starttime="20230926 20:01:29.883" endtime="20230926 20:01:29.887"/>
-</iter>
-<status status="PASS" starttime="20230926 20:01:29.870" endtime="20230926 20:01:29.887"/>
-</for>
-<kw name="Should Be Empty" library="BuiltIn">
-<arg>${error_list}</arg>
-<arg>Errors found in the following paramaters : ${error_list}</arg>
-<doc>Verifies that the given item is empty.</doc>
-<msg timestamp="20230926 20:01:29.887" level="INFO">Length is 3</msg>
-<msg timestamp="20230926 20:01:29.888" level="FAIL">Errors found in the following paramaters : ['max locked memory', 'open files', 'max user processes']</msg>
-<status status="FAIL" starttime="20230926 20:01:29.887" endtime="20230926 20:01:29.888"/>
-</kw>
-<doc>This test checks that the variables applied to the /etc/security/limits.d/ncs.conf
-have been applied. This typically requires a user to disconnect and reconnect to the servers</doc>
-<status status="FAIL" starttime="20230926 20:01:29.860" endtime="20230926 20:01:29.888">Errors found in the following paramaters : ['max locked memory', 'open files', 'max user processes']</status>
-</test>
-<doc>This set of tests validates the system envionment changes have been made for
-the Cisco NSO application and the T-SDN Core Function Pack the changes relate to:
-- overcommit_memory disabled across reboots
-- system limits configured as per T-SDN package documentation</doc>
-<status status="FAIL" starttime="20230926 20:01:29.767" endtime="20230926 20:01:29.890"/>
+<status status="FAIL" starttime="20230927 16:42:35.786" endtime="20230927 16:42:35.910"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="3" skip="0">All Tests</stat>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat pass="0" fail="3" skip="0" id="s1" name="Ncs Env.V2">Ncs Env.V2</stat>
+<stat pass="0" fail="1" skip="0" id="s1" name="ATP">ATP</stat>
 </suite>
 </statistics>
 <errors>

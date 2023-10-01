@@ -1,0 +1,15 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <plan-notifications>
+      <subscription>
+        <name>l3vpn-notif</name>
+        <service-type>/cisco-flat-L3vpn-fp:flat-L3vpn</service-type>
+      </subscription>
+    </plan-notifications>
+  </services>
+  <plan-path-for-notification xmlns="http://com/cisco/core-fp-plan-notif-generator">
+    <path>/cisco-flat-L3vpn-fp:flat-L3vpn-plan</path>
+    <service-path>/cisco-flat-L3vpn-fp:flat-L3vpn</service-path>
+    <service-key-elements>name</service-key-elements>
+  </plan-path-for-notification>
+</config>

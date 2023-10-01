@@ -1,0 +1,22 @@
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <authgroups>
+    <group>
+      <name>default</name>
+      <default-map>
+        <remote-name>cisco2</remote-name>
+        <remote-password>$9$b5HI5y8X5M/rVsEcIofT/7Z1HTMN7voQGEhBJxjeqQc=</remote-password>
+      </default-map>
+    </group>
+  </authgroups>
+  <device>
+    <name>test</name>
+    <address>1.1.1.1</address>
+    <authgroup>default</authgroup>
+    <device-type>
+      <cli>
+        <ned-id xmlns:ned="http://tail-f.com/ns/ncs-ned">ned:snmp</ned-id>
+        <protocol>ssh</protocol>
+      </cli>
+    </device-type>
+  </device>
+</devices>

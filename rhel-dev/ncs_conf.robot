@@ -1,4 +1,5 @@
 *** Settings ***
+Name    NSO Configuration (ncs.conf) Validations
 Documentation    The following tests validate that the /etc/ncs/ncs.conf file has 
 ...    been correctly configured with the required values. The faile can be viewed 
 ...    by accessing the server and simply using the commands:
@@ -55,3 +56,4 @@ Verify High-Availability Is Enabled in ncs.conf
     [Documentation]    Verify that High-Availability is enabled in the ncs.conf file 
     [Tags]    nso 
     Check NCS Config Against String Value    ha/enabled    true
+

@@ -1,9 +1,0 @@
-# Adding T-SDN System Limits needed for NSO
-
-*    soft nproc 65535
-*    hard nproc 65535
-*    soft  nofile 65536
-*    hard  nofile 65535
-*    hard memlock 65536
-*    soft memlock 65536
-# *   soft memlock 9999

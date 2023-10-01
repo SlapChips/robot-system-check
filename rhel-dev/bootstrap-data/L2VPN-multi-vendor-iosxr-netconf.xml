@@ -1,0 +1,28 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <cfp-configurations xmlns="http://cisco.com/ns/nso/fp/examples/cisco-tsdn-flat-L2vpn">
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.3:cisco-iosxr-nc-7.3</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.NativeXR</python-impl-class-name>
+    </dynamic-device-mapping>
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.4:cisco-iosxr-nc-7.4</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.NativeXR</python-impl-class-name>
+    </dynamic-device-mapping>
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.315:cisco-iosxr-nc-7.315</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.NativeXR</python-impl-class-name>
+    </dynamic-device-mapping>
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.5:cisco-iosxr-nc-7.5</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.UMXR</python-impl-class-name>
+    </dynamic-device-mapping>
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.6:cisco-iosxr-nc-7.6</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.UMXR</python-impl-class-name>
+    </dynamic-device-mapping>
+    <dynamic-device-mapping>
+      <ned-id>cisco-iosxr-nc-7.7:cisco-iosxr-nc-7.7</ned-id>
+      <python-impl-class-name>flat_l2vpn_multi_vendors.UMXR</python-impl-class-name>
+    </dynamic-device-mapping>
+  </cfp-configurations>
+</config>

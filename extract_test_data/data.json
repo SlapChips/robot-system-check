@@ -1,0 +1,634 @@
+
+{'s1': {'name': 'Tests', 'source': '/home/ubutt/robot-dev/tests'},
+ 's1-s1': {'name': 'Ncs Env',
+           'source': '/home/ubutt/robot-dev/tests/ncs_env.robot'},
+ 's1-s2': {'name': 'Security',
+           'source': '/home/ubutt/robot-dev/tests/security.robot'},
+ 's1-s3': {'name': 'System',
+           'source': '/home/ubutt/robot-dev/tests/system.robot'}}
+
+{'s1-s1-t1': {'doc': 'The default os value is pre-configured to 0, this needs '
+                     'to be modified\n'
+                     'to "2". This can be changed at run-time by "echo 2 > '
+                     '/proc/sys/vm/overcommit_memmory"\n'
+                     'however it should be persistently added to the '
+                     '/etc/sysctl.d/ncs.conf\n'
+                     'this test will check both locations',
+              'messages': "Running command 'cat /proc/sys/vm/overcommit_memory "
+                          "2>&1'.\n"
+                          '${run_time_overcommit} = 2\n'
+                          "Getting file '<a "
+                          'href="file:///etc/sysctl.d/ncs.conf">/etc/sysctl.d/ncs.conf</a>\'.\n'
+                          '${sysctl_d_ncs_conf} = # Adding Over Commit Memmory '
+                          'Changes\n'
+                          '# This change keeps overcommit_memmory (OOM) '
+                          'disbaled across system reboots.\n'
+                          '\n'
+                          'vm.overcommit_memory = 2\n'
+                          '\n'
+                          '${error_list} = []\n'
+                          '/proc/sys/vm/overcommit_memory is configured '
+                          'correctly\n'
+                          "${matches} = ['2']\n"
+                          "['2']\n"
+                          '2\n'
+                          'vm.overcommit_memory assigned to correct values\n'
+                          'Length is 0',
+              'name': 'Verify that the overcommit_memory value has been '
+                      'updated',
+              'section': 's1-s1',
+              'status': 'PASS'},
+ 's1-s1-t2': {'doc': 'The T-SDN Core Function Pack requires system limit '
+                     'changes to be made\n'
+                     'the test will check the /etc/security/limnits.d/ncs.conf '
+                     'file exists and that the expected values\n'
+                     'have been provided. The expected values are stored in a '
+                     'dict k,v arrangement and can be extended\n'
+                     'if needed\n'
+                     '\n'
+                     'To handle the Regex * issue we need to preface each key '
+                     'with \n'
+                     '\\*s+ should be handled in\n'
+                     'the KEywork but thats for the future',
+              'messages': "Getting file '<a "
+                          'href="file:///etc/security/limits.d/ncs.conf">/etc/security/limits.d/ncs.conf</a>\'.\n'
+                          '${file} = # Adding T-SDN System Limits needed for '
+                          'NSO\n'
+                          '\n'
+                          '*    soft nproc 65535\n'
+                          '*    hard nproc 65535\n'
+                          '*    soft  nofile 65535\n'
+                          '*    hard  nofile 65535\n'
+                          '*    hard memlock 65536\n'
+                          '*    soft memlock 65536\n'
+                          '\n'
+                          '${clean_file} = # Adding T-SDN System Limits needed '
+                          'for NSO *  soft nproc 65535\n'
+                          '*  hard nproc 65535\n'
+                          '*  soft nofile 65535\n'
+                          '*  hard nofile 65535\n'
+                          '*  hard memlock 65536\n'
+                          '*  soft memlock 65536\n'
+                          '\n'
+                          "${limits_dict} = {'soft nproc': '65535', 'hard "
+                          "nproc': '65535', 'soft nofile': '65535', 'hard "
+                          "memlock': '65536', 'soft memlock': '65536'}\n"
+                          '${error_list} = []\n'
+                          "${matches} = ['65535']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'soft nproc value found, and set to the expected '
+                          'value : 65535\n'
+                          "${matches} = ['65535']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'hard nproc value found, and set to the expected '
+                          'value : 65535\n'
+                          "${matches} = ['65535']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'soft nofile value found, and set to the expected '
+                          'value : 65535\n'
+                          "${matches} = ['65536']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'hard memlock value found, and set to the expected '
+                          'value : 65536\n'
+                          "${matches} = ['65536']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'soft memlock value found, and set to the expected '
+                          'value : 65536\n'
+                          'Length is 0',
+              'name': 'Verify the T-SDN system limits have been configured',
+              'section': 's1-s1',
+              'status': 'PASS'},
+ 's1-s1-t3': {'doc': 'This test checks that the variables applied to the '
+                     '/etc/security/limits.d/ncs.conf\n'
+                     'have been applied. This typically requires a user to '
+                     'disconnect and reconnect to the servers',
+              'messages': "Running command 'ulimit -a 2>&1'.\n"
+                          '${ulimit_settings} = real-time non-blocking time  '
+                          '(microseconds, -R) unlimited\n'
+                          'core file size              (blocks, -c) 0\n'
+                          'data seg size               (kbytes, -d) unlimited\n'
+                          'scheduling priority                 (-e) 0\n'
+                          'file ...\n'
+                          "${ulimit_dict} = {'max locked memory': '65536', "
+                          "'open files': '65535', 'max user processes': "
+                          "'65535'}\n"
+                          '${error_list} = []\n'
+                          'max locked memory:65536\n'
+                          "${matches} = ['65536']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'max locked memory value found, and set to the '
+                          'expected value : 65536\n'
+                          'open files:65535\n'
+                          "${matches} = ['65535']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'open files value found, and set to the expected '
+                          'value : 65535\n'
+                          'max user processes:65535\n'
+                          "${matches} = ['65535']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'max user processes value found, and set to the '
+                          'expected value : 65535\n'
+                          'Length is 0',
+              'name': 'Verify that the limit changes are applied to the system',
+              'section': 's1-s1',
+              'status': 'PASS'},
+ 's1-s2-t1': {'doc': 'The firewall service should not be disabled on reboot',
+              'messages': "Running command 'systemctl is-enabled firewalld "
+                          "2>&1'.\n"
+                          '${output} = enabled',
+              'name': 'Verify firewalld service is enabled',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t10': {'doc': 'Password expiration values need to be modified in the '
+                      '/etc/login.defs file the\n'
+                      'default values need to be modified to meet the '
+                      'following requirements:\n'
+                      '- PASS_MIN_LEN    5\n'
+                      '- PASS_MAX_DAYS   90\n'
+                      '- PASS_MIN_DAYS   1\n'
+                      '- PASS_WARN_AGE   5',
+               'messages': "${dict} = {'PASS_MAX_DAYS': '90', 'PASS_MIN_DAYS': "
+                           "'1', 'PASS_MIN_LEN': '5', 'PASS_WARN_AGE': '5'}\n"
+                           '${file_path} = /etc/login.defs\n'
+                           "{'PASS_MAX_DAYS': '90', 'PASS_MIN_DAYS': '1', "
+                           "'PASS_MIN_LEN': '5', 'PASS_WARN_AGE': '5'}\n"
+                           '/etc/login.defs\n'
+                           "Getting file '<a "
+                           'href="file:///etc/login.defs">/etc/login.defs</a>\'.\n'
+                           '${file} = #\n'
+                           '# Please note that the parameters in this '
+                           'configuration file control the\n'
+                           '# behavior of the tools from the shadow-utils '
+                           'component. None of these\n'
+                           '# tools uses the PAM mechanism, and the utilities '
+                           'that...\n'
+                           '${errors_list} = []\n'
+                           "${match} = ['90']\n"
+                           'Length is 1\n'
+                           '${number_of_results} = 1\n'
+                           '${match_val} = 90\n'
+                           '${status} = PASS\n'
+                           '${status_message} = None\n'
+                           "${match} = ['1']\n"
+                           'Length is 1\n'
+                           '${number_of_results} = 1\n'
+                           '${match_val} = 1\n'
+                           '${status} = PASS\n'
+                           '${status_message} = None\n'
+                           "${match} = ['5']\n"
+                           'Length is 1\n'
+                           '${number_of_results} = 1\n'
+                           '${match_val} = 5\n'
+                           '${status} = PASS\n'
+                           '${status_message} = None\n'
+                           "${match} = ['5']\n"
+                           'Length is 1\n'
+                           '${number_of_results} = 1\n'
+                           '${match_val} = 5\n'
+                           '${status} = PASS\n'
+                           '${status_message} = None\n'
+                           'Length is 0',
+               'name': 'Verify login.defs has been modifed',
+               'section': 's1-s2',
+               'status': 'PASS'},
+ 's1-s2-t11': {'doc': 'The default value of INACTIVE in /etc/defaults/useradd '
+                      'is set to -1 which\n'
+                      'equates to no inactvity time out for user. We need to '
+                      'change this value to 90 as per\n'
+                      'request from Customer',
+               'messages': "Getting file '<a "
+                           'href="file:///etc/default/useradd">/etc/default/useradd</a>\'.\n'
+                           '${useradd_conf} = # useradd defaults file\n'
+                           'GROUP=100\n'
+                           'HOME=/home\n'
+                           'INACTIVE=90\n'
+                           '# INACTIVE=-1\n'
+                           'EXPIRE=\n'
+                           'SHELL=/bin/bash\n'
+                           'SKEL=/etc/skel\n'
+                           'CREATE_MAIL_SPOOL=yes\n'
+                           '\n'
+                           '\n'
+                           "${match} = ['90']\n"
+                           '${match_val} = 90',
+               'name': 'Verify the user account inavtive days value has been '
+                       'modified',
+               'section': 's1-s2',
+               'status': 'PASS'},
+ 's1-s2-t2': {'doc': 'Check that the neccesary tcp/udp ports are open for nso '
+                     'the\n'
+                     'ports are listed in the list "nso_fw_ports" defined in '
+                     'the global Variables\n'
+                     "List includes the following : ['2022', '2024', '8080', "
+                     "'8888']",
+              'messages': "Running command 'sudo firewall-cmd --list-all "
+                          "2>&1'.\n"
+                          '${output} = public (active)\n'
+                          '  target: default\n'
+                          '  icmp-block-inversion: no\n'
+                          '  interfaces: ens33\n'
+                          '  sources: \n'
+                          '  services: cockpit dhcpv6-client ssh\n'
+                          '  ports: 22/tcp 4570/tcp 2022/tcp 2023/tcp 2024/tcp '
+                          '8080/tcp 8888/tcp...\n'
+                          '2022\n'
+                          '2024\n'
+                          '8080\n'
+                          '8888',
+              'name': 'Verify NSO ports are configured in the firewalld',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t3': {'doc': 'Verify that a custom sssd profile has been created',
+              'messages': "Running command 'authselect list 2>&1'.\n"
+                          '${output} = - minimal       \t Local users only for '
+                          'minimal installations\n'
+                          '- sssd          \t Enable SSSD for system '
+                          'authentication (also for local users only)\n'
+                          '- winbind       \t Enable winbind for system '
+                          'authenticat...',
+              'name': 'Verify authselect profile sssd-vf is created',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t4': {'doc': 'This runs the command "authselect current -r" and '
+                     'returns the current active profile\n'
+                     'the test checks that this matches the expected value of '
+                     'custom/sssd-vf',
+              'messages': "Running command 'authselect current -r 2>&1'.\n"
+                          '${output} = custom/sssd-vf with-faillock '
+                          'without-nullok\n'
+                          '${profile} = custom/sssd-vf\n'
+                          'Execution passed with message:\n'
+                          'Current Profile is correct - sssd-vf',
+              'name': 'Verify expected authselect profile is active',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t5': {'doc': 'This test will verify that without-nullok and '
+                     'with-faillock modules are activated\n'
+                     'the test will run the command "autheselect current" '
+                     'which returns the enabled features in the\n'
+                     'format:\n'
+                     '\n'
+                     'Profile ID: custom/sssd-vf\n'
+                     'Enabled features:\n'
+                     '- with-faillock\n'
+                     '- without-nullok\n'
+                     '\n'
+                     'Checks made against the following features: '
+                     "['with-faillock', 'without-nullok']",
+              'messages': "Running command 'authselect current 2>&1'.\n"
+                          '${output} = Profile ID: custom/sssd-vf\n'
+                          'Enabled features:\n'
+                          '- with-faillock\n'
+                          '- without-nullok\n'
+                          '${module_status_dict} = {}\n'
+                          'Profile ID: custom/sssd-vf\n'
+                          'Enabled features:\n'
+                          '- with-faillock\n'
+                          '- without-nullok\n'
+                          '${regex_result} = PASS\n'
+                          '${regex_message} = with-faillock\n'
+                          '${regex_result} = PASS\n'
+                          '${regex_message} = without-nullok\n'
+                          "{'with-faillock': 'PASS', 'without-nullok': "
+                          "'PASS'}\n"
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          'PASS',
+              'name': 'Verify that the required PAM Modules are enabled',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t6': {'doc': 'Read the /etc/authselect/custom/sssd-vf/password-auth '
+                     'file\n'
+                     'and check that the values have been modified the check '
+                     'takes a dict with\n'
+                     'the module search string and the expected configuration '
+                     'as a k,v Pairs\n'
+                     'the check then searches the file for the key and '
+                     'evaluates the value',
+              'messages': "${check_dict} = {'auth.*pam_unix.so': '{if not "
+                          '"without-nullok":nullok} try_first_pass\', '
+                          "'password.*pam_pwquality.so': 'try_first_pass "
+                          "local_users_only', 'password.*pam_unix.so sha512 "
+                          'shadow\': \'{if not "without-nullo...\n'
+                          "Getting file '<a "
+                          'href="file:///etc/authselect/custom/sssd-vf/password-auth">/etc/authselect/custom/sssd-vf/password-auth</a>\'.\n'
+                          '${password_auth} = auth        '
+                          'required                                     '
+                          'pam_env.so\n'
+                          'auth        '
+                          'required                                     '
+                          'pam_faildelay.so delay=2000000\n'
+                          'auth        required                        ...\n'
+                          '${error_list} = []\n'
+                          'auth.*pam_unix.so : {if not '
+                          '"without-nullok":nullok} try_first_pass\n'
+                          '${matches} = [\'{if not "without-nullok":nullok} '
+                          "try_first_pass']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          "Match Found match auth.*pam_unix.so : ['{if not "
+                          '"without-nullok":nullok} try_first_pass\']\n'
+                          '{if not "without-nullok":nullok} try_first_pass\n'
+                          "'auth.*pam_unix.so' Configured as expected\n"
+                          'password.*pam_pwquality.so : try_first_pass '
+                          'local_users_only\n'
+                          "${matches} = ['try_first_pass local_users_only']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'Match Found match password.*pam_pwquality.so : '
+                          "['try_first_pass local_users_only']\n"
+                          'try_first_pass local_users_only\n'
+                          "'password.*pam_pwquality.so' Configured as "
+                          'expected\n'
+                          'password.*pam_unix.so sha512 shadow : {if not '
+                          '"without-nullok":nullok} try_first_pass '
+                          'use_authtok\n'
+                          '${matches} = [\'{if not "without-nullok":nullok} '
+                          "try_first_pass use_authtok']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'Match Found match password.*pam_unix.so sha512 '
+                          'shadow : [\'{if not "without-nullok":nullok} '
+                          "try_first_pass use_authtok']\n"
+                          '{if not "without-nullok":nullok} try_first_pass '
+                          'use_authtok\n'
+                          "'password.*pam_unix.so sha512 shadow' Configured as "
+                          'expected\n'
+                          '[]\n'
+                          'Length is 0',
+              'name': 'Check the password-auth file has been updated',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t7': {'doc': 'Read the /etc/authselect/custom/sssd-vf/system-auth '
+                     'file\n'
+                     'and check that the values have been modified the check '
+                     'takes a dict with\n'
+                     'the module search string and the expected configuration '
+                     'as a k,v Pairs\n'
+                     'the check then searches the file for the key and '
+                     'evaluates the value',
+              'messages': "${check_dict} = {'auth.*pam_unix.so': '{if not "
+                          '"without-nullok":nullok} try_first_pass\', '
+                          "'password.*pam_pwquality.so': 'try_first_pass "
+                          'local_users_only enforce-for-root retry=3 '
+                          "remember=12', 'password.*pam_unix.so sh...\n"
+                          "Getting file '<a "
+                          'href="file:///etc/authselect/custom/sssd-vf/system-auth">/etc/authselect/custom/sssd-vf/system-auth</a>\'.\n'
+                          '${password_auth} = {imply "with-smartcard" if '
+                          '"with-smartcard-required"}\n'
+                          'auth        '
+                          'required                                     '
+                          'pam_env.so\n'
+                          'auth        '
+                          'required                                     '
+                          'pam_faildelay.so dela...\n'
+                          '${error_list} = []\n'
+                          'auth.*pam_unix.so : {if not '
+                          '"without-nullok":nullok} try_first_pass\n'
+                          '${matches} = [\'{if not "without-nullok":nullok} '
+                          "try_first_pass']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          "Match Found match auth.*pam_unix.so : ['{if not "
+                          '"without-nullok":nullok} try_first_pass\']\n'
+                          '{if not "without-nullok":nullok} try_first_pass\n'
+                          'auth.*pam_unix.so Configured as expected\n'
+                          'password.*pam_pwquality.so : try_first_pass '
+                          'local_users_only enforce-for-root retry=3 '
+                          'remember=12\n'
+                          "${matches} = ['try_first_pass local_users_only "
+                          "enforce-for-root retry=3 remember=12']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'Match Found match password.*pam_pwquality.so : '
+                          "['try_first_pass local_users_only enforce-for-root "
+                          "retry=3 remember=12']\n"
+                          'try_first_pass local_users_only enforce-for-root '
+                          'retry=3 remember=12\n'
+                          'password.*pam_pwquality.so Configured as expected\n'
+                          'password.*pam_unix.so sha512 shadow : {if not '
+                          '"without-nullok":nullok} try_first_pass use_authtok '
+                          'remember=12\n'
+                          '${matches} = [\'{if not "without-nullok":nullok} '
+                          "try_first_pass use_authtok remember=12']\n"
+                          'Length is 1\n'
+                          '${len} = 1\n'
+                          'Match Found match password.*pam_unix.so sha512 '
+                          'shadow : [\'{if not "without-nullok":nullok} '
+                          "try_first_pass use_authtok remember=12']\n"
+                          '{if not "without-nullok":nullok} try_first_pass '
+                          'use_authtok remember=12\n'
+                          'password.*pam_unix.so sha512 shadow Configured as '
+                          'expected\n'
+                          '[]\n'
+                          'Length is 0',
+              'name': 'Check the system-auth file has been updated',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t8': {'doc': 'We are required to modify the fail_interval to be = 1800 '
+                     'seconds',
+              'messages': "${dict} = {'fail_interval': '1800'}\n"
+                          '${file_path} = /etc/security/faillock.conf\n'
+                          "{'fail_interval': '1800'}\n"
+                          '/etc/security/faillock.conf\n'
+                          "Getting file '<a "
+                          'href="file:///etc/security/faillock.conf">/etc/security/faillock.conf</a>\'.\n'
+                          '${file} = # Configuration for locking the user '
+                          'after multiple failed\n'
+                          '# authentication attempts.\n'
+                          '#\n'
+                          '# The directory where the user files with the '
+                          'failure records are kept.\n'
+                          '# The default is /var/run/faillock.\n'
+                          '# di...\n'
+                          '${errors_list} = []\n'
+                          "${match} = ['1800']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = 1800\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          'Length is 0',
+              'name': 'Verify that faillock.conf has been modifed',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s2-t9': {'doc': 'We are required to modify the '
+                     '/etc/security/pwquality.conf\n'
+                     'to ensure only complex passwords are allowed following '
+                     'values should be used:\n'
+                     '- minlen  =  8\n'
+                     '- dcredit = -1\n'
+                     '- ucredit = -1\n'
+                     '- lcredit = -1\n'
+                     '- ocredit = -1',
+              'messages': "${dict} = {'minlen': '8', 'dcredit': '-1', "
+                          "'ucredit': '-1', 'lcredit': '-1', 'ocredit': '-1'}\n"
+                          '${file_path} = /etc/security/pwquality.conf\n'
+                          "{'minlen': '8', 'dcredit': '-1', 'ucredit': '-1', "
+                          "'lcredit': '-1', 'ocredit': '-1'}\n"
+                          '/etc/security/pwquality.conf\n'
+                          "Getting file '<a "
+                          'href="file:///etc/security/pwquality.conf">/etc/security/pwquality.conf</a>\'.\n'
+                          '${file} = # Configuration for systemwide password '
+                          'quality limits\n'
+                          '# Defaults:\n'
+                          '#\n'
+                          '# Number of characters in the new password that '
+                          'must not be present in the\n'
+                          '# old password.\n'
+                          '# difok = 1\n'
+                          '#\n'
+                          '# Minimum acceptable size ...\n'
+                          '${errors_list} = []\n'
+                          "${match} = ['8']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = 8\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          "${match} = ['-1']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = -1\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          "${match} = ['-1']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = -1\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          "${match} = ['-1']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = -1\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          "${match} = ['-1']\n"
+                          'Length is 1\n'
+                          '${number_of_results} = 1\n'
+                          '${match_val} = -1\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          'Length is 0',
+              'name': 'Verify that pwquality.conf has been modified',
+              'section': 's1-s2',
+              'status': 'PASS'},
+ 's1-s3-t1': {'doc': 'As above without break on first failure',
+              'messages': '${command} = rpm -q\n'
+                          '${check_string} = not installed\n'
+                          '${errors_list} = []\n'
+                          '${run_cmd} = rpm -q ant\n'
+                          'rpm -q ant\n'
+                          "Running command 'rpm -q ant 2>&1'.\n"
+                          '${output} = ant-1.10.9-7.el9.noarch\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = rpm -q java-11-openjdk\n'
+                          'rpm -q java-11-openjdk\n'
+                          "Running command 'rpm -q java-11-openjdk 2>&1'.\n"
+                          '${output} = '
+                          'java-11-openjdk-11.0.20.0.8-3.el9.x86_64\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = rpm -q python3\n'
+                          'rpm -q python3\n'
+                          "Running command 'rpm -q python3 2>&1'.\n"
+                          '${output} = python3-3.9.16-1.el9_2.1.x86_64\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = rpm -q openssl\n'
+                          'rpm -q openssl\n'
+                          "Running command 'rpm -q openssl 2>&1'.\n"
+                          '${output} = openssl-3.0.7-17.el9_2.x86_64\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = rpm -q pam\n'
+                          'rpm -q pam\n'
+                          "Running command 'rpm -q pam 2>&1'.\n"
+                          '${output} = pam-1.5.1-14.el9.x86_64\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = rpm -q python3-setuptools\n'
+                          'rpm -q python3-setuptools\n'
+                          "Running command 'rpm -q python3-setuptools 2>&1'.\n"
+                          '${output} = '
+                          'python3-setuptools-53.0.0-12.el9.noarch\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          'Length is 0',
+              'name': 'Verify dependency packages are installed',
+              'section': 's1-s3',
+              'status': 'PASS'},
+ 's1-s3-t2': {'doc': 'Cisco NSO requires some utilities, this test verfies '
+                     'these binaries exist',
+              'messages': '${command} = which\n'
+                          '${check_string} = /usr/bin/which: no\n'
+                          '${errors_list} = []\n'
+                          '${run_cmd} = which tar\n'
+                          'which tar\n'
+                          "Running command 'which tar 2>&1'.\n"
+                          '${output} = /usr/bin/tar\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = which gzip\n'
+                          'which gzip\n'
+                          "Running command 'which gzip 2>&1'.\n"
+                          '${output} = /usr/bin/gzip\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = which find\n'
+                          'which find\n'
+                          "Running command 'which find 2>&1'.\n"
+                          '${output} = /usr/bin/find\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          '${run_cmd} = which ssh-keygen\n'
+                          'which ssh-keygen\n'
+                          "Running command 'which ssh-keygen 2>&1'.\n"
+                          '${output} = /usr/bin/ssh-keygen\n'
+                          '${status} = PASS\n'
+                          '${status_message} = None\n'
+                          'Length is 0',
+              'name': 'Verify required utilities are available',
+              'section': 's1-s3',
+              'status': 'PASS'},
+ 's1-s3-t3': {'doc': 'Hostname Should not be localhost',
+              'messages': "Running command 'hostnamectl hostname 2>&1'.\n"
+                          '${output} = robot-dev-00',
+              'name': 'Verify Hostname is not set to localhost',
+              'section': 's1-s3',
+              'status': 'PASS'},
+ 's1-s3-t4': {'doc': 'DNS Servers should be Configured',
+              'messages': "Running command 'more /etc/resolv.conf 2>&1'.\n"
+                          '${output} = # Generated by NetworkManager\n'
+                          'search localdomain\n'
+                          'nameserver 192.168.1.1\n'
+                          'nameserver 8.8.8.8',
+              'name': 'Verify DNS servers are Configured',
+              'section': 's1-s3',
+              'status': 'PASS'},
+ 's1-s3-t5': {'doc': 'NTP Servers should be Configured',
+              'messages': "Running command 'chronyc sources 2>&1'.\n"
+                          '${output} = MS Name/IP address         Stratum Poll '
+                          'Reach LastRx Last sample               \n'
+                          '===============================================================================\n'
+                          '^- ntp1.trans-ix.nl              2  10  ...',
+              'name': 'Verify NTP servers are Configured',
+              'section': 's1-s3',
+              'status': 'PASS'},
+ 's1-s3-t6': {'doc': 'Check that the NTP service is active',
+              'messages': "Running command 'timedatectl show | grep -Po "
+                          "'(?<=NTPSynchronized=)[^,]+' 2>&1'.\n"
+                          '${output} = yes',
+              'name': 'Verify NTP service is active',
+              'section': 's1-s3',
+              'status': 'PASS'}}

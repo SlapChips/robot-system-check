@@ -1,0 +1,10 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <kickers xmlns="http://tail-f.com/ns/kicker">
+    <data-kicker>
+      <id>flat-l2vpn-cfp-configuration-kicker</id>
+      <monitor>/cisco-flat-L2vpn-fp:cfp-configurations</monitor>
+      <kick-node>/cisco-flat-L2vpn-fp:flat-L2vpn-actions</kick-node>
+      <action-name>update-internal-cfp-configurations</action-name>
+    </data-kicker>
+  </kickers>
+</config>

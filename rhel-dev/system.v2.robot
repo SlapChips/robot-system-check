@@ -1,4 +1,5 @@
 *** Settings ***
+Name    NSO Operating System (RHEL) Validations
 Documentation    The following tests verify the operating system configuration & dependency packages
 ...    are present in preperation for the Cisco NSO application testing. The checks include:
 ...    - dependent packages are available
@@ -40,18 +41,6 @@ Verify required package are and package versions
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing
     ...    the required package and the minimum supported value
     ...    
-    # ${items}     Get Dictionary Items   ${packages_dict}
-    # Log    ${items}
-    # FOR   ${key}    ${value}    IN    @{items}
-    #    Log To Console   ${key}:${value}    DEBUG
-    #    ${package}    Run    rpm -q ${key}
-    #    Log To Console    ${package}
-    #    ${installed_version}    Get Regexp Matches    ${package}    ${key}-(.*)-.*    1
-    #    Log To Console    ${installed_version}
-    #    ${required_version}   Set Variable    ${value} 
-    #    Compare Package Versions    ${installed_version}    >=    ${required_version}
-    #
-    # END
     ${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1    python3-setuptools=0
     ${error_list}    Create List
     FOR    ${package}  ${required_version}    IN    &{packages_dict}

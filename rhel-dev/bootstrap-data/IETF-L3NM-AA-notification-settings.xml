@@ -1,0 +1,6 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <service-path-for-subscription xmlns="http://cisco.com/ns/aa/cisco-aa-service-assurance">
+    <service-path>/l3vpn-ntw:l3vpn-ntw/vpn-services/vpn-service</service-path>
+    <service-key-elements>vpn-id</service-key-elements>
+  </service-path-for-subscription>
+</config>

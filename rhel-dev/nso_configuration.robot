@@ -1,8 +1,9 @@
 *** Settings ***
-
-Library     OperatingSystem
-Resource    ../resources/keywords.robot
-Resource    ../resources/ncs.keywords.robot
+Name    NSO Configuration (Running Config) Validation
+Library    OperatingSystem
+Library    ../resources/CiscoNso.py
+Resource   ../resources/keywords.robot
+Resource   ../resources/ncs.keywords.robot
 
 *** Variables ***
 ${NCS_CONF}
@@ -69,9 +70,46 @@ Extract the NSO Application Config
     Log   Successfully Imported NCS_CONF 
 
 
-Test 2
-    ${xpath}    Set Variable    devices/global-settings/
-    # ${response}    Get Elements Texts    ${NCS_CONF}    ${xpath}
-    ${response}    Search XPATH against NCS_CONF    ${xpath}
-    Should Not Be Empty    ${response}
-    Log   Successfully Imported NCS_CONF 
+
+Verify High-Availability is operational
+    [Documentation]    Verify that High-Availability is operational by running the
+    ...    command 'show ncs-state ha' and 'show high-availbility' if the state 
+    ...    returns errors the high-availbility is not configured correctly and 
+    ...    needs to be modified and re-verified.
+    [Tags]    nso 
+    Skip    TODO Create Test 
+
+Verify that the T-SDN Packages are installed in NSO
+    [Tags]    t-sdn
+    [Documentation]    The CNC integration with NSO requires that the T-SDN Core 
+    ...    Function Pack (CFP) is installed and present. These packages should be 
+    ...    uploaded to the /var/opt/ncs/packages/ folder and then linked to the 
+    ...    /opt/ncs/packages/ directory where the system will load them on application
+    ...    startup. This test validates the core packages only, add additional test 
+    ...    cases for custom packages validation. If the packages are not found the 
+    ...    test fails. To fix, download the neccesary packages bundle and follow the 
+    ...    CFP install instructions.
+    ...    
+    Skip    TODO Create Test 
+
+Verify that the T-SDN startup configurations are loaded
+    [Tags]    t-sdn
+    [Documentation]    In addtion to the T-SDN Core Function Pack packages being 
+    ...    installed the system needs start-up configuration to be loaded into the
+    ...    system to  operate. These files are provided as XML files in the CFP bundle in the 
+    ...    'config/' folder. Loading these files is achived by using the 'load merge filename.xml'
+    ...    command
+    Skip    TODO Create Test 
+
+Test Load merge
+    ${load_xml_file}    Set Variable    test
+    ${status}    ${message}    ${output}    Load Merge Xml File And Return Output    ${load_xml_file}
+    Log    Output ${output}
+    Log    Status ${status}
+    Log    Message ${message}
+    IF    ${status} == True 
+        Pass Execution    Validation Successful for file : ${load_xml_file}
+    ELSE
+        Fail    Validation unsuccesful for file : ${load_xml_file}
+    END
+

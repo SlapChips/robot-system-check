@@ -1,0 +1,10 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <kickers xmlns="http://tail-f.com/ns/kicker">
+    <data-kicker>
+      <id>l3nm-internal-plan-kicker</id>
+      <monitor>/cisco-flat-L3vpn-fp:flat-L3vpn-plan</monitor>
+      <kick-node>/l3vpn-ntw:l3nm-actions</kick-node>
+      <action-name>internal-plan-change-handler</action-name>
+    </data-kicker>
+  </kickers>
+</config>

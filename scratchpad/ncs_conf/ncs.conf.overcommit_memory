@@ -1,7 +1,0 @@
-# Adding Over Commit Memory Changes
-# This change keeps overcommit_memmory (OOM) disbaled across system reboots.
-
-vm.overcommit_memory = 2
-
-
-    

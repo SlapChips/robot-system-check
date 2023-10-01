@@ -1,0 +1,15 @@
+cli {
+    local-node {
+        data  devices {
+                  authgroups {
+                      group default {
+                          default-map {
+             -                remote-name "Kilroy was here";
+             +                remote-name cisco;
+                          }
+                      }
+                  }
+              }
+    }
+}
+

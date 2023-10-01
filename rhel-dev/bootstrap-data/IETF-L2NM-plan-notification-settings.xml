@@ -1,0 +1,15 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <plan-notifications>
+      <subscription>
+        <name>l2nm-notif</name>
+        <service-type>/l2vpn-ntw:l2vpn-ntw/l2vpn-ntw:vpn-services/l2vpn-ntw:vpn-service</service-type>
+      </subscription>
+    </plan-notifications>
+  </services>
+  <plan-path-for-notification xmlns="http://com/cisco/core-fp-plan-notif-generator">
+    <path>/l2vpn-ntw:l2vpn-ntw/vpn-services/vpn-service-plan</path>
+    <service-path>/l2vpn-ntw:l2vpn-ntw/vpn-services/vpn-service</service-path>
+    <service-key-elements>vpn-id</service-key-elements>
+  </plan-path-for-notification>
+</config>

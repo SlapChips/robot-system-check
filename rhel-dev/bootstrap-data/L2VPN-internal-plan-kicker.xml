@@ -1,0 +1,22 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <kickers xmlns="http://tail-f.com/ns/kicker">
+    <data-kicker>
+      <id>flat-L2vpn-internal-local-site-plan-kicker</id>
+      <monitor>/cisco-flat-L2vpn-fp-internal-local-site:flat-L2vpn-internal-local-site/cisco-flat-L2vpn-fp-internal-local-site:flat-L2vpn-plan</monitor>
+      <kick-node>/cisco-flat-L2vpn-fp:actions</kick-node>
+      <action-name>l2vpn-internal-plan-change-handler</action-name>
+    </data-kicker>
+    <data-kicker>
+      <id>flat-L2vpn-internal-remote-site-plan-kicker</id>
+      <monitor>/cisco-flat-L2vpn-fp-internal-remote-site:flat-L2vpn-internal-remote-site/cisco-flat-L2vpn-fp-internal-remote-site:flat-L2vpn-plan</monitor>
+      <kick-node>/cisco-flat-L2vpn-fp:actions</kick-node>
+      <action-name>l2vpn-internal-plan-change-handler</action-name>
+    </data-kicker>
+    <data-kicker>
+      <id>flat-L2vpn-internal-site-plan-kicker</id>
+      <monitor>/cisco-flat-L2vpn-fp-internal-site:flat-L2vpn-internal-site/cisco-flat-L2vpn-fp-internal-site:flat-L2vpn-plan</monitor>
+      <kick-node>/cisco-flat-L2vpn-fp:actions</kick-node>
+      <action-name>l2vpn-internal-plan-change-handler</action-name>
+    </data-kicker>
+  </kickers>
+</config>

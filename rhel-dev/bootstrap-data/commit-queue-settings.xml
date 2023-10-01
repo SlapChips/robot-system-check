@@ -1,0 +1,12 @@
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <global-settings>
+    <commit-queue>
+      <enabled-by-default>false</enabled-by-default>
+      <async/>
+      <atomic>false</atomic>
+      <retry-attempts>0</retry-attempts>
+      <retry-timeout>30</retry-timeout>
+      <error-option>stop-on-error</error-option>
+    </commit-queue>
+  </global-settings>
+</devices>

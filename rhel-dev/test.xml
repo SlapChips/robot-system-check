@@ -210,7 +210,7 @@
       <max-message-size>50000</max-message-size>
     </agent>
     <system>
-      <contact></contact>
+      <contact>ulfat</contact>
       <name></name>
       <location></location>
     </system>

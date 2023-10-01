@@ -1,0 +1,15 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <plan-notifications>
+      <subscription>
+        <name>ietf-te-notif</name>
+        <service-type>/te:te/te:tunnels/te:tunnel</service-type>
+      </subscription>
+    </plan-notifications>
+  </services>
+  <plan-path-for-notification xmlns="http://com/cisco/core-fp-plan-notif-generator">
+    <path>/te:te/tunnels/tunnel-plan</path>
+    <service-path>/te:te/tunnels/tunnel</service-path>
+    <service-key-elements>name</service-key-elements>
+  </plan-path-for-notification>
+</config>

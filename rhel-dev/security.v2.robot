@@ -1,4 +1,5 @@
 *** Settings ***
+Name    NSO Operating System (RHEL) Security Features Validation
 Documentation    The following tests verify the security configuration that are expected to be implemented
 ...    on the redhat servers that will host the Cisco NSO application
 ...    - firewall Service Configrations

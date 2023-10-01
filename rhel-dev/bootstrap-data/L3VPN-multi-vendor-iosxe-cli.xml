@@ -1,0 +1,8 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <cfp-configurations xmlns="http://cisco.com/ns/nso/fp/examples/cisco-tsdn-flat-L3vpn">
+    <dynamic-device-mapping>
+      <ned-id>cisco-ios-cli-6.77:cisco-ios-cli-6.77</ned-id>
+      <python-impl-class-name>flat_l3vpn_multi_vendors.IosXE</python-impl-class-name>
+    </dynamic-device-mapping>
+  </cfp-configurations>
+</config>
