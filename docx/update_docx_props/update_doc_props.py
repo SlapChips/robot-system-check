@@ -1,30 +1,38 @@
 #!/bin/bash
 import xml.etree.ElementTree as ET
 from lxml import etree
-import zipfile
+import zipfile_deflate64 as zipfile
 import os
+import pprint
 
 
-def unpack_docx(file_out):
-    return
+def unpack_docx(**kwargs):
+    """
+    unpacks the docx file with zip
+    """
+    input_file = kwargs.get('input_file', './Template.docx')
+    unpack_folder = kwargs.get('unpack_folder', './docx_src/')
+    with zipfile.ZipFile(input_file, 'r') as zipf:
+        zipf.extractall(unpack_folder)
+    print(f'unpacking docx file: {input_file} into folder : {unpack_folder}')
 
 
-def pack_docx(file):
-    zip_files = ['Content_Types].xml', '_rels', 'customXml', 'docProps', 'word']
-    zip_filename = 'Test__z.docx'
-    with zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED) as zipf:
-        for folder_name in zip_files:
-            # Add the contents of the folder to the zip file
-            for folder_root, _, folder_files in os.walk(folder_name):
-                for file in folder_files:
-                    file_path = os.path.join(folder_root, file)
-                    arcname = os.path.relpath(file_path, folder_name)
-                    zipf.write(file_path, arcname=arcname)
-    return
+def pack_docx(**kwargs):
+    """
+    Repack the docx file
+    """
+    unpack_folder = kwargs.get('unpack_folder', './docx_src/')
+    output_file = kwargs.get('output_file', './Test__z.docx')
+    with zipfile.ZipFile(output_file, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for folder_root, _, folder_files in os.walk(unpack_folder):
+            for file in folder_files:
+                file_path = os.path.join(folder_root, file)
+                arcname = os.path.relpath(file_path, unpack_folder)
+                print(file_path, arcname)
+                zipf.write(file_path, arcname)
 
 
 def update_item2_xml(props_dict):
-
     # Open the XML file
     ET.register_namespace('', 'http://schemas.cisco.com/ASMasterTemplate/additionalProperties')
     tree = ET.parse("./customXml/item2.xml")
@@ -46,8 +54,31 @@ def update_item2_xml(props_dict):
     print('Outputing updted changes to ./customXml/item2.xml')
 
 
-def update_custom_xml(props_dict):
-    tree = etree.parse('./docProps/custom.xml')
+def update_item2_xml__new(props_dict, **kwargs):
+    unpack_folder = kwargs.get('unpack_folder', './docx_src')
+    tree = etree.parse(f'./{unpack_folder}/customXml/item2.xml')
+    tree.getroot().nsmap
+    root = tree.getroot()
+    # Creating namespace maping from the XML:
+    nsmap = {k if k is not None else 'default':v for k,v in root.nsmap.items()}
+    for p, value in props_dict.items():
+        # Find the element and refernce namespace
+        element = root.find(f'.//default:{p}', nsmap)
+        # Check if the element exists before updating
+        if element is not None and value is not None:
+            print(f'updating {p} with value : {value}')
+            element.text = value
+        else:
+            print(f"Element '{p}' not updated.")
+    # Save the updated XML to a new file
+    tree.write(f'./{unpack_folder}/customXml/item2.xml', xml_declaration=True, encoding='utf-8')
+    print('Outputing updted changes to ./customXml/item2.xml')
+
+
+def update_custom_xml(props_dict, **kwargs):
+    unpack_folder = kwargs.get('unpack_folder', './docx_src')
+    tree = etree.parse(f'./{unpack_folder}/docProps/custom.xml')
+    # tree = etree.parse('./docProps/custom.xml')
     tree.getroot().nsmap
     root = tree.getroot()
     # Creating namespace maping from the XML:
@@ -67,7 +98,7 @@ def update_custom_xml(props_dict):
                 print(f'Custom Property pid={p} not found in custom.xml')
         else:
             print(f'No value found for pid={p}')
-    tree.write("./docProps/custom.xml", xml_declaration=True, encoding='utf-8')
+    tree.write(f'./{unpack_folder}/docProps/custom.xml', xml_declaration=True, encoding='utf-8')
 
 
 props_tuple = [
@@ -84,9 +115,9 @@ props_tuple = [
     ('documentTheater', 15, 'EMEA'),
     ('documentOrg', 10, 'Cisco CX')
 ]
-file_in = 'Template.docx'
-file_out = 'test.docx'
+unpack_docx()
 props_dict = {item[0]: item[2] for item in props_tuple}
-update_item2_xml(props_dict)
+update_item2_xml__new(props_dict)
 props_dict = {item[1]: item[2] for item in props_tuple}
 update_custom_xml(props_dict)
+pack_docx()

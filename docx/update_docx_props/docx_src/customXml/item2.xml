@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<additionalProperties xmlns="http://schemas.cisco.com/ASMasterTemplate/additionalProperties">
+    <ProjectNameAndCustomerName>VF Germany - SDN Controller</ProjectNameAndCustomerName>
+    <documentDeliverableName>Acceptance Test Plan</documentDeliverableName>
+    <VersionDocument>1.0</VersionDocument>
+    <documentAuthor>Ulfat Butt</documentAuthor>
+    <ChangeAuthority>Cisco CX</ChangeAuthority>
+    <documentDCP>11239</documentDCP>
+    <documentPID>11239</documentPID>  
+    <documentClassification>Cisco Highly Confidential</documentClassification>
+    <documentTemplateDate>[Enter Template Date]</documentTemplateDate>
+    <documentTemplateVersion>Template v2.30.5</documentTemplateVersion>
+    <documentTheater>EMEA</documentTheater>
+    <documentOrg>Cisco CX</documentOrg>
+    <EDCS_Reference>EDCS-1238376</EDCS_Reference>
+    <ReferenceNo>[Enter AIX Template ID number]</ReferenceNo>
+    <TemplateId>ICN-TMPL-18326</TemplateId>
+    <AIX-TMPL>AIX-TMPL 18326</AIX-TMPL>
+    <TemplateOwner>[Enter Template Owner (email alias)]</TemplateOwner>
+    
+</additionalProperties>

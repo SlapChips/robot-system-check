@@ -1,0 +1,30 @@
+# Code Decsription
+The code here is to modfiy a docx base template file (docx) and update the custome
+properties of the file to reflect the specifics of the test case
+
+The properties are stored in a tuple and used to generate 2 dicts one for each 
+of the xml files in the unpacked docx file.
+
+The code does the following:
+1. unexctracts the docx which is a zip format file
+1. creates the neccesary dict files
+1. updeats the custom.xml and items3.xml
+1. repacks the file
+
+
+
+## Usage
+```python
+unpack_docx()
+props_dict = {item[0]: item[2] for item in props_tuple}
+update_item2_xml__new(props_dict)
+props_dict = {item[1]: item[2] for item in props_tuple}
+update_custom_xml(props_dict)
+pack_docx()
+
+```
+## Todo
+1. merge code for robot file extraction
+1. Format the test documentation to make it presentable
+1. 
+1. 

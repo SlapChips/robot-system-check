@@ -12,6 +12,30 @@ from docx.shared import Cm
 from docx.oxml.ns import nsdecls
 from docx.oxml import parse_xml
 import re
+import sys
+"""WORKING DOC"""
+
+
+def log_output_to_file(file_name):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            original_stdout = sys.stdout
+            original_stderr = sys.stderr
+
+            with open(file_name, 'w') as log_file:
+                sys.stdout = log_file
+                sys.stderr = log_file
+                try:
+                    result = func(*args, **kwargs)
+                finally:
+                    sys.stdout = original_stdout
+                    sys.stderr = original_stderr
+
+            return result
+
+        return wrapper
+
+    return decorator
 
 
 def parse_output_xml(file_path):
@@ -45,46 +69,6 @@ def clean_doc_text(doc_text):
     return '\n'.join(cleaned_lines)
 
 
-# def create_table_in_docx2(doc, data):
-#     # Add a table with one row and the number of columns equal to the length of the input dictionary
-#     table = doc.add_table(rows=1, cols=len(data))
-
-#     # Apply the custom table style to the table
-#     table.style = 'Cisco CX Table | Default'
-
-#     # Add the header row with labels from the input dictionary
-#     header_row = table.rows[0].cells
-#     for idx, label in enumerate(data.keys()):
-#         header_row[idx].text = label
-
-#     # Add the values from the input dictionary as a new row
-#     values_row = table.add_row().cells
-#     for idx, value in enumerate(data.values()):
-#         values_row[idx].text = value        
-
-# def add_caption(doc, caption_type, caption_text):
-#     """
-#     Creates a caption using the Cisco Caption style
-
-#     Inputs:
-#     doc :   the document object
-#     type:   Table, Code, Figure
-#     Caption:    Caption Text to append
-#     """
-#     # Define the Valid Caption Types (Table, Figure, or Code)
-#     if caption_type.title() in ["Figure", "Code", "Table"]:
-#         caption = f'{caption_type.title()} : {caption_text.title()}'
-#     else:
-#         raise ValueError("Invalid type specified. Use 'figure', 'code', or 'table'.")
-#         # Add an empty line before the table
-#     add_caption = doc.add_paragraph(caption)
-#     add_caption.style = 'Caption'
-#     # Add the caption above the table
-
-#     # Add an empty line after the caption
-#     doc.add_paragraph()
-
-
 def add_caption(doc, caption_type, caption_text):
     """
     Creates a caption using the Cisco Caption style
@@ -103,7 +87,6 @@ def add_caption(doc, caption_type, caption_text):
     paragraph = doc.add_paragraph(f'{caption_type.title()}-', style='Caption')
     add_caption_field_code(paragraph=paragraph, caption_type=caption_type.title())
     run = paragraph.add_run(f' {caption_text}')
-
 
 
 def add_caption_field_code(paragraph, caption_type):
@@ -336,7 +319,7 @@ def add_vertical_testcase_table__old(doc, test_data):
 
 
 def add_vertical_testcase_table(doc, data_dict):
-    add_caption(doc, caption_type='table', caption_text=test_data['name'])
+    add_caption(doc, caption_type='table', caption_text=data_dict['name'])
     page_width = doc.sections[0].page_width
     pprint(page_width)
     pprint(f'first_column_width = {int(page_width * 0.8)}')
@@ -377,71 +360,69 @@ def add_testcase_table(doc, test_data):
     row[3].text = test_data['messages']
 
 
-"""
-Invokes the get test sections and returns the list of test sections in Dict
-"""
-# Parse the XML data
-file_path = 'output.xml'
-output_xml = parse_output_xml(file_path)
-sections = get_test_sections(output_xml=output_xml)
-tests = get_tests(output_xml=output_xml)
-# pprint(sections)
-# pprint(tests)
+@log_output_to_file('output_log.txt')
+def create_test_docx():
+    """
+    Bring everything together and create the docx content
 
-""" Need to create the doc now we have the sections and test"""
+    Defaults:
+    table_style_name = 'Cisco CX Table | Default'
+    test_output_xml = './output.xml'
+    docx_template = 'Template.docx'
 
-# Create a new Word document
+    """
+    table_style_name = 'Cisco CX Table | Default'
+    test_output_xml = './output.xml'
+    docx_template = 'Template.docx'
+    # Calling functions top extract test data:
+    output_xml = parse_output_xml(test_output_xml)
+    sections = get_test_sections(output_xml=output_xml)
+    tests = get_tests(output_xml=output_xml)
+    # Create a new Word document
+    custom_style_doc = Document('Template.docx')
+    table_style_name = 'Cisco CX Table | Default'
+    # Check if the style exists in the document's styles
+    if table_style_name in custom_style_doc.styles:
+        # Get the style object
+        custom_table_style = custom_style_doc.styles[table_style_name]
+    else:
+        # If the style doesn't exist, you can create a new style based on it
+        custom_table_style = custom_style_doc.styles.add_style(
+            table_style_name, 'Table Normal')  
+    doc = Document(docx_template)
+    # create a blank table to store the data in the document
+    table = doc.tables[0]
+    # Asisgn the Cisco CX Default Style
+    table.style = table_style_name
+    added_sections = {}
+    # Iterate over the tests and organize them by section
+    for test_data in tests:
+        section_id = test_data['section']
+        if section_id not in sections:
+            continue  # Skip tests without a matching section
+        # Add a section break if it's a new section
+        if section_id not in added_sections:
+            if not doc.sections or doc.sections[-1].footer is None:
+                section = doc.sections[-1]
+                section.start_type = WD_SECTION_START.CONTINUOUS
+                section.start_param = WD_SECTION.NEW_COLUMN
+                section.footer.is_linked_to_previous = False
+            # Add a heading for the section 
+            # (using the section name as the heading text)
+            section_name = sections[section_id]['name']
+            doc.add_heading(section_name, level=1)
+            doc.add_paragraph(sections[section_id]['doc'])
+            added_sections[section_id] = True
+            section_stats = get_section_statistics(output_xml, section_id)
+            # pprint(section_stats)
+            get_section_summary_results(
+                doc, section_stats,
+                caption=f'{section_name} Test Results Summary')
+        pprint(test_data)
+        add_vertical_testcase_table(doc, test_data)
+    doc.add_paragraph()
+    # Save the document
+    doc.save('test_results.docx')
 
-custom_style_doc = Document('Template.docx')
-table_style_name = 'Cisco CX Table | Default'  # Modify this to match the actual style name
 
-# Check if the style exists in the document's styles
-if table_style_name in custom_style_doc.styles:
-    # Get the style object
-    custom_table_style = custom_style_doc.styles[table_style_name]
-else:
-    # If the style doesn't exist, you can create a new style based on it
-    custom_table_style = custom_style_doc.styles.add_style(table_style_name, 'Table Normal')
-
-
-doc = Document("Template.docx")
-table = doc.tables[0]
-table.style = table_style_name
-
-added_sections = {}
-# Iterate over the tests and organize them by section
-for test_data in tests:
-    section_id = test_data['section']
-    if section_id not in sections:
-        continue  # Skip tests without a matching section
-    # Add a section break if it's a new section
-    if section_id not in added_sections:
-        if not doc.sections or doc.sections[-1].footer is None:
-            section = doc.sections[-1]
-            section.start_type = WD_SECTION_START.CONTINUOUS
-            section.start_param = WD_SECTION.NEW_COLUMN
-            section.footer.is_linked_to_previous = False
-        # Add a heading for the section (using the section name as the heading text)
-        section_name = sections[section_id]['name']
-        doc.add_heading(section_name, level=1)
-        doc.add_paragraph(sections[section_id]['doc'])
-        added_sections[section_id] = True
-        section_stats = get_section_statistics(output_xml, section_id)
-        # pprint(section_stats)
-        get_section_summary_results(doc, section_stats, caption=f'{section_name} Test Results Summary')
-
-    add_vertical_testcase_table(doc, test_data)
-    # add_testcase_table(doc, test_data)
-
-data_x = [
-    ['Column 1', 'Column 2', 'Column 3'],
-    ['Data 1', 'Data 2', 'Data 3'],
-    ['More Data 1', 'More Data 2', 'More Data 3'],
-]
-doc.add_paragraph('Some text')
-# add_equal_width_columns_table(doc, data_x, column_width_percentage=80)
-doc.add_paragraph('Some text')
-# add_vertical_testcase_table__old(doc, data_x)
-
-# Save the document
-doc.save('test_results.docx')
+create_test_docx()

@@ -78,6 +78,7 @@ def add_table_to_document_old(doc, data):
     # Add a continuous section break after the table
     doc.add_section(WD_SECTION_START.CONTINUOUS)
 
+
 def add_table_to_document(doc, data, caption):
     table_style_name = 'Cisco CX Table | Default'
     
