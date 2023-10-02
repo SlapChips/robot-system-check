@@ -24,7 +24,8 @@ def parse_statistics_from_file(file_path, section):
     elif section == "suite":
         xpath = ".//suite/stat"
     else:
-        raise ValueError("Invalid section specified. Use 'total', 'tag', or 'suite'.")
+        raise ValueError(
+            "Invalid section specified. Use 'total', 'tag', or 'suite'.")
 
     # Iterate through the selected elements and extract the attributes
     for elem in root.findall(xpath):
@@ -81,16 +82,12 @@ def add_table_to_document_old(doc, data):
 
 def add_table_to_document(doc, data, caption):
     table_style_name = 'Cisco CX Table | Default'
-    
     # Add a paragraph for the caption and align it to the left
     table_caption = doc.add_paragraph(style='Caption')
     table_caption.add_run('Table  ')
     field_code = "AUTONUM \* MERGEFORMAT"
     table_caption.add_run().add_field(field_code)
-    #table_caption.alignment = WD_ALIGN_VERTICAL.LEFT
     table_caption.add_run(caption)
-
-    
     # Add a table with headers
     table = doc.add_table(rows=1, cols=4)
 

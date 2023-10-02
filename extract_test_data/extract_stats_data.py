@@ -23,7 +23,8 @@ def parse_statistics_from_file(file_path, section):
     elif section == "suite":
         xpath = ".//suite/stat"
     else:
-        raise ValueError("Invalid section specified. Use 'total', 'tag', or 'suite'.")
+        raise ValueError(
+            "Invalid section specified. Use 'total', 'tag', or 'suite'.")
 
     # Iterate through the selected elements and extract the attributes
     for elem in root.findall(xpath):
@@ -64,7 +65,7 @@ data = results
 custom_style_doc = Document('Template.docx')
 
 # Get the table style name (e.g., "Cisco CX Table | Default")
-table_style_name = 'Cisco CX Table | Default'  # Modify this to match the actual style name
+table_style_name = 'Cisco CX Table | Default'
 
 # Check if the style exists in the document's styles
 if table_style_name in custom_style_doc.styles:
@@ -72,7 +73,8 @@ if table_style_name in custom_style_doc.styles:
     custom_table_style = custom_style_doc.styles[table_style_name]
 else:
     # If the style doesn't exist, you can create a new style based on it
-    custom_table_style = custom_style_doc.styles.add_style(table_style_name, 'Table Normal')
+    custom_table_style = custom_style_doc.styles.add_style(table_style_name,
+                                                           'Table Normal')
 
 # Create a new Word document
 doc = Document("Template.docx")
@@ -104,4 +106,3 @@ for test_name, test_data in data.items():
 
 # Save the document
 doc.save('test_results_with_custom_style.docx')
-
