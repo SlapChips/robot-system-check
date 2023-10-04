@@ -20,6 +20,10 @@ def unpack_docx(**kwargs):
 def pack_docx(**kwargs):
     """
     Repack the docx file
+
+    Defaults:
+    output_file = './Test__z.docx'
+    unpack_folder = './docx_src/'
     """
     unpack_folder = kwargs.get('unpack_folder', './docx_src/')
     output_file = kwargs.get('output_file', './Test__z.docx')
@@ -32,7 +36,7 @@ def pack_docx(**kwargs):
                 zipf.write(file_path, arcname)
 
 
-def update_item2_xml__new(props_dict, **kwargs):
+def update_item2_xml(props_dict, **kwargs):
     unpack_folder = kwargs.get('unpack_folder', './docx_src')
     tree = etree.parse(f'./{unpack_folder}/customXml/item2.xml')
     tree.getroot().nsmap
@@ -99,7 +103,7 @@ props_tuple = [
 ]
 unpack_docx()
 props_dict = {item[0]: item[2] for item in props_tuple}
-update_item2_xml__new(props_dict)
+update_item2_xml(props_dict)
 props_dict = {item[1]: item[2] for item in props_tuple}
 update_custom_xml(props_dict)
 pack_docx()

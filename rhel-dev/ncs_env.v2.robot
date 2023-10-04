@@ -20,7 +20,7 @@ Verify that the overcommit_memory value has been updated
     ...    however it should be persistently added to the /etc/sysctl.d/ncs.conf
     ...    this test will check both locations
     ...
-
+    Step. Check the commdn cat /proc/sys/vm/overcommit_memory returns "2" 
     Skip    Need to check the configurations as its not in the CFP docs
 
     ${run_time_overcommit}    Run    cat /proc/sys/vm/overcommit_memory
@@ -59,6 +59,7 @@ Verify that the ncs init script 'ulimit' has been updated
     ...    conf="-c ${confdir}/ncs.conf"
     ...    heart="--heart"
     ...    
+    Step. Check that the file /etc/init.d/ncs exists
     ${cmd}    Set Variable    grep "ulimit" /etc/init.d/ncs
     ${response}    Run    ${cmd}
     Should Not Be Empty    ${response}
@@ -79,7 +80,7 @@ Verify the T-SDN system limits have been configured
     ...    To handle the Regex * issue we need to preface each key with \n\\*\s+ should be handled in
     ...    the Keyword but thats for the future
     ...
-
+    Step. Check that the file /etc/init.d/ncs exists contents has expected values
     ${file}    Get File    /etc/security/limits.d/ncs.conf
     ${clean_file}    Replace String Using Regexp    ${file}    \\s{2}    ${SPACE}    # This fixes some whitepsace issues that i found in the files
     ${limits_dict}    Create Dictionary    soft nproc=65535    hard nproc=65535    soft nofile=65536    hard memlock=65536    soft memlock=65536
@@ -106,7 +107,7 @@ Verify that the limit changes are applied to the system
     [Documentation]    This test checks that the variables applied to the /etc/security/limits.d/ncs.conf
     ...    have been applied. This typically requires a user to disconnect and reconnect to the servers
     ...
-
+    Step. Run the command ulimit -a and validate that the limits are correctly applied
     ${ulimit_settings}    Run    ulimit -a
     ${ulimit_dict}    Create Dictionary    max locked memory=65536    open files=65535    max user processes=65535
     ${error_list}    Create List

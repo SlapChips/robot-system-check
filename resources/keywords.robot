@@ -8,7 +8,12 @@ Library  String
 Library    Collections
 
 *** Keywords ***
-
+Step. ${message}
+    [Documentation]    Simple Keyword to store text which will be added to 
+    ...    test case Docx as instruction/guidance steps to inform reader in the
+    ...    tets procesdures
+    ...    
+    Log    ${message}
 Pad Version
     [Arguments]    ${version}    ${length}
     ${segments}    Split String    ${version}    .

@@ -35,7 +35,7 @@ Verify dependency packages are installed
     ${command}    Set Variable    rpm -q
     ${check_string}    Set Variable    not installed
     Iterate Over List and Run Command    ${package_list}    ${command}    ${check_string}
-
+    
 Verify required package are and package versions
     [Documentation]    Check the versions of the packages installed meets the neccessary minimum values
     ...    the test calls the packages_dict dictionary which should be populated with k,v pairs representing

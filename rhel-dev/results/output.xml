@@ -1,102 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230927 16:42:35.785" rpa="false" schemaversion="4">
-<suite id="s1" name="ATP" source="/mnt/vm-shared/robot-dev/dev/ncs_load_merge/nso_load_merge.robot">
-<test id="s1-t1" name="Test Load merge" line="5">
-<kw name="Set Variable" library="BuiltIn">
-<var>${load_xml_file}</var>
-<arg>test</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<msg timestamp="20230927 16:42:35.821" level="INFO">${load_xml_file} = test</msg>
-<status status="PASS" starttime="20230927 16:42:35.821" endtime="20230927 16:42:35.821"/>
-</kw>
-<kw name="Load Merge Xml File And Return Output" library="CiscoNso">
-<var>${status}</var>
-<var>${message}</var>
-<var>${output}</var>
-<arg>${load_xml_file}</arg>
-<doc>Constructs the command sequance to send to ncs_cli to load an xml file 
-which is passed as an argument. File path of the XML files should be in 
-the relative path ./config_files/ directory</doc>
-<msg timestamp="20230927 16:42:35.901" level="INFO">${status} = False</msg>
-<msg timestamp="20230927 16:42:35.901" level="INFO">${message} = Configuration is applied but not consistent</msg>
-<msg timestamp="20230927 16:42:35.901" level="INFO">${output} = Loading.
-361 bytes parsed in 0.00 sec (43.43 KiB/sec)
-cli {
-    local-node {
-        data  devices {
-                  authgroups {
-                      group default {
-                          defa...</msg>
-<status status="PASS" starttime="20230927 16:42:35.822" endtime="20230927 16:42:35.901"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Output ${output}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230927 16:42:35.903" level="INFO">Output Loading.
-361 bytes parsed in 0.00 sec (43.43 KiB/sec)
-cli {
-    local-node {
-        data  devices {
-                  authgroups {
-                      group default {
-                          default-map {
-             -                remote-name "Kilroy was here";
-             +                remote-name cisco55;
-                          }
-                      }
-                  }
-              }
-    }
-}
+<robot generator="Robot 6.1.1 (Python 3.9.16 on linux)" generated="20230927 16:42:35.785"
+    rpa="false" schemaversion="4">
+    <suite id="s1" name="ATP"
+        source="/mnt/vm-shared/robot-dev/dev/ncs_load_merge/nso_load_merge.robot">
+        <test id="s1-t1" name="Test Load merge" line="5">
+            <kw name="Set Variable" library="BuiltIn">
+                <var>${load_xml_file}</var>
+                <arg>test</arg>
+                <doc>Returns the given values which can then be assigned to a variables.</doc>
+                <msg timestamp="20230927 16:42:35.821" level="INFO">${load_xml_file} = test</msg>
+                <status status="PASS" starttime="20230927 16:42:35.821"
+                    endtime="20230927 16:42:35.821" />
+            </kw>
+            <kw name="Load Merge Xml File And Return Output" library="CiscoNso">
+                <var>${status}</var>
+                <var>${message}</var>
+                <var>${output}</var>
+                <arg>${load_xml_file}</arg>
+                <doc>Constructs the command sequance to send to ncs_cli to load an xml file
+                    which is passed as an argument. File path of the XML files should be in
+                    the relative path ./config_files/ directory</doc>
+                <msg timestamp="20230927 16:42:35.901" level="INFO">${status} = False</msg>
+                <msg timestamp="20230927 16:42:35.901" level="INFO">${message} = Configuration is
+                    applied but not consistent</msg>
+                <msg timestamp="20230927 16:42:35.901" level="INFO">${output} = Loading.
+                    361 bytes parsed in 0.00 sec (43.43 KiB/sec)
+                    cli {
+                    local-node {
+                    data devices {
+                    authgroups {
+                    group default {
+                    defa...</msg>
+                <status status="PASS" starttime="20230927 16:42:35.822"
+                    endtime="20230927 16:42:35.901" />
+            </kw>
+            <kw name="Log" library="BuiltIn">
+                <arg>Output ${output}</arg>
+                <doc>Logs the given message with the given level.</doc>
+                <msg timestamp="20230927 16:42:35.903" level="INFO">Output Loading.
+                    361 bytes parsed in 0.00 sec (43.43 KiB/sec)
+                    cli {
+                    local-node {
+                    data devices {
+                    authgroups {
+                    group default {
+                    default-map {
+                    - remote-name "Kilroy was here";
+                    + remote-name cisco55;
+                    }
+                    }
+                    }
+                    }
+                    }
+                    }
 </msg>
-<status status="PASS" starttime="20230927 16:42:35.902" endtime="20230927 16:42:35.903"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Status ${status}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230927 16:42:35.904" level="INFO">Status False</msg>
-<status status="PASS" starttime="20230927 16:42:35.903" endtime="20230927 16:42:35.904"/>
-</kw>
-<kw name="Log" library="BuiltIn">
-<arg>Message ${message}</arg>
-<doc>Logs the given message with the given level.</doc>
-<msg timestamp="20230927 16:42:35.906" level="INFO">Message Configuration is applied but not consistent</msg>
-<status status="PASS" starttime="20230927 16:42:35.905" endtime="20230927 16:42:35.906"/>
-</kw>
-<if>
-<branch type="IF" condition="${status} == True">
-<kw name="Pass Execution" library="BuiltIn">
-<arg>Validation Successful for file : ${load_xml_file}</arg>
-<doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
-<status status="NOT RUN" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.907"/>
-</kw>
-<status status="NOT RUN" starttime="20230927 16:42:35.906" endtime="20230927 16:42:35.907"/>
-</branch>
-<branch type="ELSE">
-<kw name="Fail" library="BuiltIn">
-<arg>Validation unsuccesful for file : ${load_xml_file}</arg>
-<doc>Fails the test with the given message and optionally alters its tags.</doc>
-<msg timestamp="20230927 16:42:35.907" level="FAIL">Validation unsuccesful for file : test</msg>
-<status status="FAIL" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.908"/>
-</kw>
-<status status="FAIL" starttime="20230927 16:42:35.907" endtime="20230927 16:42:35.908"/>
-</branch>
-<status status="FAIL" starttime="20230927 16:42:35.906" endtime="20230927 16:42:35.908"/>
-</if>
-<status status="FAIL" starttime="20230927 16:42:35.820" endtime="20230927 16:42:35.908">Validation unsuccesful for file : test</status>
-</test>
-<status status="FAIL" starttime="20230927 16:42:35.786" endtime="20230927 16:42:35.910"/>
-</suite>
-<statistics>
-<total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
-</total>
-<tag>
+                <status status="PASS" starttime="20230927 16:42:35.902"
+                    endtime="20230927 16:42:35.903" />
+            </kw>
+            <kw name="Log" library="BuiltIn">
+                <arg>Status ${status}</arg>
+                <doc>Logs the given message with the given level.</doc>
+                <msg timestamp="20230927 16:42:35.904" level="INFO">Status False</msg>
+                <status status="PASS" starttime="20230927 16:42:35.903"
+                    endtime="20230927 16:42:35.904" />
+            </kw>
+            <kw name="Log" library="BuiltIn">
+                <arg>Message ${message}</arg>
+                <doc>Logs the given message with the given level.</doc>
+                <msg timestamp="20230927 16:42:35.906" level="INFO">Message Configuration is applied
+                    but not consistent</msg>
+                <status status="PASS" starttime="20230927 16:42:35.905"
+                    endtime="20230927 16:42:35.906" />
+            </kw>
+            <if>
+                <branch type="IF" condition="${status} == True">
+                    <kw name="Pass Execution" library="BuiltIn">
+                        <arg>Validation Successful for file : ${load_xml_file}</arg>
+                        <doc>Skips rest of the current test, setup, or teardown with PASS status.</doc>
+                        <status status="NOT RUN" starttime="20230927 16:42:35.907"
+                            endtime="20230927 16:42:35.907" />
+                    </kw>
+                    <status status="NOT RUN" starttime="20230927 16:42:35.906"
+                        endtime="20230927 16:42:35.907" />
+                </branch>
+                <branch type="ELSE">
+                    <kw name="Fail" library="BuiltIn">
+                        <arg>Validation unsuccesful for file : ${load_xml_file}</arg>
+                        <doc>Fails the test with the given message and optionally alters its tags.</doc>
+                        <msg timestamp="20230927 16:42:35.907" level="FAIL">Validation unsuccesful
+                            for file : test</msg>
+                        <status status="FAIL" starttime="20230927 16:42:35.907"
+                            endtime="20230927 16:42:35.908" />
+                    </kw>
+                    <status status="FAIL" starttime="20230927 16:42:35.907"
+                        endtime="20230927 16:42:35.908" />
+                </branch>
+                <status status="FAIL" starttime="20230927 16:42:35.906"
+                    endtime="20230927 16:42:35.908" />
+            </if>
+            <status status="FAIL" starttime="20230927 16:42:35.820" endtime="20230927 16:42:35.908">Validation
+                unsuccesful for file : test</status>
+        </test>
+        <status status="FAIL" starttime="20230927 16:42:35.786" endtime="20230927 16:42:35.910" />
+    </suite>
+    <statistics>
+        <total>
+            <stat pass="0" fail="1" skip="0">All Tests</stat>
+        </total>
+        <tag>
 </tag>
-<suite>
-<stat pass="0" fail="1" skip="0" id="s1" name="ATP">ATP</stat>
-</suite>
-</statistics>
-<errors>
+        <suite>
+            <stat pass="0" fail="1" skip="0" id="s1" name="ATP">ATP</stat>
+        </suite>
+    </statistics>
+    <errors>
 </errors>
 </robot>

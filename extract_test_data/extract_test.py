@@ -296,14 +296,31 @@ def get_tests(output_xml):
         status_value = test_element.find("status").get("status")
         # Insert the attributes into a dictionary
         msg_elements = test_element.findall(".//msg")
+        # Iterating to see if there are any kw matching 
+        steps_list = []
+
+        for kw_element in test_element.findall("kw"):
+            kw_name = kw_element.get("name")  # Get the name attribute
+            print(kw_name)
+            if ('Step.' in kw_name):
+                print(f'Found Step > {kw_name}')
+                steps_list.append(kw_name)
+        print(steps_list)
+        # merge the messages output into one value
+        # currently each message is seperated by CR
+        # need to trim whitespace in each message
+        # for msg_element in msg_elements:
+        #     msg_element.text = re.sub(r'\s{2,}', ' ', msg_element.text)
         message_value = "\n".join(
             msg_element.text for msg_element in msg_elements)
+        message_value = clean_doc(message_value)
         test_data = {
             "name": name_value,
             "doc": doc_value,
             "section": section_value,
             "status": status_value,
-            "messages": message_value
+            "messages": message_value,
+            "procedure": steps_list
         }
         test_list.append(test_data)
     return test_list
@@ -345,11 +362,38 @@ def add_vertical_testcase_table(doc, data_dict):
     # Set the width for the first column
     table.columns[0].width = int(page_width * 0.2)
     table.columns[1].width = int(page_width * 0.8)
+    # Specifiy the order of the test case rows, in the table
+    key_order = ['section', 'doc', 'procedure', 'status', 'messages']
 
-    for key, value in data_dict.items():
+    for key in key_order:
+        value = data_dict.get(key, '')  # Get the value for the current key, default to empty string if key not found
         row = table.add_row().cells
         row[0].text = key
-        row[1].text = value
+
+        if key == 'procedure' and isinstance(value, list):
+            # If the key is 'procedure' and the value is a list, add list items as bullets
+            print(value)
+            value_stripped = [item.replace("Step.", "") for item in value]
+            cell = row[1]
+            for item in value_stripped:
+                p = cell.add_paragraph(item, style='Step Style')
+        elif key == 'doc':
+            """ Reformat the <doc> contents to remove page breaks"""
+            value = clean_doc(value)
+            row[0].text = 'Purpose'
+            row[1].text = value
+        else:
+            # If the key is not 'procedure' or the value is not a list, set the text directly
+            row[1].text = value
+
+
+def clean_doc(value):
+    # Remove all carriage returns and extra whitespace
+    # value = re.sub(r'[\r\n]+', ' ', value)
+    value = re.sub(r'\s{2,}', ' ', value)
+    # if value has - with whitespace on eother side, add a new line:
+    value = re.sub(r' - ', '\n - ', value)
+    return value
 
 
 def add_testcase_table(doc, test_data):
@@ -378,7 +422,7 @@ def add_testcase_table(doc, test_data):
 
 
 # @log_output_to_file('output_log.txt')
-def create_test_docx():
+def create_test_docx(**kwargs):
     """
     Bring everything together and create the docx content
 
@@ -388,9 +432,11 @@ def create_test_docx():
     docx_template = 'Template.docx'
 
     """
+    output_docx = kwargs.get('output_docx', 'output.docx')
+    test_output_xml = kwargs.get('test_output_xml', './output.xml')
+    docx_template = kwargs.get('docx_template', 'Template.docx')
     table_style_name = 'Cisco CX Table | Default'
-    test_output_xml = './output.xml'
-    docx_template = 'Template.docx'
+
     # Calling functions top extract test data:
     output_xml = parse_output_xml(test_output_xml)
     sections = get_test_sections(output_xml=output_xml)
@@ -439,8 +485,31 @@ def create_test_docx():
         add_vertical_testcase_table(doc, test_data)
     doc.add_paragraph()
     # Save the document
-    doc.save('test_results.docx')
+    doc.save(output_docx)
 
 
 if __name__ == "__main__":
-    create_test_docx()
+    test_output_xml = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/output.xml'
+    docx_template = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/vf-atp-template.docx'
+    create_test_docx(
+        test_output_xml=test_output_xml,
+        docx_template=docx_template
+    )
+"""
+
+table_style_name = 'Cisco CX Table | Default'
+test_output_xml = './output.xml'
+docx_template = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/vf-atp-template.docx'
+# Calling functions top extract test data:
+output_xml = parse_output_xml(test_output_xml)
+sections = get_test_sections(output_xml=output_xml)
+tests = get_tests(output_xml=output_xml)
+
+Manual Tests:
+from lxml import etree as ET
+from extract_test import *
+test_output_xml = '/Users/ubutt/git/robot-system-check/override_doc/output.xml'
+output_xml = parse_output_xml(test_output_xml)
+tests = get_tests(output_xml=output_xml)
+xml_string = ET.tostring(output_xml, encoding='unicode', method='xml')
+"""

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.2 on darwin)" generated="20231003 15:27:45.694" rpa="false" schemaversion="4">
+<suite id="s1" name="Override" source="/Users/ubutt/git/robot-system-check/override_doc/override.robot">
+<test id="s1-t1" name="Create and Store Dynamic XML" line="21">
+<kw name="Step. Step 1" sourcename="Step. ${message}">
+<doc>Simple Keyword to store text which will be added to
+test case Docx as instruction/guidance steps to inform reader in the
+tets procesdures</doc>
+<kw name="Log" library="BuiltIn">
+<arg>${message}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231003 15:27:45.750" level="INFO">Step 1</msg>
+<status status="PASS" starttime="20231003 15:27:45.750" endtime="20231003 15:27:45.750"/>
+</kw>
+<status status="PASS" starttime="20231003 15:27:45.749" endtime="20231003 15:27:45.750"/>
+</kw>
+<kw name="Step. Step 2" sourcename="Step. ${message}">
+<doc>Simple Keyword to store text which will be added to
+test case Docx as instruction/guidance steps to inform reader in the
+tets procesdures</doc>
+<kw name="Log" library="BuiltIn">
+<arg>${message}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231003 15:27:45.751" level="INFO">Step 2</msg>
+<status status="PASS" starttime="20231003 15:27:45.751" endtime="20231003 15:27:45.751"/>
+</kw>
+<status status="PASS" starttime="20231003 15:27:45.751" endtime="20231003 15:27:45.751"/>
+</kw>
+<kw name="Step. Step 3" sourcename="Step. ${message}">
+<doc>Simple Keyword to store text which will be added to
+test case Docx as instruction/guidance steps to inform reader in the
+tets procesdures</doc>
+<kw name="Log" library="BuiltIn">
+<arg>${message}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20231003 15:27:45.752" level="INFO">Step 3</msg>
+<status status="PASS" starttime="20231003 15:27:45.752" endtime="20231003 15:27:45.752"/>
+</kw>
+<status status="PASS" starttime="20231003 15:27:45.751" endtime="20231003 15:27:45.752"/>
+</kw>
+<doc>Some documentation</doc>
+<status status="PASS" starttime="20231003 15:27:45.749" endtime="20231003 15:27:45.752"/>
+</test>
+<status status="PASS" starttime="20231003 15:27:45.695" endtime="20231003 15:27:45.753"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Override">Override</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1.1 (Python 3.10.2 on darwin)" generated="20231003 12:19:48.541" rpa="false" schemaversion="4">
+<suite id="s1" name="Override" source="/Users/ubutt/git/robot-system-check/override_doc/override.robot">
+<test id="s1-t1" name="Create and Store Dynamic XML" line="35">
+<kw name="Set Variable" library="BuiltIn">
+<var>${dynamic_value}</var>
+<arg>DynamicValue</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231003 12:19:48.615" level="INFO">${dynamic_value} = DynamicValue</msg>
+<status status="PASS" starttime="20231003 12:19:48.614" endtime="20231003 12:19:48.617"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${dynamic_content}</var>
+<arg>DynamicContent</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231003 12:19:48.619" level="INFO">${dynamic_content} = DynamicContent</msg>
+<status status="PASS" starttime="20231003 12:19:48.618" endtime="20231003 12:19:48.619"/>
+</kw>
+<kw name="Create XML">
+<var>${xml_data}</var>
+<arg>${dynamic_value}</arg>
+<arg>${dynamic_content}</arg>
+<doc>Create an XML document with dynamic values</doc>
+<kw name="Set Variable" library="BuiltIn">
+<var>${xml_data}</var>
+<arg>&lt;root&gt;&lt;element attribute="${value}"&gt;${content}&lt;/element&gt;&lt;/root&gt;</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20231003 12:19:48.622" level="INFO">${xml_data} = &lt;root&gt;&lt;element attribute="DynamicValue"&gt;DynamicContent&lt;/element&gt;&lt;/root&gt;</msg>
+<status status="PASS" starttime="20231003 12:19:48.622" endtime="20231003 12:19:48.622"/>
+</kw>
+<msg timestamp="20231003 12:19:48.623" level="INFO">${xml_data} = &lt;root&gt;&lt;element attribute="DynamicValue"&gt;DynamicContent&lt;/element&gt;&lt;/root&gt;</msg>
+<status status="PASS" starttime="20231003 12:19:48.620" endtime="20231003 12:19:48.623"/>
+</kw>
+<kw name="Set Test Documentation" library="BuiltIn">
+<arg>${xml_data}</arg>
+<arg>append=True</arg>
+<doc>Sets documentation for the current test case.</doc>
+<msg timestamp="20231003 12:19:48.624" level="INFO">Set test documentation to:
+Some documentation &lt;root&gt;&lt;element attribute="DynamicValue"&gt;DynamicContent&lt;/element&gt;&lt;/root&gt;</msg>
+<status status="PASS" starttime="20231003 12:19:48.624" endtime="20231003 12:19:48.624"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${xml_data}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20231003 12:19:48.625" endtime="20231003 12:19:48.626"/>
+</kw>
+<doc>Some documentation &lt;root&gt;&lt;element attribute="DynamicValue"&gt;DynamicContent&lt;/element&gt;&lt;/root&gt;</doc>
+<status status="PASS" starttime="20231003 12:19:48.613" endtime="20231003 12:19:48.627"/>
+</test>
+<status status="PASS" starttime="20231003 12:19:48.547" endtime="20231003 12:19:48.629"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Override">Override</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

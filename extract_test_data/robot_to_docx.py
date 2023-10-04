@@ -85,7 +85,7 @@ def add_table_to_document(doc, data, caption):
     # Add a paragraph for the caption and align it to the left
     table_caption = doc.add_paragraph(style='Caption')
     table_caption.add_run('Table  ')
-    field_code = "AUTONUM \* MERGEFORMAT"
+    field_code = "AUTONUM \\* MERGEFORMAT"
     table_caption.add_run().add_field(field_code)
     table_caption.add_run(caption)
     # Add a table with headers
