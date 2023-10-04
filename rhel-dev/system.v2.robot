@@ -32,6 +32,7 @@ Verify dependency packages are installed
     ...    packages, add and remove packages form the list to modify the test case.
     ...    List included : ${package_list}
     [Tags]    os    packages
+    Step. Run the command 'rpm -q {package_name}' and verify the neccessary packages are installed
     ${command}    Set Variable    rpm -q
     ${check_string}    Set Variable    not installed
     Iterate Over List and Run Command    ${package_list}    ${command}    ${check_string}
@@ -43,6 +44,7 @@ Verify required package are and package versions
     ...    
     ${packages_dict}    Create Dictionary    ant=1.9.3    java-11-openjdk=1.1    python3=3.7    openssl=0    pam=1.3.1    python3-setuptools=0
     ${error_list}    Create List
+    Step. Using the 'rpm -q' command valdate that the neccesary packages versions meet the minimum requirements 
     FOR    ${package}  ${required_version}    IN    &{packages_dict}
 
         Log    Package = ${package} Version = ${required_version}
@@ -62,6 +64,11 @@ Check library availability
     [Documentation]    Cisco NSO requires that the operating system has specific libraries installed
     ...    the test verifies that the "ldconfig -p" output includes each of the libraries mentioned in the
     ...    documentation. To adapt modify the list
+    ...    
+    Step. Run the command 'ldconfig -p' and capture the output
+    Step. Verify that libpam.so.0 is available
+    Step. Verify that libexpat.so.1 is available
+    Step. Verify that libz.so.1 is available
     ${libraries}     Create List    libpam.so.0    libexpat.so.1    libz.so.1
     ${system_libraries}    Run    ldconfig -p
     ${error_list}    Create List
@@ -78,6 +85,9 @@ Check library availability
 Check libz library version
     [Documentation]    Cisco NSO requires a minimimum version of 1.2.7.1 for the libz library
     ...    this test will verify that the verison installed satisfies this requirement.
+    ...    
+    Step. Run the command 'python3 -c "import zlib; print (zlib.ZLIB_VERSION)"'
+    Step. Verify that the version is >= 1.2.7.1
     ${desired_major_version}    Set Variable    1.2
     ${desired_minor_version}    Set Variable    7.1
     ${libz_version}   Run    python3 -c "import zlib; print (zlib.ZLIB_VERSION)"
@@ -104,6 +114,7 @@ Check libz library version
 Verify required utilities are available
     [Documentation]    Cisco NSO requires some utilities, this test verfies these binaries exist
     [Tags]    os    packages
+    Step. Using the command 'which' verify that tar, gzip, find, and ssh-keygen utilities are in the the system $PATH 
     ${command}    Set Variable    which
     ${check_string}    Set Variable    /usr/bin/which: no
     Iterate Over List and Run Command    ${utility_list}    ${command}    ${check_string}
@@ -113,6 +124,8 @@ Verify correct version of Python is active
     ...    active python environmnet meets this requirement
     ...
     [Tags]    os    packages
+    Step. Run the command 'python --version'
+    Step. Verify that the verison is >= to 3.8
     ${python_version}    Run    python --version
     ${python_major_version}    Get Regexp Matches    ${python_version}    Python (\\d+\.\\d+)    1
     ${desired_version}    Set Variable    3.08
@@ -125,12 +138,17 @@ Verify correct version of Python is active
 Verify Hostname is not set to localhost
     [Documentation]    Hostname Should not be localhost
     [Tags]    os    dns
+    Step. Run the command 'hostnamectl hostname'
+    Step. Verify that the system hostname is not set to 'localhost'
+    Step. Verify taht the hostname is set to the expected value
     ${output}    Run    hostnamectl hostname
     Should Not Be Equal As Strings    ${output}    localhost
 
 Verify DNS servers are Configured
     [Documentation]    DNS Servers should be Configured
     [Tags]    os    dns
+    Step. View the file '/etc/resolv.conf'
+    Step. Verify that the neccesary DNS hosts are visible
     ${output}    Run    more /etc/resolv.conf
     FOR    ${dns_server}    IN    @{dns_servers}
         Should Contain    ${output}    ${dns_server}
@@ -139,6 +157,8 @@ Verify DNS servers are Configured
 Verify NTP servers are Configured
     [Documentation]    NTP Servers should be Configured
     [Tags]    os    ntp
+    Step. Run the command 'chronyc sources'
+    Step. Verify that the neccesary NTP sources are visible
     ${output}    Run    chronyc sources
     FOR    ${ntp_server}    IN    @{ntp_servers}
         Should Contain    ${output}    ${ntp_server}
@@ -147,5 +167,7 @@ Verify NTP servers are Configured
 Verify NTP service is active
     [Documentation]    Check that the NTP service is active
     [Tags]    os    ntp
+    Step. Run the command 'timedatectl show'
+    Step. Verify that the system shows NTPSynchronized=yes
     ${output}    Run    timedatectl show | grep -Po '(?<=NTPSynchronized=)[^,]+'
     Should Be Equal As Strings    ${output}    yes

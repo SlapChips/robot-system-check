@@ -77,9 +77,6 @@ Verify the T-SDN system limits have been configured
     ...    *   hard memlock 65536
     ...    *   soft memlock 65536 
     ...
-    ...    To handle the Regex * issue we need to preface each key with \n\\*\s+ should be handled in
-    ...    the Keyword but thats for the future
-    ...
     Step. Check that the file /etc/init.d/ncs exists contents has expected values
     ${file}    Get File    /etc/security/limits.d/ncs.conf
     ${clean_file}    Replace String Using Regexp    ${file}    \\s{2}    ${SPACE}    # This fixes some whitepsace issues that i found in the files

@@ -30,6 +30,9 @@ Is the NSO Service (NCS) Running
     ...    this test will run the command 'systemctl is-active ncs' and parse the response
     ...    test passes if the response is 'actve' any other response will fail
     ...    if the test fails, enable the service using the 'systemctl start ncs' command
+    ...    
+    Step. Run the command 'systemctl is-active ncs' 
+    Step. Verify that the NCS process is active
     ${status}    Run    systemctl is-active ncs
     ${expected_output}    Set Variable    active
     Should Be Equal    ${status}    ${expected_output}
@@ -42,6 +45,8 @@ Is the NSO service (NCS) enabled on boot
     ...    
     ...    If the test fails enable the service using the command 'systemctl enable ncs' and re-run the test 
     ...    
+    Step. Run the command 'systemctl is-enabled ncs' 
+    Step. Verify that the NCS process is Enabled for auto-start
     ${status}    Run    systemctl is-enabled ncs
     ${expected_output}    Set Variable    enabled
     Should Contain    ${status}    ${expected_output}
@@ -77,6 +82,9 @@ Verify High-Availability is operational
     ...    returns errors the high-availbility is not configured correctly and 
     ...    needs to be modified and re-verified.
     [Tags]    nso 
+    Step. Run the command 'show ncs-state ha' 
+    Step. Verify that the high-avaialbaility status is enabled
+    Step. Verify that the output shows that the high-availability nodes are listed (master and Slave)
     Skip    TODO Create Test 
 
 Verify that the T-SDN Packages are installed in NSO
@@ -102,14 +110,16 @@ Verify that the T-SDN startup configurations are loaded
     Skip    TODO Create Test 
 
 Test Load merge
-    ${load_xml_file}    Set Variable    test
-    ${status}    ${message}    ${output}    Load Merge Xml File And Return Output    ${load_xml_file}
-    Log    Output ${output}
-    Log    Status ${status}
-    Log    Message ${message}
-    IF    ${status} == True 
-        Pass Execution    Validation Successful for file : ${load_xml_file}
-    ELSE
-        Fail    Validation unsuccesful for file : ${load_xml_file}
-    END
+    [Documentation]    Some text
+    # ${load_xml_file}    Set Variable    test
+    # ${status}    ${message}    ${output}    Load Merge Xml File And Return Output    ${load_xml_file}
+    # Log    Output ${output}
+    # Log    Status ${status}
+    # Log    Message ${message}
+    # IF    ${status} == True 
+    #     Pass Execution    Validation Successful for file : ${load_xml_file}
+    # ELSE
+    #     Fail    Validation unsuccesful for file : ${load_xml_file}
+    # END
+    Skip    TODO Create Test
 

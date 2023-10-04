@@ -448,17 +448,17 @@ def create_test_docx(**kwargs):
     sections = get_test_sections(output_xml=output_xml)
     tests = get_tests(output_xml=output_xml)
     # Create a new Word document
-    custom_style_doc = Document('Template.docx')
+    doc = Document(docx_template)
     table_style_name = 'Cisco CX Table | Default'
     # Check if the style exists in the document's styles
-    if table_style_name in custom_style_doc.styles:
+    if table_style_name in doc.styles:
         # Get the style object
-        custom_table_style = custom_style_doc.styles[table_style_name]
+        custom_table_style = doc.styles[table_style_name]
     else:
         # If the style doesn't exist, you can create a new style based on it
-        custom_table_style = custom_style_doc.styles.add_style(
+        custom_table_style = doc.styles.add_style(
             table_style_name, 'Table Normal')
-    doc = Document(docx_template)
+    # doc = Document(docx_template)
     # create a blank table to store the data in the document
     table = doc.tables[0]
     # Asisgn the Cisco CX Default Style
@@ -489,15 +489,86 @@ def create_test_docx(**kwargs):
                 caption=f'{section_name} Test Results Summary')
         pprint(test_data)
         add_vertical_testcase_table(doc, test_data)
-    doc.add_paragraph()
+    # invoke positional text test
+
+    p = create_inline_paragraph(
+        doc,
+        placeholder='test_case_placeholder',
+        position='before'
+    )
+    p.add_run('Adding text before placeholder')
+
+    p = create_inline_paragraph(
+        doc=doc,
+        placeholder='test_case_placeholder',
+        position='After'
+    )
+    p.add_run('Adding text after placeholder')
+    if p:
+        print('Entering new table')
+        
+        empty_paragraph = doc.add_paragraph()
+        table = doc.add_table(rows=3, cols=2)
+        # Add content to the table cells
+        table.cell(0, 0).text = "Row 1, Cell 1"
+        table.cell(0, 1).text = "Row 1, Cell 2"
+        table.cell(1, 0).text = "Row 2, Cell 1"
+        table.cell(1, 1).text = "Row 2, Cell 2"
+        table.cell(2, 0).text = "Row 3, Cell 1"
+        table.cell(2, 1).text = "Row 3, Cell 2"
+        # the line below adds the table to the paragraph location:
+        p._p.addnext(table._tbl)
+
     # Save the document
     doc.save(output_docx)
+
+
+def find_placeholder(doc, placeholder):
+    """
+    Find the location of a placeholder, we need this for inline edits of a docx
+    template. The input is a seach string that the code will use to iterate over 
+    the raw document text.
+
+    Return: Paragraph Number (int)
+    This can be used to construct a new parapgraph statement like this:
+
+    insert_before_here = doc.paragraphs[106]
+
+    This creates a new paragraph before the paragraph 106
+    """
+    # create a list of all paragraphs, painful but neccesary:
+    para_list = doc.paragraphs
+    # set counter to store location:
+    count = 0
+    for p in para_list:
+        if (placeholder in p.text):
+            # found you, you retartd
+            p_id = count
+        count += 1
+    return p_id  # return the paragraph id (int)
+
+
+def create_inline_paragraph(doc, placeholder, position):
+    """
+    Create a new paragraph object before the placeholder text:
+
+    placeholder = some text placeholder in docx template
+    position = relative position : before / after
+
+    """
+    p_id = find_placeholder(doc, placeholder)
+    if position.lower() == 'before':
+        p = doc.paragraphs[p_id].insert_paragraph_before()
+    elif position.lower() == 'after':
+        p = doc.paragraphs[p_id]
+        new_line = p.add_run('\n')
+    return p  # returning docx paragraph object
 
 
 if __name__ == "__main__":
     test_output_xml = '/Users/ubutt/git/robot-system-check/rhel-dev/results/output.xml'
     # test_output_xml = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/output.xml'
-    docx_template = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/vf-atp-template.docx'
+    docx_template = '/Users/ubutt/git/robot-system-check/rhel-dev/create_docx/vf-atp-template.docx'
     create_test_docx(
         test_output_xml=test_output_xml,
         docx_template=docx_template

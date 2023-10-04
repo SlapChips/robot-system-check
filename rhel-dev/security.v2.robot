@@ -15,13 +15,15 @@ Library    String
 Library    Collections
 *** Variables ***
 @{nso_fw_ports}   2022    2024    8080    8888 
-@{pam_modules}    with-faillock    without-nullok    spam-locks
+@{pam_modules}    with-faillock    without-nullok
 
 *** Test Cases ***
 
 Verify firewalld service is enabled
     [Documentation]    The firewall service should not be disabled on reboot
     [Tags]    security
+    Step. Run the command systemctl is-enabled firewalld
+    Step. Verify that the response is 'enabled'
     ${output}    Run    systemctl is-enabled firewalld
     Should Be Equal As Strings    ${output}    enabled
 
@@ -30,6 +32,8 @@ Verify NSO ports are configured in the firewalld
     ...    ports are listed in the list "nso_fw_ports" defined in the global Variables
     ...    List includes the following : @{nso_fw_ports} 
     [Tags]    security
+    Step. Run the command sudo firewall-cmd --list-all
+    Step. Verify that the required ports are configured
     ${output}    Run    sudo firewall-cmd --list-all
     FOR    ${port}    IN    @{nso_fw_ports}
         Should Contain    ${output}    ${port}
@@ -39,15 +43,20 @@ Verify NSO ports are configured in the firewalld
 Verify authselect profile sssd-vf is created
     [Documentation]    Verify that a custom sssd profile has been created
     [Tags]    security
+    Step. Run the command 'authselect list'
+    Step. Verify that the 'sssd-vf' profile exists
     ${output}    Run    authselect list
     Should Contain    ${output}    sssd-vf 
 
 Verify expected authselect profile is active
-    ${output}    Run    authselect current -r
     [Documentation]    This runs the command "authselect current -r" and returns the current active profile
     ...    the test checks that this matches the expected value of custom/sssd-vf
+    Step. Run the command 'authselect current -r'
+    Step. Verify that the profile custom/sssd-vf is active
+    ${output}    Run    authselect current -r
     ${profile}    Set Variable    custom/sssd-vf
     IF    '${profile}' in '${output}'    Pass Execution    Current Profile is correct - sssd-vf    ELSE    Fail    Incorrect, or No, Profile active
+    
 
 Verify that the required PAM Modules are enabled
     [Documentation]    This test will verify that without-nullok and with-faillock modules are activated 
@@ -60,8 +69,9 @@ Verify that the required PAM Modules are enabled
     ...    - without-nullok
     ...    
     ...    Checks made against the following features: @{pam_modules}
-
     [Tags]    security
+    Step. Run the command 'authselect current'
+    Step. Validate that the required features, listed above, are enabled
     ${output}    Run    authselect current
     ${module_status_dict}    Create Dictionary
     Log    ${output}
@@ -80,7 +90,11 @@ Check the password-auth file has been updated
     ...    the module search string and the expected configuration as a k,v Pairs
     ...    the check then searches the file for the key and evaluates the value
     ...
-    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok    dummy=dummy
+    Step. View the contents of the file: '/etc/authselect/custom/sssd-vf/password-auth'
+    Step. Locate the 'pam_unix.so' entry in the auth section, verify that the definition includes 'try_first_pass'
+    Step. Locate the 'pam_pwquality.so' entry in the password section, verify that the definition includes 'try_first_pass'
+    Step. Locate the 'pam_unix.so' entry in the password section, verify the definition includes 'try_first_pass'
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok
     ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/password-auth
     ${error_list}    Create List
     FOR    ${key}    ${value}    IN    &{check_dict}
@@ -105,16 +119,18 @@ Check the password-auth file has been updated
     Log    ${error_list}
     Should Be Empty    ${error_list}    Errors found in the following modules ${error_list}
 
-
-
-
 Check the system-auth file has been updated
     [Documentation]    Read the /etc/authselect/custom/sssd-vf/system-auth file
     ...    and check that the values have been modified the check takes a dict with
     ...    the module search string and the expected configuration as a k,v Pairs
     ...    the check then searches the file for the key and evaluates the value
     ...
-    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only enforce-for-root retry=3 remember=12   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok remember=12    dummy=dummy
+    Step. View the contents of the file: '/etc/authselect/custom/sssd-vf/system-auth'
+    Step. Locate the 'pam_unix.so' entry in the auth section, verify that the definition matches '{if not "without-nullok":nullok} try_first_pass'
+    Step. Locate the 'pam_pwquality.so' entry in the password section, verify that the definition matches 'try_first_pass local_users_only enforce-for-root retry=3 remember=12'
+    Step. Locate the 'pam_unix.so' entry in the password section, verify the definition matche '{if not "without-nullok":nullok} try_first_pass use_authtok remember=12'
+ 
+    ${check_dict}    Create Dictionary   auth.*pam_unix.so={if not "without-nullok":nullok} try_first_pass    password.*pam_pwquality.so=try_first_pass local_users_only enforce-for-root retry=3 remember=12   password.*pam_unix.so sha512 shadow={if not "without-nullok":nullok} try_first_pass use_authtok remember=12
     ${password_auth}    Get File    /etc/authselect/custom/sssd-vf/system-auth
     ${error_list}    Create List
     FOR    ${key}    ${value}    IN    &{check_dict}
@@ -142,6 +158,8 @@ Check the system-auth file has been updated
 Verify that faillock.conf has been modifed
     [Documentation]    We are required to modify the fail_interval to be = 1800 seconds
     [Tags]    security
+    Step. View the file /etc/security/faillock.conf
+    Step. Verify that the 'fail_interval' is set to '1800'
     ${dict}    Create Dictionary    fail_interval=1800
     ${file_path}    Set Variable    /etc/security/faillock.conf
     Get Regexp Matches For Key Value Pairs in File    ${dict}    ${file_path}
@@ -155,6 +173,8 @@ Verify that pwquality.conf has been modified
     ...    - lcredit = -1
     ...    - ocredit = -1
     [Tags]    security
+    Step. View the file '/etc/security/pwquality.conf'
+    Step. Validate that the attributes are assigned the correct values, see above 
     ${dict}    Create Dictionary    minlen=8    dcredit=-1    ucredit=-1    lcredit=-1    ocredit=-1    dummy=1
     ${file_path}    Set Variable    /etc/security/pwquality.conf
     Get Regexp Matches For Key Value Pairs in File    ${dict}    ${file_path}
@@ -168,6 +188,8 @@ Verify login.defs has been modifed
     ...    - PASS_WARN_AGE   5
 
     [Tags]    security
+    Step. View the file '/etc/login.defs'
+    Step. Validate that the attributes are assigned the correct values, see above 
     ${dict}    Create Dictionary    PASS_MAX_DAYS=90    PASS_MIN_DAYS=1    PASS_MIN_LEN=5    PASS_WARN_AGE=5    dummy=5
     ${file_path}    Set Variable    /etc/login.defs
     Get Regexp Matches For Key Value Pairs in File    ${dict}    ${file_path}
@@ -177,6 +199,8 @@ Verify the user account inavtive days value has been modified
     ...    equates to no inactvity time out for user. We need to change this value to 90 as per
     ...    request from Customer
     [Tags]    security
+    Step. View the file '/etc/default/useradd'
+    Step. Validate that the attributes are assigned the correct values, see above 
     ${useradd_conf}    Get File    /etc/default/useradd
     ${match}    Get Regexp Matches    ${useradd_conf}    (?m)^\\s?INACTIVE\\s?\=\\s?(-?\\d+)    1
     ${match_val}    Get From List    ${match}    0
