@@ -139,38 +139,6 @@ def get_section_summary_results(doc, data, caption):
     doc.add_paragraph()
 
 
-def create_table_in_docx(doc, data):
-    # Determine the number of rows and columns based on the data
-    num_rows = len(data)
-    # Add 1 for the "Test Name" column
-    num_columns = len(next(iter(data.values()))) + 1
-    # print(f'Creating {num_rows} rows, and {num_columns} colums')
-    # Add a table with dynamic rows and columns
-    table = doc.add_table(rows=num_rows, cols=num_columns)
-
-    # Apply the custom table style to the table
-    table.style = 'Cisco CX Table | Default'
-
-    # Set alignment for the "Test Name" cell to center vertically
-    cell = table.cell(0, 0)
-    cell.vertical_alignment = WD_ALIGN_VERTICAL.CENTER
-
-    # Add table headers
-    table_cells = table.rows[0].cells
-    table_cells[0].text = 'Test Name'
-
-    # Add headers for additional columns (if any)
-    for i, label in enumerate(data.values()):
-        table_cells[i + 1].text = label
-
-    # Add data to the table
-    for row_index, (test_name, test_data) in enumerate(data.items(), start=1):
-        row = table.rows[row_index].cells
-        row[0].text = test_name  # Set the test name in the "Test Name" column
-        for i, value in enumerate(test_data.values(), start=1):
-            row[i].text = value
-
-
 def get_section_statistics(output_xml, section_id):
     # Define the XPath for the specified section
     # (total, tag, or suite) with the given section_id
@@ -201,52 +169,6 @@ def get_section_statistics(output_xml, section_id):
     {'All Tests': {'pass': '20', 'fail': '0', 'skip': '0'}}
     """
     return section_dict
-
-
-def get_tests_from_output_xml(file_path, section):
-    try:
-        # Parse the XML file
-        tree = ET.parse(file_path)
-        root = tree.getroot()
-    except ET.ParseError as e:
-        raise ValueError(f"Failed to parse the XML file: {e}")
-
-    # Initialize a dictionary to store the results
-    result_dict = {}
-
-    # Define the XPath for the specified section (total, tag, or suite)
-    if section == "total":
-        xpath = ".//total/stat"
-    elif section == "tag":
-        xpath = ".//tag/stat"
-    elif section == "suite":
-        xpath = ".//suite/stat"
-    else:
-        raise ValueError(
-            "Invalid section specified. Use 'total', 'tag', or 'suite'.")
-
-    # Iterate through the selected elements and extract the attributes
-    for elem in root.findall(xpath):
-        pass_value = elem.get("pass")
-        fail_value = elem.get("fail")
-        skip_value = elem.get("skip")
-        name_value = elem.get("name")
-
-        # If name attribute is not present, use the element's text as name
-        if name_value is None:
-            name_value = elem.text
-
-        # Create a dictionary entry for the element
-        result_dict[name_value] = {
-            "pass": pass_value,
-            "fail": fail_value,
-            "skip": skip_value,
-        }
-    """
-    Returns:
-    {'All Tests': {'pass': '20', 'fail': '0', 'skip': '0'}}
-    """
-    return result_dict
 
 
 def get_test_sections(output_xml):
@@ -297,7 +219,7 @@ def get_tests(output_xml):
         status_value = test_element.find("status").get("status")
         # Insert the attributes into a dictionary
         msg_elements = test_element.findall(".//msg")
-        # Iterating to see if there are any kw matching 
+        # Iterating to see if there are any kw matching
         steps_list = []
 
         for kw_element in test_element.findall("kw"):
@@ -316,6 +238,7 @@ def get_tests(output_xml):
             msg_element.text for msg_element in msg_elements)
         message_value = message_value
         test_data = {
+            "id":   id_value,
             "name": name_value,
             "doc": doc_value,
             "section": section_value,
@@ -327,37 +250,9 @@ def get_tests(output_xml):
     return test_list
 
 
-def add_vertical_testcase_table__old(doc, test_data):
-    # Create a table with one column and a row
-    # for each key-value pair in test_data
-    table = doc.add_table(rows=len(test_data), cols=2)
-    table.style = 'Cisco CX Table | Default'
-    doc.add_paragraph()
-
-    # Set the width of the first column to make it a header column
-    table.columns[0].width = Cm(4)  # Adjust the width as needed
-
-    # Add data rows based on the input
-    for idx, (header, value) in enumerate(test_data.items()):
-        # Add the header in the first column
-        header_cell = table.cell(idx, 0)
-        header_cell.text = header
-        header_cell.paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-
-        # Add the value in the second column
-        value_cell = table.cell(idx, 1)
-        value_cell.text = value
-
-    # Apply formatting to the header column (e.g., bold)
-    for row in table.rows:
-        row.cells[0].paragraphs[0].runs[0].bold = True
-
-
 def add_vertical_testcase_table(doc, data_dict):
     add_caption(doc, caption_type='table', caption_text=data_dict['name'])
     page_width = doc.sections[0].page_width
-    pprint(page_width)
-    pprint(f'first_column_width = {int(page_width * 0.8)}')
     table = doc.add_table(rows=0, cols=2)
     table.style = 'Cisco CX Table | Default'
     # Set the width for the first column
@@ -365,12 +260,11 @@ def add_vertical_testcase_table(doc, data_dict):
     table.columns[1].width = int(page_width * 0.8)
     # Specifiy the order of the test case rows, in the table
     key_order = ['section', 'doc', 'procedure', 'status', 'messages']
-
     for key in key_order:
-        value = data_dict.get(key, '')  # Get the value for the current key, default to empty string if key not found
+        # Get the value for the current key, default to empty string if key not found
+        value = data_dict.get(key, '')
         row = table.add_row().cells
         row[0].text = key
-
         if key == 'procedure' and isinstance(value, list):
             # If the key is 'procedure' and the value is a list, add list items as bullets
             print(value)
@@ -402,32 +296,126 @@ def clean_doc(value):
     return value
 
 
-def add_testcase_table(doc, test_data):
-    # Create a table with headers: Test Name,
-    # Test Status, Test Documentation, Test Message Log
-    add_caption(doc, "table", test_data['name'])
-    table = doc.add_table(rows=1, cols=4)
+def add_testcase_table_in_position(doc,
+                                   test_data_dict,
+                                   positon='before'
+                                   ):
+    page_width = doc.sections[0].page_width
+    test_section = test_data_dict['section']
+    test_id = test_data_dict['id']
+    test_name = test_data_dict['name']
+    table = doc.add_table(rows=0, cols=2)
     table.style = 'Cisco CX Table | Default'
-    doc.add_paragraph()
+    # Set the width for the first column
+    table.columns[0].width = int(page_width * 0.2)
+    table.columns[1].width = int(page_width * 0.8)
+    key_order = ['name', 'id', 'section', 'doc',
+                 'procedure', 'status', 'messages']
+    # Add content to the table cells
+    for key in key_order:
+        value = test_data_dict.get(key, '')
+        row = table.add_row().cells
+        row[0].text = key
+        if isinstance(value, list):
+            # If the value is a list, add list items as bullets
+            print(value)
+            value_stripped = [item.replace("Step. ", "") for item in value]
+            cell = row[1]
+            # use existing cell paragraph
+            p = cell.paragraphs[0]
+            for item in value_stripped:
+                p.add_run("• " + item + "\n")
+        else:
+            row[1].text = value
+    pprint(test_data_dict)
+    testcase_anchor = create_inline_paragraph(
+        doc,
+        placeholder=test_section,
+        position=positon,
+        style_name='Caption'
+    )
+    # This line assignes the tables to the placeholder location
+    # Need to modify Caption code...
+    # testcase_anchor.add_run(test_id)
+    caption_text = test_id + ' ' + test_name
+    add_caption_new(testcase_anchor, 'Table', caption_text)
+    testcase_anchor._p.addnext(table._tbl)
 
-    # pprint(test_data)
-    # Add the table headers
-    header_row = table.rows[0].cells
-    header_row[0].text = 'Test Name'
-    header_row[1].text = 'Test Status'
-    header_row[2].text = 'Test Documentation'
-    header_row[3].text = 'Test Message Log'
-    # pprint(test_data.keys())
-    # pprint(test_data['name'])
-    # Add data rows based on the input
-    row = table.add_row().cells
-    row[0].text = test_data['name']
-    row[1].text = test_data['status']
-    row[2].text = test_data['doc']
-    row[3].text = test_data['messages']
+
+def add_caption_new(paragraph, caption_type, caption_text):
+    """
+    Creates a caption using the Cisco Caption style
+
+    Inputs:
+    doc :   the document object
+    type:   Table, Code, Figure
+    Caption:    Caption Text to append
+    """
+    # Define the Valid Caption Types (Table, Figure, or Code)
+    if caption_type.title() in ["Figure", "Code", "Table"]:
+        pass
+    else:
+        raise ValueError(
+            "Invalid type specified. Use 'figure', 'code', or 'table'.")
+    caption = paragraph.add_run(f'{caption_type.title()}: {caption_text}')
+    # caption = paragraph.add_paragraph(f'{caption_type.title()}: caption_text', style='Caption')
+    add_caption_field_code(paragraph=paragraph,
+                           caption_type=caption_type.title())
+    # run = paragraph.add_run(f' {caption_text}')
 
 
-# @log_output_to_file('output_log.txt')
+def add_content_inline(doc,
+                       section_name,
+                       placeholder,
+                       position='before',
+                       style='Normal',
+                       ):
+    """ Adds a section heading before the placeholder"""
+    testcase_anchor = create_inline_paragraph(
+        doc,
+        placeholder=placeholder,
+        position=position,
+        style_name=style
+    )
+    testcase_anchor.add_run(section_name)
+    return testcase_anchor
+
+
+def add_all_test_sections(doc, sections):
+    added_sections = {}
+    for section_id, section_data in sections.items():
+        section_doc = section_data['doc']
+        section_name = section_data['name']      
+        # evaluate if i need to add a new section, if true create heading and
+        # dump section documentation from the test suite docs
+        if section_id not in added_sections:
+            # We want all section headings and content above the 
+            # placeholder text <test_section_placeholder>
+            placeholder = 'test_section_placeholder'
+            position = 'before'
+            # this is a new test suite thats has no heading, adding a heading:
+            add_section = add_content_inline(doc,
+                                             section_name,
+                                             placeholder,
+                                             position=position,
+                                             style='Heading 2',
+                                             )
+            add_section_doc = add_content_inline(doc,
+                                                 section_doc,
+                                                 placeholder,
+                                                 position=position,
+                                                 style='Normal'
+                                                 )
+            new_text = f'\n<{section_id}>'
+            add_section_placeholder = add_content_inline(doc,
+                                                         new_text,
+                                                         placeholder,
+                                                         position=position,
+                                                         style='Normal'
+                                                         )
+            added_sections[section_id] = True
+
+
 def create_test_docx(**kwargs):
     """
     Bring everything together and create the docx content
@@ -446,7 +434,7 @@ def create_test_docx(**kwargs):
     # Calling functions top extract test data:
     output_xml = parse_output_xml(test_output_xml)
     sections = get_test_sections(output_xml=output_xml)
-    tests = get_tests(output_xml=output_xml)
+    test_list = get_tests(output_xml=output_xml)
     # Create a new Word document
     doc = Document(docx_template)
     table_style_name = 'Cisco CX Table | Default'
@@ -458,69 +446,52 @@ def create_test_docx(**kwargs):
         # If the style doesn't exist, you can create a new style based on it
         custom_table_style = doc.styles.add_style(
             table_style_name, 'Table Normal')
-    # doc = Document(docx_template)
-    # create a blank table to store the data in the document
+
     table = doc.tables[0]
     # Asisgn the Cisco CX Default Style
     table.style = table_style_name
-    added_sections = {}
-    # Iterate over the tests and organize them by section
-    for test_data in tests:
+    test_case_tables = []
+    add_all_section = add_all_test_sections(doc, sections)
+    
+    for test_data in test_list:
+        test_id = test_data['id']
         section_id = test_data['section']
-        if section_id not in sections:
-            continue  # Skip tests without a matching section
-        # Add a section break if it's a new section
-        if section_id not in added_sections:
-            if not doc.sections or doc.sections[-1].footer is None:
-                section = doc.sections[-1]
-                section.start_type = WD_SECTION_START.CONTINUOUS
-                section.start_param = WD_SECTION.NEW_COLUMN
-                section.footer.is_linked_to_previous = False
-            # Add a heading for the section
-            # (using the section name as the heading text)
-            section_name = sections[section_id]['name']
-            doc.add_heading(section_name, level=1)
-            doc.add_paragraph(sections[section_id]['doc'])
-            added_sections[section_id] = True
-            section_stats = get_section_statistics(output_xml, section_id)
-            # pprint(section_stats)
-            get_section_summary_results(
-                doc, section_stats,
-                caption=f'{section_name} Test Results Summary')
-        pprint(test_data)
-        add_vertical_testcase_table(doc, test_data)
-    # invoke positional text test
+        test_case = add_testcase_table_in_position(doc, test_data)
 
-    p = create_inline_paragraph(
-        doc,
-        placeholder='test_case_placeholder',
-        position='before'
-    )
-    p.add_run('Adding text before placeholder')
+    #     # This messed up the whole layout:
+    #     # add_vertical_testcase_table(doc, test_data)
 
-    p = create_inline_paragraph(
-        doc=doc,
-        placeholder='test_case_placeholder',
-        position='After'
-    )
-    p.add_run('Adding text after placeholder')
-    if p:
-        print('Entering new table')
-        
-        empty_paragraph = doc.add_paragraph()
-        table = doc.add_table(rows=3, cols=2)
-        # Add content to the table cells
-        table.cell(0, 0).text = "Row 1, Cell 1"
-        table.cell(0, 1).text = "Row 1, Cell 2"
-        table.cell(1, 0).text = "Row 2, Cell 1"
-        table.cell(1, 1).text = "Row 2, Cell 2"
-        table.cell(2, 0).text = "Row 3, Cell 1"
-        table.cell(2, 1).text = "Row 3, Cell 2"
-        # the line below adds the table to the paragraph location:
-        p._p.addnext(table._tbl)
+    #     """
+    #     Content below continue is old code that works...
+    #     skipping to test content inline placement
+    #     """
+    #     continue
+    #     section_id = test_data['section']
+    #     if section_id not in sections:
+    #         continue  # Skip tests without a matching section
+    #     # Add a section break if it's a new section
+    #     if section_id not in added_sections:
+    #         if not doc.sections or doc.sections[-1].footer is None:
+    #             section = doc.sections[-1]
+    #             section.start_type = WD_SECTION_START.CONTINUOUS
+    #             section.start_param = WD_SECTION.NEW_COLUMN
+    #             section.footer.is_linked_to_previous = False
+    #         # Add a heading for the section
+    #         # (using the section name as the heading text)
+    #         section_name = sections[section_id]['name']
+    #         doc.add_heading(section_name, level=2)
+    #         doc.add_paragraph(sections[section_id]['doc'])
+    #         added_sections[section_id] = True
+    #         section_stats = get_section_statistics(output_xml, section_id)
+    #         get_section_summary_results(
+    #             doc, section_stats,
+    #             caption=f'{section_name} Test Results Summary')
+    #     # pprint(test_data)
+    #     # test_case_tables.append()
+    #     # add_vertical_testcase_table(doc, test_data)
 
-    # Save the document
     doc.save(output_docx)
+    print(f'Created Output file : {output_docx}')
 
 
 def find_placeholder(doc, placeholder):
@@ -548,7 +519,7 @@ def find_placeholder(doc, placeholder):
     return p_id  # return the paragraph id (int)
 
 
-def create_inline_paragraph(doc, placeholder, position):
+def create_inline_paragraph(doc, placeholder, position, style_name=None):
     """
     Create a new paragraph object before the placeholder text:
 
@@ -561,14 +532,16 @@ def create_inline_paragraph(doc, placeholder, position):
         p = doc.paragraphs[p_id].insert_paragraph_before()
     elif position.lower() == 'after':
         p = doc.paragraphs[p_id]
-        new_line = p.add_run('\n')
+    if style_name:
+        p.style = style_name
     return p  # returning docx paragraph object
 
 
 if __name__ == "__main__":
-    test_output_xml = '/Users/ubutt/git/robot-system-check/rhel-dev/results/output.xml'
-    # test_output_xml = '/Users/ubutt/git/robot-system-check/docx/update_docx_props/output.xml'
-    docx_template = '/Users/ubutt/git/robot-system-check/rhel-dev/create_docx/vf-atp-template.docx'
+    # set ROOT_PATH to absolutio location of code
+    root_path = '/Users/ubutt/git/robot-system-check/rhel-dev/'
+    test_output_xml = f'{root_path}results/output.xml'
+    docx_template = f'{root_path}create_docx/vf-atp-template.docx'
     create_test_docx(
         test_output_xml=test_output_xml,
         docx_template=docx_template
